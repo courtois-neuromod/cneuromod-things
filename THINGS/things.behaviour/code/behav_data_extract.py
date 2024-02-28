@@ -360,7 +360,7 @@ def process_runs(
         """
         df_trials = None
 
-        run_list = sorted(glob.glob(f"{in_path}/{sub_num}/ses*/*events.tsv"))
+        run_list = sorted(glob.glob(f"{in_path}/{sub_num}/ses*/func/*events.tsv"))
         for run_path in tqdm.tqdm(run_list, desc=f'processing {sub_num} run files'):
             '''
             Calculate performance metrics per run for each session
