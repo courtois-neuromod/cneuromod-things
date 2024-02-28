@@ -1,7 +1,9 @@
 cneuromod-things
 ==============================
 
-Data, scripts and derrivatives for the CNeuroMod-THINGS dataset
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset
+
+TODO: Add task and dataset description
 
 Project Organization
 ------------
@@ -77,42 +79,31 @@ Project Organization
     │    │
     │    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
     │
-    ├── THINGS                  <- THINGS datasets and scripts
-    │    ├── Makefile           <- Makefile with commands like `make data` or `make train`
+    ├── THINGS                  <- THINGS datasets, scripts and derivatives
     │    ├── README.md          <- Overview of THINGS datasets and scripts
-    │    ├── data               <- THINGS datasets and derivatives
-    │    │   ├── things.fmriprep         <- fmriprep output
-    │    │   │    └── sourcedata         <- raw fMRI files
-    │    │   │         └── things.raw       
-    │    │   │               ├── bidsified raw fMRI data
-    │    │   │               ├── things.stimuli
-    │    │   │               ├── things.eyetracking
-    │    │   │               └── events.tsv files
-    │    │   │
-    │    │   ├── things.behaviour           <- performance on the image recognition task
-    │    │   ├── things.annotations         <- image content annotations and manual
-    │    │   └── things.glmsingle           <- glm single derivatives
+    │    ├── things.fmriprep         <- fmriprep output
+    │    │    └── sourcedata         <- raw fMRI files
+    │    │         └── things.raw       
+    │    │               ├── bidsified raw fMRI data
+    │    │               ├── things.stimuli
+    │    │               │     └── things.annotations <- image content annotations and manual
+    │    │               ├── bidsified eyetracking data
+    │    │               └── cleaned up events.tsv files
     │    │
-    │    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │    │                         generated with `pip freeze > requirements.txt`
+    │    ├── things.behaviour        <- performance on the image recognition task
+    │    │       ├── code
+    │    │       │     ├── README.md    
+    │    │       │     ├── requirements.txt        
+    │    │       │     └── behav_data_extract.py    <- computes behav scores from events.tsv files
+    │    │       ├── sub-0*
+    │    │       │     └── beh
+    │    │       │          ├── sub-0*_task-things_desc-score-per-trial_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-score-per-run_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-score-per-session_beh.tsv    
+    │    │       │          └── sub-0*_task-things_desc-score-global_beh.tsv    
+    │    │       └── task-thingsmemory_beh_dataset_description.json
     │    │
-    │    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    │    ├── src                <- Source code for use in this project.
-    │    │   ├── __init__.py    <- Makes src a Python module
-    │    │   │
-    │    │   ├── behaviour        <- Behaviour analysis scripts
-    │    │   │   └── make_dataset.py
-    │    │   │
-    │    │   ├── eyetracking       <- Scripts to analyse eye-tracking data
-    │    │   │   └── eye_track.py
-    │    │   │
-    │    │   ├── data           <- fMRI data preparation scripts
-    │    │   │   └── make_dataset.py
-    │    │   │
-    │    │   └── features       <- Scripts to extract betas and noise ceiling
-    │    │       └── build_features.py
-    │    │
-    │    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
+    │    └── things.glmsingle        <- glm single derivatives
     │
     └── datapaper          <- Report, figures and visualization notebooks
         ├── figures        <- Generated graphics and figures from the report
