@@ -102,26 +102,43 @@ Project Organization
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
     │    │               ├── things.stimuli
-    │    │               │     └── things.annotations <- image content annotations and manual
+    │    │               │     └── annotations <- image content annotations and manual
+    │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
+    │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
+    │    │               │            │     ├── arousal_meanRatings.tsv
+    │    │               │            │     ├── category53_wideFormat.tsv
+    │    │               │            │     ├── imageLabeling_imageWise.tsv  
+    │    │               │            │     ├── imageLabeling_objectWise.tsv
+    │    │               │            │     ├── objectProperties_meanRatings.tsv  
+    │    │               │            │     ├── size_meanRatings.tsv  
+    │    │               │            │     ├── things_concepts.tsv  
+    │    │               │            │     └── THINGS_Memorability_Scores.csv  ** EXCLUDE!!    
+    │    │               │            ├── task-things_desc-manual_annotations_description.json
+    │    │               │            └── task-things_desc-manual_image-annotations.tsv
     │    │               ├── code
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
     │    │               │     ├── eyetracking       <- scripts to process eyetracking data    
-    │    │               │     └── events_relabel.py  <- script to relabel *events.tsv files
+    │    │               │     └── events_relabel.py  <- script to relabel/clean *events.tsv files
     │    │               ├── task-things_eyetrack_description.json
     │    │               └── task-things_events_description.json
     │    │
     │    ├── things.behaviour        <- performance on the image recognition task
     │    │       ├── code
     │    │       │     ├── README.md    
-    │    │       │     ├── requirements.txt        
-    │    │       │     └── behav_data_extract.py    <- computes behav scores from events.tsv files
+    │    │       │     ├── requirements.txt
+    │    │       │     ├── behav_data_annotate.py      <- builds trial-wise annotations   
+    │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
     │    │       ├── sub-0*
     │    │       │     └── beh
+    │    │       │          ├── sub-0*_task-things_desc-annotation-per-trial_beh.tsv      
+    │    │       │          ├── sub-0*_task-things_desc-catNum.tsv  
+    │    │       │          ├── sub-0*_task-things_desc-imgNum.tsv  
     │    │       │          ├── sub-0*_task-things_desc-score-per-trial_beh.tsv    
     │    │       │          ├── sub-0*_task-things_desc-score-per-run_beh.tsv    
     │    │       │          ├── sub-0*_task-things_desc-score-per-session_beh.tsv    
     │    │       │          └── sub-0*_task-things_desc-score-global_beh.tsv    
+    │    │       ├── task-things_annotations_dataset_description.json
     │    │       └── task-things_beh_dataset_description.json
     │    │
     │    └── things.glmsingle        <- glm single derivatives
