@@ -84,3 +84,10 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# THINGS+ annotations
+THINGS/things.fmriprep/sourcedata/things/things.stimuli/annotations/THINGS+/*sv
+
+# output figures
+datapaper/figures/*.png
+datapaper/figures/*.svg
