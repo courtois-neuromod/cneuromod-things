@@ -138,7 +138,7 @@ Project Organization
     │    │       │          ├── sub-0*_task-things_desc-score-per-run_beh.tsv    
     │    │       │          ├── sub-0*_task-things_desc-score-per-session_beh.tsv    
     │    │       │          └── sub-0*_task-things_desc-score-global_beh.tsv    
-    │    │       ├── task-things_annotations_dataset_description.json
+    │    │       ├── task-things_annotations_dataset_description.json  <- TODO
     │    │       └── task-things_beh_dataset_description.json
     │    │
     │    └── things.glmsingle        <- glm single derivatives
@@ -175,7 +175,9 @@ Project Organization
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
-        ├── notebooks      <- Code to generate figures from the data
+        ├── notebooks      <- Code to generate datapaper figures
+        │       ├── behav_analysis.ipynb      <- behav figures     
+        │       └── head_motion.ipynb         <- framewise displacement figs    
         └── report         <- Data paper manuscript
 
 --------
