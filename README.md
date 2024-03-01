@@ -124,8 +124,8 @@ Project Organization
     │    │               └── task-things_events_description.json
     │    │
     │    ├── things.behaviour        <- performance on the image recognition task
+    │    │       ├── README.md
     │    │       ├── code
-    │    │       │     ├── README.md    
     │    │       │     ├── requirements.txt
     │    │       │     ├── behav_data_annotate.py      <- builds trial-wise annotations   
     │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files

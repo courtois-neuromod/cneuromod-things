@@ -20,9 +20,9 @@ COL_NAMES = [
                 'highercat27_names', 'highercat53_names',
                 'highercat53_num', 'categ_concreteness',
                 'categ_wordfreq_COCA', 'categ_nameability',
-                'img_nameability', 'categ_recognizability',
-                'img_recognizability', 'categ_consistency',
-                'img_consistency',
+                'img_nameability',
+                #'categ_recognizability', 'img_recognizability',
+                'categ_consistency', 'img_consistency',
                 #'img_memorability',   # need permission to share
                 'categ_size',
                 'categ_arousal', 'categ_manmade', 'categ_precious',
@@ -224,7 +224,7 @@ def process_files(
         None
     '''
     event_files = sorted(glob.glob(
-        f"{ev_path}/sub-{sub-num}/ses-*/func/*events.tsv"
+        f"{ev_path}/sub-{sub_num}/ses-*/func/*events.tsv"
     ))
 
     '''
@@ -295,7 +295,7 @@ def process_files(
 
         # Add columns of annotations imported from THINGS & THINGSplus databases
         categ53 = pd.read_csv(
-            f"{annot_path}/THINGS+/category53_wideFormat.tsv", sep= ',')
+            f"{annot_path}/THINGS+/category53_wideFormat.tsv", sep='\t')
         # transform matrix of one-hots into DF w two columns before
         # indexing values
         cat53_1854 = format_cat53(categ53)
@@ -319,23 +319,24 @@ def process_files(
 
 
         img_concepts = pd.read_csv(
-            f"{annot_path}/THINGS+/imageLabeling_objectWise.tsv", sep= ',')
+            f"{annot_path}/THINGS+/imageLabeling_objectWise.tsv", sep='\t')
         df['categ_nameability'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'nameability_mean', img_concepts), axis=1)
-        df['categ_recognizability'] = df.apply(lambda row: get_THINGSmatch(
-            row, 'things_category_nr', 'recognizability_mean', img_concepts), axis=1)
+        # Feature removed from updated spreadsheet
+        #df['categ_recognizability'] = df.apply(lambda row: get_THINGSmatch(
+        #    row, 'things_category_nr', 'recognizability_mean', img_concepts), axis=1)
         df['categ_consistency'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'consistency_mean', img_concepts), axis=1)
 
 
         obj_size = pd.read_csv(
-            f"{annot_path}/THINGS+/size_meanRatings.tsv", sep= ',')
+            f"{annot_path}/THINGS+/size_meanRatings.tsv", sep='\t')
         df['categ_size'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'Size_mean', obj_size), axis=1)
 
 
         obj_properties = pd.read_csv(
-            f"{annot_path}/THINGS+/objectProperties_meanRatings.tsv", sep= ',')
+            f"{annot_path}/THINGS+/objectProperties_meanRatings.tsv", sep='\t')
         df['categ_manmade'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'manmade_mean', obj_properties), axis=1)
         df['categ_precious'] = df.apply(lambda row: get_THINGSmatch(
@@ -358,21 +359,20 @@ def process_files(
             row, 'things_category_nr', 'pleasant_mean', obj_properties), axis=1)
 
         ar = pd.read_csv(
-            f"{annot_path}/THINGS+/arousal_meanRatings.tsv", sep= ','
-        )
+            f"{annot_path}/THINGS+/arousal_meanRatings.tsv", sep='\t')
         df['categ_arousal'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'arousing_mean', ar), axis=1)
 
         # Image-specific ratings
         img_labels = pd.read_csv(
-            f"{annot_path}/THINGS+/imageLabeling_imageWise.tsv", sep= ',')
+            f"{annot_path}/THINGS+/imageLabeling_imageWise.tsv", sep='\t')
         img_labels['image_name'] = img_labels.apply(
             lambda row: row['image'].split('/')[-1].split('.')[0], axis=1)
         img_labels = img_labels.set_index('image_name')
         df['img_nameability'] = df.apply(lambda row: get_THINGSmatch(
             row, 'image_name', 'nameability', img_labels, usekey=True), axis=1)
-        df['img_recognizability'] = df.apply(lambda row: get_THINGSmatch(
-            row, 'image_name', 'recognizability', img_labels, usekey=True), axis=1)
+        #df['img_recognizability'] = df.apply(lambda row: get_THINGSmatch(
+        #    row, 'image_name', 'recognizability', img_labels, usekey=True), axis=1)
         df['img_consistency'] = df.apply(lambda row: get_THINGSmatch(
             row, 'image_name', 'naming_consistency', img_labels, usekey=True), axis=1)
 
@@ -390,10 +390,10 @@ def process_files(
         # Add columns of imported manual annotations
         img_manual = pd.read_csv(
             f"{annot_path}/task-things_desc-manual_image-annotations.tsv",
-            sep= '\')
+            sep= '\t')
         img_manual = img_manual.set_index('image_name')
-        for m_name in COL_MANUAL]:
-            df[f'manual_{m_name]}'] = df.apply(lambda row: get_THINGSmatch(
+        for m_name in COL_MANUAL:
+            df[f'manual_{m_name}'] = df.apply(lambda row: get_THINGSmatch(
                 row, 'image_name', m_name, img_manual, usekey=True), axis=1)
 
         final_df = df[ids + COL_NAMES + manual_cols]
@@ -416,10 +416,7 @@ if __name__ == '__main__':
 
     Values are exported as one .tsv file per subject for which all sessions
     and runs are concatenated.
-
-    Script to be ran on elm within ~/my_venv/retino_venv environment
     '''
-
     args = get_arguments()
 
     process_files(args.events_dir, args.annot_dir, args.out_dir, args.sub)
