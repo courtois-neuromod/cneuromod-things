@@ -21,7 +21,7 @@ COL_NAMES = [
                 'highercat53_num', 'categ_concreteness',
                 'categ_wordfreq_COCA', 'categ_nameability',
                 'img_nameability',
-                #'categ_recognizability', 'img_recognizability',
+                #'categ_recognizability', 'img_recognizability', # removed from new version
                 'categ_consistency', 'img_consistency',
                 #'img_memorability',   # need permission to share
                 'categ_size',
@@ -284,7 +284,7 @@ def process_files(
         assert f'{rn:02}' == run_num
         #df.insert(loc=2, column=ids[2], value=run_num, allow_duplicates=True)
 
-        # Add columns generated from events.tsv file data
+        # Add columns generated from events.tsv file's own data
         df['image_name'] = df.apply(lambda row: get_name(row), axis=1)
         df['image_category'] = df.apply(lambda row: get_cat(row), axis=1)
         df['response_type'] = df.apply(lambda row: get_respType(row), axis=1)
@@ -322,7 +322,7 @@ def process_files(
             f"{annot_path}/THINGS+/imageLabeling_objectWise.tsv", sep='\t')
         df['categ_nameability'] = df.apply(lambda row: get_THINGSmatch(
             row, 'things_category_nr', 'nameability_mean', img_concepts), axis=1)
-        # Feature removed from updated spreadsheet
+        # Feature removed from updated dataset
         #df['categ_recognizability'] = df.apply(lambda row: get_THINGSmatch(
         #    row, 'things_category_nr', 'recognizability_mean', img_concepts), axis=1)
         df['categ_consistency'] = df.apply(lambda row: get_THINGSmatch(
@@ -371,13 +371,14 @@ def process_files(
         img_labels = img_labels.set_index('image_name')
         df['img_nameability'] = df.apply(lambda row: get_THINGSmatch(
             row, 'image_name', 'nameability', img_labels, usekey=True), axis=1)
+        # Feature removed from updated dataset
         #df['img_recognizability'] = df.apply(lambda row: get_THINGSmatch(
         #    row, 'image_name', 'recognizability', img_labels, usekey=True), axis=1)
         df['img_consistency'] = df.apply(lambda row: get_THINGSmatch(
             row, 'image_name', 'naming_consistency', img_labels, usekey=True), axis=1)
 
-        # Image-specific memorability (courtesy of Wilma Bainbridge's group)
         # NOTE: need permission to share
+        # Image-specific memorability (courtesy of Wilma Bainbridge's group)
         #img_memo = pd.read_csv(
         #    f"{annot_path}/THINGS+/THINGS_Memorability_Scores.csv", sep= ','
         #)

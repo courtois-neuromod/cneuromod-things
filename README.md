@@ -144,14 +144,14 @@ Project Organization
     │    └── things.glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── README.md    
-    │            │     ├── requirements.txt        
+    │            │     ├── requirements.txt      
+    │            │     ├── QCing          
+    │            │     │    └── compile_headmotion.py   
     │            │     ├── preprocessing    
     │            │     ├── glmsingle        
     │            │     └── noiseceilings    
     │            │
     │            └── sub-0*
-    │                  ├── temp_files   <- intermediate steps
-    │                  │    └── ...
     │                  ├── GLMsingle
     │                  │    ├── TYPEA_ONOFF.mat    
     │                  │    ├── TYPEB_FITHRF.mat   
@@ -163,6 +163,10 @@ Project Organization
     │                  │    ├── sub-0*_task-things_space-T1w_res-func_desc-GM_mask.nii.gz  
     │                  │    └── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.mat
     │                  │
+    │                  ├── QC   <- quality checks
+    │                  │    └── sub-0*_task-things_desc-headmotion.tsv
+    │                  ├── temp_files   <- intermediate steps
+    │                  │    └── ...
     │                  ├── top_image
     │                  │    └── ...
     │                  └── tsne

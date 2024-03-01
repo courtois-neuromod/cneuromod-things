@@ -12,7 +12,7 @@ Launch the following script to process all subjects & sessions
 DATADIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
 OUTDIR="cneuromod-things/THINGS/things.behaviour"
 
-python code/behav_data_extract.py --idir="${DATADIR}" --odir="${OUTDIR}" --clean
+python code/behav_data_memoperformance.py --idir="${DATADIR}" --odir="${OUTDIR}" --clean
 ```
 
 
@@ -65,5 +65,5 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 
 - ``sub-0*/beh/sub-0*_task-things_desc-annotation-per-trial_beh.tsv``, trialwise annotations for a concatenation of all events.tsv files.
 # TODO: Columns are described in ?? annotations_descriptors.json (make file)
-- ``sub-0*_task-things_desc-catNum.tsv``, list of categories of images shown to the subject throughout the experiment
-- ``sub-0*_task-things_desc-imgNum.tsv``, list of image numbers for images shown to the subject throughout the experiment
+- ``sub-0*/beh/sub-0*_task-things_desc-catNum.tsv``, list of categories of images shown to the subject throughout the experiment
+- ``sub-0*/beh/sub-0*_task-things_desc-imgNum.tsv``, list of image numbers for images shown to the subject throughout the experiment
