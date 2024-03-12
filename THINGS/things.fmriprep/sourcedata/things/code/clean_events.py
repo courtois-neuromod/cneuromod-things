@@ -1,4 +1,5 @@
 import os, sys, glob
+from io import TextIOWrapper
 
 import numpy as np
 from numpy import nan as NaN
@@ -83,7 +84,11 @@ def get_sess_times(
     return session_times
 
 
-def get_ses_list(in_path, sub_num, session_times) -> list:
+def get_ses_list(
+    in_path: str,
+    sub_num: str,
+    session_times: dict,
+) -> list:
     """
     Return list of subject's sessions
     """
@@ -357,6 +362,7 @@ def export_events_files(
     ses_list: list,
     out_path: str,
     sub_num: str,
+    run_error_report: TextIOWrapper,
 ) -> None:
     """
     Export newly updated/corrected *events.tsv files with
@@ -452,7 +458,9 @@ def validate_behav_data(
     '''
     STEP 4: Export updated/corrected *events.tsv files
     '''
-    export_events_files(df_trials, cols_to_keep, ses_list, out_path, sub_num)
+    export_events_files(
+        df_trials, cols_to_keep, ses_list, out_path, sub_num, run_error_report,
+    )
 
 
 def main():
