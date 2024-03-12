@@ -6,13 +6,13 @@ repeat (scan problem) messes w conditions: 014, 015 (probably a very small issue
 sleep / missing answers: to user's discretion \
 SUB-02: all good \
 SUB-03: ses-024, ses-025, ses-026 \
-sub-06: ses-019, ses-020, ses-021, 022, 023, 024, 025, 026 \
+sub-06: ses-019, ses-020, ses-021, 022, 023, 024, 025, 026
 
 ***NOTE: a few cleaned up event.tsv files were edited manually after being validated and updated by the clean_events.py script*** \
 The added column, 'exclude_session', was changed MANUALLY from FALSE to TRUE for all rows in the following files. \
 This flag is to identify sessions that should be excluded from Memory analyses (but they are fine to assess perception) \
 sub-03: sessions 24, 25 and 26 (all 6 runs) \
-sub-06: sessions 19, 20, 21, 22, 23, 24, 25 and 26 (all 6 runs) \
+sub-06: sessions 19, 20, 21, 22, 23, 24, 25 and 26 (all 6 runs)
 
 Additional sessions include a few "atypical trials" (those with repetition patterns that
 deviate from the planned protocole, e.g. a run was interrupted & repeated, or ran out of order). \
@@ -23,62 +23,34 @@ discretion of the experimenter.
 
 ### EMPTY psychopy log Files (under /unf/eyetrack): cannot access trialwise timing info
 update: date removed from file name for de-identification \
-**SUB-01** \
-ses-007
-- sub-01_ses-007_202xxxxx-xxxxxx.log: runs 1-6
+**SUB-01**
+- ses-007, runs 1-6
+- ses-009, runs 1-5
+- ses-009, run 6
+- ses-021, runs 4-6
+- ses-032, runs 1-4
+- ses-034, run 1
+- ses-035, runs 1-3
 
-ses-009
-- sub-01_ses-009_202xxxxx-xxxxxx.log: runs 1-5
-- sub-01_ses-009_202xxxxx-xxxxxx.log: run 6
+**SUB-02**
+- ses-018, runs 1-3
+- ses-018, run 4
+- ses-018, runs 5-6
 
-ses-021
-- sub-01_ses-021_202xxxxx-xxxxxx.log: runs 4-6
+**SUB-03**
+- ses-035, runs 1-6
 
-ses-032
-- sub-01_ses-032_202xxxxx-xxxxxx.log: runs 1-4
-
-ses-034
-- sub-01_ses-034_202xxxxx-xxxxxx.log: run 1
-
-ses-035
-- sub-01_ses-035_202xxxxx-xxxxxx.log: runs 1-3
-
-**SUB-02** \
-ses-018
-- sub-02_ses-018_202xxxxx-xxxxxx.log: runs 1-3
-- sub-02_ses-018_202xxxxx-xxxxxx.log: run 4
-- sub-02_ses-018_202xxxxx-xxxxxx.log: runs 5-6
-
-**SUB-03** \
-ses-035
-- sub-03_ses-035_202xxxxx-xxxxxx.log: runs 1-6
-
-**SUB-06** \
-ses-004
-- sub-06_ses-004_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-005
-- sub-06_ses-005_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-006
-- sub-06_ses-006_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-007
-- sub-06_ses-007_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-009
-- sub-06_ses-009_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-010
-- sub-06_ses-010_202xxxxx-xxxxxx.log: runs 1-6
-
-ses-031
-- sub-06_ses-031_202xxxxx-xxxxxx.log: run 1
-
-ses-032
-- sub-06_ses-032_202xxxxx-xxxxxx.log: run 1
-- sub-06_ses-032_202xxxxx-xxxxxx.log: run 2
-- sub-06_ses-032_202xxxxx-xxxxxx.log: runs 3-6
+**SUB-06**
+- ses-004, runs 1-6
+- ses-005, runs 1-6
+- ses-006, runs 1-6
+- ses-007, runs 1-6
+- ses-009, runs 1-6
+- ses-010, runs 1-6
+- ses-031, run 1
+- ses-032, run 1
+- ses-032, run 2
+- ses-032, runs 3-6
 
 **Workaround SOLUTION**: estimate run onset from onset of eyetracker for that run, and add time to trial "onset" value in events file \
 Only the following sessions could not be given trialwise timestamps (no eyetracking data, no log files):
@@ -99,7 +71,7 @@ On [date removed], sub-02_ses-004 stimuli were accidentally run for sub-03's ses
 *(All "b" sessions are non-valid, in-between sessions whose data were discarded from the final dataset).* \
 The [date removed] session can be discarded. \
 Note: session 14 was reran again (properly this time) on [date removed] in the proper order
-(since ses-004 tests an earlier batch of stimuli all seen weeks before, it should not affect the performance of the other sessions beside increasing the between-session delay and perhaps introducing some interference; But it doesn't "spoil" unseen stimuli or repeats stimuli before their final (3rd) repetition. \
+(since ses-004 tests an earlier batch of stimuli all seen weeks before, it should not affect the performance of the other sessions beside increasing the between-session delay and perhaps introducing some interference; But it doesn't "spoil" unseen stimuli or repeats stimuli before their final (3rd) repetition.
 
 ***sub-03, session 25*** was accidentally ran instead of session 22... \
 sessions 22, 23 and 24 were then ran, then session 25 was ran again a second time... \
