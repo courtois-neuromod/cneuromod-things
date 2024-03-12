@@ -22,7 +22,7 @@ discretion of the experimenter.
 
 
 ### EMPTY psychopy log Files (under /unf/eyetrack): cannot access trialwise timing info
-update: date removed from file name for de-identification \
+update: removed log file name (w date) for de-identification \
 **SUB-01**
 - ses-007, runs 1-6
 - ses-009, runs 1-5
