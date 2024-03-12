@@ -119,7 +119,7 @@ Project Organization
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
     │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
-    │    │               │     ├── raw_qc_notes.md       <- notes on QCing runs & sessions        
+    │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
     │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
     │    │               ├── task-things_eyetrack_description.json
     │    │               └── task-things_events_description.json

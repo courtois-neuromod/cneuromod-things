@@ -496,15 +496,7 @@ def main():
     contain them) can be excluded at the experimenter's discretion.
 
     Additional notes about the QCing of the CNeuroMod-THINGS dataset are included
-    in raw_qc_notes.md.
-
-    Temp time files with scan dates per participant are saved on elm.
-    e.g., sub-02_scandates.txt
-    For confidentiality, scan dates cannot be shared publically.
-    # TODO delete, as scan date is a subject identifier
-
-    THINGS scanning sheet (for CNeuroMod internal use):
-    https://docs.google.com/spreadsheets/d/1Wh8uen7wKZqN48-2lwKvDhb4IV3erGoJ57ub1hmSR34/edit#gid=838353901
+    in qc_notes.md.
     """
 
     parser = argparse.ArgumentParser()
