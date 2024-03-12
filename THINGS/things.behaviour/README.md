@@ -15,6 +15,7 @@ OUTDIR="cneuromod-things/THINGS/things.behaviour"
 python code/behav_data_memoperformance.py --idir="${DATADIR}" --odir="${OUTDIR}" --clean
 ```
 
+Of note, a handful of sessions had their planned patterns of repetition affected by a session administered out of order (sub-03's sessions 24, 25 and 26; sub-06's sessions 19 to 26). These sessions included "atypical trials" (e.g., images shown more than 3 times), and were excluded from the computation of behavioural performance metrics (they were flagged with ``exclude_session == True`` in their ``*events.tsv`` file).
 
 *Input*:
 
