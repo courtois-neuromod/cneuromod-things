@@ -23,44 +23,59 @@ discretion of the experimenter.
 
 ### EMPTY psychopy log Files (under /unf/eyetrack): cannot access trialwise timing info
 update: date removed from file name for de-identification \
-SUB-01 \
-ses-007 \
+**SUB-01** \
+ses-007
 - sub-01_ses-007_202xxxxx-xxxxxx.log: runs 1-6
-ses-009 \
+
+ses-009
 - sub-01_ses-009_202xxxxx-xxxxxx.log: runs 1-5
 - sub-01_ses-009_202xxxxx-xxxxxx.log: run 6
-ses-021 \
+
+ses-021
 - sub-01_ses-021_202xxxxx-xxxxxx.log: runs 4-6
-ses-032 \
+
+ses-032
 - sub-01_ses-032_202xxxxx-xxxxxx.log: runs 1-4
-ses-034 \
+
+ses-034
 - sub-01_ses-034_202xxxxx-xxxxxx.log: run 1
-ses-035 \
+
+ses-035
 - sub-01_ses-035_202xxxxx-xxxxxx.log: runs 1-3
-SUB-02 \
-ses-018 \
+
+**SUB-02** \
+ses-018
 - sub-02_ses-018_202xxxxx-xxxxxx.log: runs 1-3
 - sub-02_ses-018_202xxxxx-xxxxxx.log: run 4
 - sub-02_ses-018_202xxxxx-xxxxxx.log: runs 5-6
-SUB-03 \
-ses-035 \
+
+**SUB-03** \
+ses-035
 - sub-03_ses-035_202xxxxx-xxxxxx.log: runs 1-6
-SUB-06 \
-ses-004 \
+
+**SUB-06** \
+ses-004
 - sub-06_ses-004_202xxxxx-xxxxxx.log: runs 1-6
-ses-005 \
+
+ses-005
 - sub-06_ses-005_202xxxxx-xxxxxx.log: runs 1-6
-ses-006 \
+
+ses-006
 - sub-06_ses-006_202xxxxx-xxxxxx.log: runs 1-6
-ses-007 \
+
+ses-007
 - sub-06_ses-007_202xxxxx-xxxxxx.log: runs 1-6
-ses-009 \
+
+ses-009
 - sub-06_ses-009_202xxxxx-xxxxxx.log: runs 1-6
-ses-010 \
+
+ses-010
 - sub-06_ses-010_202xxxxx-xxxxxx.log: runs 1-6
-ses-031 \
+
+ses-031
 - sub-06_ses-031_202xxxxx-xxxxxx.log: run 1
-ses-032 \
+
+ses-032
 - sub-06_ses-032_202xxxxx-xxxxxx.log: run 1
 - sub-06_ses-032_202xxxxx-xxxxxx.log: run 2
 - sub-06_ses-032_202xxxxx-xxxxxx.log: runs 3-6
@@ -90,19 +105,19 @@ Note: session 14 was reran again (properly this time) on [date removed] in the p
 sessions 22, 23 and 24 were then ran, then session 25 was ran again a second time... \
 SOLUTION: events files from sub-03 sess 025 ran on [date removed] (the first time) copied into session 21b to reflect shown stimuli. \
 Files ran on [date removed] (the 2nd time) left as the final session 25. \
-LOG files copied \
+LOG files copied
 
 ***sub-06, session 20*** ran as sub-01... that session (sub-06, ses-020) is found (on elm) in
 /data/neuromod/DATA/cneuromod/things, but not /unf/eyetracker/neuromod/things \
 AH! it's saved under sub-01's session 20 under /unf; sub-06 ran on [date removed; earlier date],
 sub-01 ran on [date removed; later date] (per google calendar) \
 **SOLUTION**: move sub-06's session 20 files from under sub-01's session 20 (keep in dataset!); we may decide later to discard it for memory, but can still be used for vision \
-LOG copied \
+LOG copied
 
 ***sub-06, session 19***: \
 two "false start" sessions (launched but not completed); \
 I gave them run numbers 40 (begining of run 4, between run 3 and the complete run 4) \
-and run 50 (between runs 4 and 5), to be considered by clean_events.py during validation but then discarded \
+and run 50 (between runs 4 and 5), to be considered by clean_events.py during validation but then discarded
 
 
 ### Other resolved issues
@@ -112,20 +127,20 @@ First run's task was restarted after trial 17 because the scanner stopped, parti
 RESOLVED: I added a run_0 with only the 17 repeated trials to be considered by clean_events.py at validation (I deleted the rest of the events file manually) \
 Edit manually \
 first 17 trials: sub-01/ses-014/sub-01_ses-014_202xxxxx-[earlier time stamp]_task-thingsmemory_run-1_events.tsv -> relabelled as run-0 \
-keep all trials: sub-01/ses-014/sub-01_ses-014_202xxxxx-[later time stamp]_task-thingsmemory_run-1_events.tsv -> remains run-1 \
+keep all trials: sub-01/ses-014/sub-01_ses-014_202xxxxx-[later time stamp]_task-thingsmemory_run-1_events.tsv -> remains run-1
 
 ***sub-03, session 1*** date is [date removed] \
-FINE: files have correct timing info within directory \
+FINE: files have correct timing info within directory
 
 ***sub-02, ses-008***: \
 two event files for run 1, first has no recorded answers, second one has answers \
-**RESOLVED**: first file was a test (no participant); the correct file is saved \
+**RESOLVED**: first file was a test (no participant); the correct file is saved
 
 ***sub-06, ses-008***: \
 two event files for run 1, the second one has only two recorded answers, first has full answers \
 TODO: the wrong file was imported into BIDS, needs to be swaped \
-RESOLVED \
+**RESOLVED**
 
 ***sub-06, ses-008***: \
 bold data from run 6 are misaligned with the other fmriprepped scans. All final analyses
-(GLMsingle, noise ceilings, etc) exclude that particular run. \
+(GLMsingle, noise ceilings, etc) exclude that particular run.
