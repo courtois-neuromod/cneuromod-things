@@ -11,7 +11,7 @@ The file ``qc_notes.md`` contains additional details about any issue with the ex
 
 *Input*:
 
-- A subject's raw ``*events.tsv`` files, across sessions (~36) and runs (6 per session), identified by scan date. E.g., ``sub-01_ses-012_2021****-******_task-thingsmemory_run-2_events.tsv``
+- A subject's raw ``*events.tsv`` files, across sessions (~36) and runs (6 per session), identified by scan date. E.g., ``sub-01_ses-012_202*****-******_task-thingsmemory_run-2_events.tsv``
 - A subject's ``sub-*_scandates.txt`` file, a text file that lists all sessions and their date of acquisition.
 - A subject's raw ``*events.tsv`` files, across sessions (~36) and runs (6 per session), e.g., ``sub-03_ses-17_task-thingsmemory_run-02_events.tsv``
 
