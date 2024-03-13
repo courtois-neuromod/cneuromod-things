@@ -95,6 +95,7 @@ THINGS/things.behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
 THINGS/things.glmsingle/sub-0*/QC/sub-0*_task-things_desc-headmotion.tsv
 
 # THINGS GLMsingle data
+THINGS/things.glmsingle/*.h5
 THINGS/things.glmsingle/sub-0*/GLMsingle/*/sub-0*
 
 # THINGS events files data

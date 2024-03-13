@@ -32,8 +32,8 @@ python GLMsingle_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --s
 (e.g., ``sub-03_ses-17_task-things_run-02_events.tsv``)
 
 **Output**:
-- A ``.json`` file that assigns a unique number to each stimulus image seen by the participant (>4000); \
-the number-image mapping is unique to each participant
+- A ``sub-*_task-things_desc-image-design-refnumbers.json`` file that assigns
+a unique number to each stimulus image seen by the participant (>4000). The number-image mapping is unique to each participant
 - A HDF5 file with one design matrix per session & run (e.g., ``sub-{sub_num}_task-things_sparsedesign.h5``). \
 Matrices are saved as lists of coordinates (onset TR, condition number) per trial
 that will be used to generate sparse design matrices (TRs per run, total number of conditions) in matlab.
@@ -67,7 +67,7 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 ------------
 ## Step 2. Generate matrices of masked bold data from *_bold.nii.gz files
 
-Vectorize and normalize (zscore) BOLD volumes in subject space (T1w) into masked
+Vectorize and normalize (z-score) BOLD volumes in subject space (T1w) into masked
 1D arrays to process with GLMsingle. Note that denoising is performed later
 with GLMsingle.
 
@@ -82,12 +82,12 @@ python GLMsingle_preprocBOLD.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --
 
 **Input**:
 - All of a subject's ``*_bold.nii.gz`` files, for all sessions (~36) and runs (6 per session)
-(e.g., ``sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``) \
+(e.g., ``sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``).
 Note that the script can process scans in MNI or T1w space (default is T1w; use default).
 
 **Output**:
 - A HDF5 file with one flattened matrix of dim = (voxels x time points in TRs) \
-per session & run (e.g., ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5``). \
+per session & run (e.g., ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5``).
 Note that the first two volumes of bold data are dropped for signal equilibrium.
 - A mask file (``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii``)
 generated from the union of functional ``*_mask.nii.gz`` files saved along the ``*_bold.nii.gz`` files.

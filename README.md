@@ -153,13 +153,15 @@ Project Organization
     │            │     │    └── ??.py      
     │            │     └── noiseceilings    
     │            │
+    │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject
+    │            │
     │            └── sub-0*
     │                  ├── GLMsingle
     │                  │    ├── input    
-    │                  │    │     ├── sub-*_task-things_sparsedesign.h5
-    │                  │    │     ├── sub-*_task-things_desc-image-design-refnumbers.json      
-    │                  │    │     ├── sub-*_task-things_space-T1w_desc-func-union_mask.nii    
-    │                  │    │     └── sub-*_task-things_space-T1w_maskedBOLD.h5   
+    │                  │    │     ├── sub-*_task-things_desc-image-design-refnumbers.json
+    │                  │    │     ├── sub-*_task-things_space-T1w_desc-func-union_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5
+    │                  │    │     └── sub-*_task-things_sparsedesign.h5
     │                  │    └── output    
     │                  │          ├── TYPEA_ONOFF.mat    
     │                  │          ├── TYPEB_FITHRF.mat   
