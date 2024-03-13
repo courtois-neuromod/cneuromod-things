@@ -94,27 +94,23 @@ generated from the union of functional ``*_mask.nii.gz`` files saved along the `
 
 
 ------------
-**Step 2b. Generate lists of valid runs per session for all subjects**
+## Step 3. Generate lists of valid runs per session for all subjects
 
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/bold_files \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMsingle_makerunlist.py
+Generate list of valid runs nested per session for each subject to import
+in matlab and loop over while running GLMsingle.
 
-Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
+Run script for all subjects
 ```bash
-module load python/3.7
-source /project/rrg-pbellec/mstlaure/.virtualenvs/things_memory_results/bin/activate
-python -m GLMs_makerunlist
+python GLMs_makerunlist.py
 ```
 
 **Input**:
-- All 6 subject's *bold.nii.gz files, for all sessions (~36) and runs (6 per session) \
-(e.g., sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
+- All 4 subject's ``sub-{sub_num}_task-things_space-T1w_maskedBOLD.h5``
+files produced in step 2.
 
 **Output**:
-- A .h5 file, runlist_THINGS.h5, with nested groups that lists valid runs per session for each subject
-
+- ``task-things_desc-runlist.h5``, a single file of nested lists of valid runs
+per session for each subject
 
 ------------
 **Step 3. Run GLMsingle on bold and design .h5 files from Steps 1 and 2**
