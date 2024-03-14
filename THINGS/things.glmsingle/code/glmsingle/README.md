@@ -118,12 +118,22 @@ per session for each subject
 Run GLMsingle in matlab to compute trialwise beta scores for each voxel within the
 functional brain mask.
 
+For the script to run, the [GLMsingle repository](https://github.com/courtois-neuromod/GLMsingle)
+needs to be installed as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+under ``cneuromod-things/THINGS/things.glmsingle/code/glmsingle`` (commit ``c4e298e``).
+
 Launch the following script for each subject, specifying the subject number,
 bold volume space (``T1w``) & number of voxels per chunk as arguments
-(recommended: reduce to ``35000`` from ``50000`` default to avoid OOM) \
 ```bash
-cd cneuromod-things/THINGS/things.glmsingle/code/glmsingle
-matlab -nodisplay -nosplash -nodesktop -r "sub_num='01';bold_type='T1w';chunk_size='35000';run('GLMsingle_run.m'); exit;"
+SUB_NUM="01" # 01, 02, 03, 06
+BD_TYPE="T1w" # MNI, T1w
+CHUNK_SZ="35000" # 35000 recommended to avoid OOM; 50000 is default
+
+DATADIR="cneuromod-things/THINGS/things.glmsingle"
+CODEDIR="${DATADIR}/code/glmsingle"
+cd ${CODEDIR}
+
+matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';bold_type='${BD_TYPE}';chunk_size='${CHUNK_SZ}';code_dir='${CODEDIR}';data_dir='${DATADIR}';run('GLMsingle_run.m'); exit;"
 ```
 Note: load StdEnv/2020, nixpkgs/16.09 and matlab/2020a modules to run on
 Alliance Canada (168h job per subject, 36 CPUs per task, 5000M memory/CPU)

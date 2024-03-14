@@ -97,6 +97,7 @@ THINGS/things.glmsingle/sub-0*/QC/sub-0*_task-things_desc-headmotion.tsv
 # THINGS GLMsingle data
 THINGS/things.glmsingle/*.h5
 THINGS/things.glmsingle/sub-0*/GLMsingle/*/sub-0*
+THINGS/things.glmsingle/sub-0*/GLMsingle/output/T1w/*
 
 # THINGS events files data
 THINGS/things.fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv

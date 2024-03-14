@@ -149,6 +149,7 @@ Project Organization
     │            │     │    ├── README.md               
     │            │     │    └── compile_headmotion.py   
     │            │     ├── glmsingle       
+    │            │     │    ├── GLMsingle  <- GLMsingle repo submodule (c4e298e)    
     │            │     │    ├── README.md       
     │            │     │    ├── GLMsingle_makedesign.py                   
     │            │     │    ├── GLMsingle_preprocBOLD.py
@@ -166,11 +167,11 @@ Project Organization
     │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5
     │                  │    │     └── sub-*_task-things_sparsedesign.h5
     │                  │    └── output    
-    │                  │          ├── TYPEA_ONOFF.mat    
-    │                  │          ├── TYPEB_FITHRF.mat   
-    │                  │          ├── TYPEC_FITHRF_GLMDENOISE.mat
-    │                  │          ├── sub-0*_task-things_headmotion.tsv       
-    │                  │          ├── TYPED_FITHRF_GLMDENOISE_RR.mat  
+    │                  │          ├── T1w
+    │                  │          │     ├── TYPEA_ONOFF.mat    
+    │                  │          │     ├── TYPEB_FITHRF.mat   
+    │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat 
+    │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-img.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-trial.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-GM_mask.nii.gz  
