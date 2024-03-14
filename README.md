@@ -170,8 +170,7 @@ Project Organization
     │                  │          ├── T1w
     │                  │          │     ├── TYPEA_ONOFF.mat    
     │                  │          │     ├── TYPEB_FITHRF.mat   
-    │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
-    │                  │          │     ├── sub-0*_task-things_headmotion.tsv       
+    │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat 
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-img.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-trial.h5  
