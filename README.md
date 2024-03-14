@@ -149,8 +149,11 @@ Project Organization
     │            │     │    ├── README.md               
     │            │     │    └── compile_headmotion.py   
     │            │     ├── glmsingle       
-    │            │     │    ├── README.md               
-    │            │     │    └── ??.py      
+    │            │     │    ├── README.md       
+    │            │     │    ├── GLMsingle_makedesign.py                   
+    │            │     │    ├── GLMsingle_preprocBOLD.py
+    │            │     │    ├── GLMsingle_makerunlist.py    
+    │            │     │    └── GLMsingle_run.m      
     │            │     └── noiseceilings    
     │            │
     │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject

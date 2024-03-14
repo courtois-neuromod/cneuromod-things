@@ -28,13 +28,13 @@ python GLMsingle_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --s
 ```
 
 **Input**:
-- All of a subject's ``*events.tsv`` files, across sessions (~36) and runs (6 per session)\
+- All of a subject's ``*_events.tsv`` files, across sessions (~36) and runs (6 per session)\
 (e.g., ``sub-03_ses-17_task-things_run-02_events.tsv``)
 
 **Output**:
-- A ``sub-*_task-things_desc-image-design-refnumbers.json`` file that assigns
+- A ``sub-{sub_num}_task-things_desc-image-design-refnumbers.json`` file that assigns
 a unique number to each stimulus image seen by the participant (>4000). The number-image mapping is unique to each participant
-- A HDF5 file with one design matrix per session & run (e.g., ``sub-{sub_num}_task-things_sparsedesign.h5``). \
+- ``sub-{sub_num}_task-things_sparsedesign.h5``, a HDF5 file with one design matrix per session & run. \
 Matrices are saved as lists of coordinates (onset TR, condition number) per trial
 that will be used to generate sparse design matrices (TRs per run, total number of conditions) in matlab.
 
@@ -73,7 +73,6 @@ with GLMsingle.
 
 Launch the following script for each subject
 ```bash
-SUB_NUM="01"
 DATADIR="cneuromod-things/THINGS/things.fmriprep"
 OUTDIR="cneuromod-things/THINGS/things.glmsingle"
 
@@ -86,12 +85,13 @@ python GLMsingle_preprocBOLD.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --
 Note that the script can process scans in MNI or T1w space (default is T1w; use default).
 
 **Output**:
-- A HDF5 file with one flattened matrix of dim = (voxels x time points in TRs) \
-per session & run (e.g., ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5``).
+- ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5``, a HDF5 file with
+one flattened matrix of dim = (voxels x time points in TRs) per session & run.
 Note that the first two volumes of bold data are dropped for signal equilibrium.
-- A mask file (``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii``)
-generated from the union of functional ``*_mask.nii.gz`` files saved along the ``*_bold.nii.gz`` files.
-
+- ``sub-{sub_num}_task-things_space-{MNI, T1w}_desc-func-union_mask.nii``, a mask file
+generated from the union of functional ``*_mask.nii.gz`` files saved along the ``*_bold.nii.gz`` files. \
+Note: by default, the script processes BOLD data in subject (``T1w``) space, but
+it can process data in ``MNI`` space by passing the ``--mni`` argument.
 
 ------------
 ## Step 3. Generate lists of valid runs per session for all subjects
@@ -101,7 +101,7 @@ in matlab and loop over while running GLMsingle.
 
 Run script for all subjects
 ```bash
-python GLMs_makerunlist.py
+python GLMsingle_makerunlist.py
 ```
 
 **Input**:
@@ -113,38 +113,30 @@ files produced in step 2.
 per session for each subject
 
 ------------
-**Step 3. Run GLMsingle on bold and design .h5 files from Steps 1 and 2**
+## Step 4. Run GLMsingle on _maskedBOLD.h5 and _sparsedesign.h5 files from Steps 1 and 2
 
-Server: beluga (Compute Canada) \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMsingle_CC.m
+Run GLMsingle in matlab to compute trialwise beta scores for each voxel within the
+functional brain mask.
 
-RECOMMENDED APPROACH
-Launch the following script for each subject, with subject number, bold volume space & number of voxels per chunk given as arguments \
+Launch the following script for each subject, specifying the subject number,
+bold volume space (``T1w``) & number of voxels per chunk as arguments
+(recommended: reduce to ``35000`` from ``50000`` default to avoid OOM) \
 ```bash
-./launch_GLMs_CC.sh 01 MNI 35000
-./launch_GLMs_CC.sh 01 T1w 35000
+cd cneuromod-things/THINGS/things.glmsingle/code/glmsingle
+matlab -nodisplay -nosplash -nodesktop -r "sub_num='01';bold_type='T1w';chunk_size='35000';run('GLMsingle_run.m'); exit;"
 ```
-
-UPDATE: while faster, the chunking approach (below) is NOT RECOMMENDED \
-It introduces artifacts (streaks) between chunks of betas & R2 values (normalization issue?)\
-To break down the job into smaller chunks and reduce compute time & memory requirements, \
-launch the following script for each subject, with subject number & normalization given as arguments
-```bash
-./batchlaunch_GLMcc.sh 01 MNI
-./batchlaunch_GLMcc.sh 01 T1w
-```
+Note: load StdEnv/2020, nixpkgs/16.09 and matlab/2020a modules to run on
+Alliance Canada (168h job per subject, 36 CPUs per task, 5000M memory/CPU)
 
 **Input**:
-- A subject's sub-{sub_num}_things_sparsedesign.h5 file created in Step 1.
-- A subject's sub-{sub_num}_things_maskedBOLD_{MNI/T1w}.h5 file created in Step 2.
-- runlist_THINGS.h5 created in Step 2b, a single file with lists of valid runs per session for all subjects \
-(saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/bold_files)
-- Note that the script can process scans in MNI or T1w space, to specify as an argument when launching the bash script
+- Subject's ``sub-{sub_num}_things_sparsedesign.h5`` file created in Step 1.
+- Subject's ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5`` file created in Step 2.
+- ``task-things_desc-runlist.h5``, the file with embedded lists of valid runs per session
+for all subjects created in Step 3. \
+Note: the script can process scans in MNI or T1w space, to specify as an argument
 
 **Output**:
-- All the GLMsingle output files (.mat) saved under '/home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/GLMs_files/sub_(sub_num)/(MNI/T1w)'
+- All the GLMsingle output files (``*.mat``) saved under ``cneuromod-things/THINGS/things.glmsingle/sub_{sub_num}/GLMsingle/output/{T1w, MNI}``
 
 
 ------------
