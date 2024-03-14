@@ -3,6 +3,7 @@
 addpath(genpath([code_dir '/GLMsingle/matlab']));
 
 % add path to .h5 data files (vectorized bold data and design matrices)
+addpath(genpath(data_dir));
 addpath(genpath([data_dir '/sub-' sub_num '/GLMsingle/input']));
 
 % Parameters specified when calling script (as reference)
