@@ -1,4 +1,4 @@
-import glob, os, json
+import glob, os
 import argparse
 from pathlib import Path
 

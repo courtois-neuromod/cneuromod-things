@@ -93,6 +93,9 @@ generated from the union of functional ``*_mask.nii.gz`` files saved along the `
 Note: by default, the script processes BOLD data in subject (``T1w``) space, but
 it can process data in ``MNI`` space by passing the ``--mni`` argument.
 
+NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other
+fmriprepped runs). All final analyses were redone without that run.
+
 ------------
 ## Step 3. Generate lists of valid runs per session for all subjects
 
@@ -135,7 +138,7 @@ cd ${CODEDIR}
 
 matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';bold_type='${BD_TYPE}';chunk_size='${CHUNK_SZ}';code_dir='${CODEDIR}';data_dir='${DATADIR}';run('GLMsingle_run.m'); exit;"
 ```
-Note: load StdEnv/2020, nixpkgs/16.09 and matlab/2020a modules to run on
+Note: load ``StdEnv/2020``, ``nixpkgs/16.09`` and ``matlab/2020a`` modules to run on
 Alliance Canada (168h job per subject, 36 CPUs per task, 5000M memory/CPU)
 
 **Input**:
@@ -147,6 +150,76 @@ Note: the script can process scans in MNI or T1w space, to specify as an argumen
 
 **Output**:
 - All the GLMsingle output files (``*.mat``) saved under ``cneuromod-things/THINGS/things.glmsingle/sub_{sub_num}/GLMsingle/output/{T1w, MNI}``
+
+------------
+
+## Step 5. Create clean functional mask for voxelwise output
+
+When z-scoring (per run) the BOLD data including in the functional mask used to
+run the GLMsingle toolbox (union of all run functional masks), some voxels within
+the mask contain NaN scores (due to low/no signal on some runs).
+
+This script identifies the voxels with NaN scores and creates masks to exclude
+them from downstream analyses and voxelwise derivatives.
+
+Launch this script once to process all subjects
+```bash
+python -m GLMs_cleanmask
+```
+
+**Input**:
+- All 4 subject's ``*bold.nii.gz`` files, for all sessions (~36) and runs (6 per session) \
+(e.g., ``sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``)
+- ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii``, the
+functional mask generated from the union of the functional masks of every run in Step 2.
+
+**Output**:
+- ``sub-{sub_num}_task-things_space-T1w_desc-NaNvals_mask.nii``, a mask that
+includes any voxel from the functional union mask with at least one normalized NaN score.
+- ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii``, a functional
+mask excludes any voxel with normalized NaN scores from the functional union mask.
+
+NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
+
+
+
+
+
+This script identifies voxels with nan scores, and creates masks to exclude them from analyses.
+It also applies those masks to the following analyses:
+- betas exported per trial and per image
+- noise ceiling computations
+
+TODO
+- top image per beta within functional ROIs
+- TSNE plots
+- classification analyses (e.g., SVM)
+- retinotopy? (seems ok)
+- fLoc: seems ok, but exclude from ROI masks?
+
+
+Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
+```bash
+module load python/3.7
+source /project/rrg-pbellec/mstlaure/.virtualenvs/things_memory_results/bin/activate
+python -m GLMs_cleanmask
+```
+
+**Input**:
+- All 6 subject's *bold.nii.gz files, for all sessions (~36) and runs (6 per session) \
+(e.g., sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
+- The functional mask averaged from each run's functional run (e.g., 01_umask_T1w.nii)
+- Output files from the noiseceiling and beta sorting (per trial and per image) scripts
+
+**Output**:
+- One mask that includes all voxels with at least one normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_nanmask_T1w.nii)
+- One mask that includes all voxels with no normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_goodvoxmask_T1w.nii)
+- noise ceiling maps (e.g., sub01_T1w_modelD_NoiseCeil_Final_noBlanks_goodvoxMask.mat)
+- betas per trial (e.g., results/betas/betas_per_trial/01_things_T1w_betas_goodvoxMask.h5)
+- betas per image (e.g., results/betas/betas_per_img/01_things_T1w_betas_goodvoxMask.h5)
+
+
+NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
 
 
 ------------
