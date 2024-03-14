@@ -144,25 +144,37 @@ Project Organization
     │    │
     │    └── things.glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output
-    │            │     ├── README.md    
     │            │     ├── requirements.txt      
-    │            │     ├── QCing          
+    │            │     ├── QCing
+    │            │     │    ├── README.md               
     │            │     │    └── compile_headmotion.py   
-    │            │     ├── preprocessing    
-    │            │     ├── glmsingle        
+    │            │     ├── glmsingle       
+    │            │     │    ├── README.md       
+    │            │     │    ├── GLMsingle_makedesign.py                   
+    │            │     │    ├── GLMsingle_preprocBOLD.py
+    │            │     │    ├── GLMsingle_makerunlist.py    
+    │            │     │    └── GLMsingle_run.m      
     │            │     └── noiseceilings    
+    │            │
+    │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject
     │            │
     │            └── sub-0*
     │                  ├── GLMsingle
-    │                  │    ├── TYPEA_ONOFF.mat    
-    │                  │    ├── TYPEB_FITHRF.mat   
-    │                  │    ├── TYPEC_FITHRF_GLMDENOISE.mat
-    │                  │    ├── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │                  │    ├── sub-0*_task-things_headmotion.tsv       
-    │                  │    ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-img.h5  
-    │                  │    ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-trial.h5  
-    │                  │    ├── sub-0*_task-things_space-T1w_res-func_desc-GM_mask.nii.gz  
-    │                  │    └── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.mat
+    │                  │    ├── input    
+    │                  │    │     ├── sub-*_task-things_desc-image-design-refnumbers.json
+    │                  │    │     ├── sub-*_task-things_space-T1w_desc-func-union_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5
+    │                  │    │     └── sub-*_task-things_sparsedesign.h5
+    │                  │    └── output    
+    │                  │          ├── TYPEA_ONOFF.mat    
+    │                  │          ├── TYPEB_FITHRF.mat   
+    │                  │          ├── TYPEC_FITHRF_GLMDENOISE.mat
+    │                  │          ├── sub-0*_task-things_headmotion.tsv       
+    │                  │          ├── TYPED_FITHRF_GLMDENOISE_RR.mat  
+    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-img.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-trial.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-GM_mask.nii.gz  
+    │                  │          └── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.mat
     │                  │
     │                  ├── QC   <- quality checks
     │                  │    └── sub-0*_task-things_desc-headmotion.tsv

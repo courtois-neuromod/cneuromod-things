@@ -1,10 +1,7 @@
-THINGS fMRI data analyses
+THINGS fMRI data QCing
 ================================
 
-**Quality checks**
-
-*Compile head motion metrics*
-
+## Compile head motion metrics
 
 Launch the following script to process a subject's sessions
 ```bash
