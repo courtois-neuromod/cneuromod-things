@@ -124,11 +124,10 @@ under ``cneuromod-things/THINGS/things.glmsingle/code/glmsingle`` (commit ``c4e2
 
 Launch the following script for each subject, specifying the subject number,
 bold volume space (``T1w``) & number of voxels per chunk as arguments
-(recommended: reduce to ``35000`` from ``50000`` default to avoid OOM)
 ```bash
 SUB_NUM="01" # 01, 02, 03, 06
 BD_TYPE="T1w" # MNI, T1w
-CHUNK_SZ="35000" # 35000 recommended; 50000 is default
+CHUNK_SZ="35000" # 35000 recommended to avoid OOM; 50000 is default
 
 DATADIR="cneuromod-things/THINGS/things.glmsingle"
 CODEDIR="${DATADIR}/code/glmsingle"

@@ -78,8 +78,7 @@ end
 opt = struct('wantmemoryoutputs',[0 0 0 0], 'sessionindicator', session_indx, 'chunknum', str2double(chunk_size), 'xvalscheme', {xvalscheme});
 
 % Specify output directory
-% outputdir = [data_dir '/sub-' sub_num '/GLMsingle/output/'];
-outputdir = ['/home/mstlaure/scratch/GLMs/results/sub-' sub_num '/GLMsingle/output/'];
+outputdir = [data_dir '/sub-' sub_num '/GLMsingle/output/'];
 
 % Run GLMsingle
 [results] = GLMestimatesingletrial(design,data,stimdur,tr,[outputdir bold_type],opt);
