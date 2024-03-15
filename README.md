@@ -156,7 +156,8 @@ Project Organization
     │            │     │    ├── GLMsingle_makerunlist.py  
     │            │     │    ├── GLMsingle_cleanmask.py  
     │            │     │    ├── GLMsingle_run.m    
-    │            │     │    ├── GLMsingle_noiseceilings.py                
+    │            │     │    ├── GLMsingle_noiseceilings.py          
+    │            │     │    ├── GLMsingle_betas_per_trial.py  
     │            │     │    └── ...      
     │            │     └── noiseceilings    
     │            │
@@ -178,8 +179,8 @@ Project Organization
     │                  │          │     ├── TYPEB_FITHRF.mat   
     │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-img.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-betas-per-trial.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-zscored-betas-per-img.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.nii.gz  
     │                  │          └── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.mat
     │                  │

@@ -1,4 +1,5 @@
 import glob
+import argparse
 from pathlib import Path
 
 import nibabel as nib
@@ -21,8 +22,17 @@ if __name__ == '__main__':
     (to be excluded) and one mask of vxels with no NaN scores within the
     functional union mask.
     '''
-    in_path = Path('../../../things.fmriprep').resolve()
-    out_path = Path('../../').resolve()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--things_dir',
+        required=True,
+        type=str,
+        help='path to THINGS data directory',
+    )
+    args = parser.parse_args()
+
+    in_path = f"{args.things_dir}/things.fmriprep"
+    out_path = f"{args.things_dir}/things.glmsingle"
 
     sub_list = ['01', '02', '03', '06']
     suffix = '_space-T1w_desc-preproc_part-mag_bold.nii.gz'

@@ -78,7 +78,8 @@ in matlab and loop over while running GLMsingle.
 
 Run script for all subjects
 ```bash
-python GLMsingle_makerunlist.py
+DATADIR="cneuromod-things/THINGS/things.glmsingle"
+python GLMsingle_makerunlist.py --data_dir="${DATADIR}"
 ```
 
 **Input**:
@@ -138,7 +139,8 @@ them from downstream analyses and voxelwise derivatives.
 
 Launch this script once to process all subjects
 ```bash
-python GLMsingle_cleanmask.py
+DATADIR="cneuromod-things/THINGS"
+python GLMsingle_cleanmask.py --things_dir="${DATADIR}"
 ```
 
 **Input**:
@@ -171,7 +173,8 @@ extracted. Run the ``behav_data_annotate.py`` script, as described under
 
 To compute noise ceilings, launch the following script for each subject:
 ```bash
-python GLMsingle_noiseceilings.py --sub_num="01"
+DATADIR="cneuromod-things/THINGS"
+python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 ```
 
 **Input**:
@@ -184,7 +187,8 @@ python GLMsingle_noiseceilings.py --sub_num="01"
 
 **Output**:
 - ``sub-{sub_num}_task-things_space-T1w_res-func_modelD_noise-ceilings.mat``,
-a single .mat file with a noise ceiling estimation per voxel (masked, flattened 1D matrix of lengh = number of voxels)
+a single .mat file with a noise ceiling estimation per voxel saved as a
+flattened 1D array whose lengh corresponds to the number of voxels within the ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` functional mask.
 - ``sub-{sub_num}_task-things_space-T1w_res-func_modelD_noise-ceilings.nii.gz``, a brain volume
 of voxelwise noise ceilings masked with Step 5's clean mask, in subject's (T1w) EPI space.
 
@@ -210,14 +214,16 @@ freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_N
 
 ## Step 7. Export betas per trial in HDF5 file
 
-Server: beluga (Compute Canada) \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMs_sortBetas.py
+Export trialwise beta scores into a nested .h5 file per subject,
+in which betas are organized per run within session.
+
+Betas are saved into arrays (trials, voxels) where each row is a 1D array of
+flattened voxel scores masked with the ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` functional mask.
 
 Launch the following script for each subject
 ```bash
-./launch_GLMs_sortBetas.sh 01
+DATADIR="cneuromod-things/THINGS/things.glmsingle"
+python GLMsingle_betas_per_trial.py --data_dir="${DATADIR}" --zbetas --sub_num="01"
 ```
 
 **Input**:

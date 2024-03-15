@@ -16,6 +16,12 @@ def get_arguments():
         description="Estimates voxelwise noise ceilings from GLMsingle betas"
     )
     parser.add_argument(
+        '--things_dir',
+        required=True,
+        type=str,
+        help='path to THINGS data directory',
+    )
+    parser.add_argument(
         '--sub_num',
         required=True,
         type=str,
@@ -236,7 +242,7 @@ if __name__ == '__main__':
     '''
     args = get_arguments()
 
-    things_dir = Path('../../../').resolve()
+    things_dir = args.things_dir
     sub_num = args.sub_num
 
     data_path = f"{things_dir}/things.glmsingle/sub-{sub_num}/GLMsingle"
