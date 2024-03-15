@@ -164,7 +164,7 @@ them from downstream analyses and voxelwise derivatives.
 
 Launch this script once to process all subjects
 ```bash
-python -m GLMs_cleanmask
+python GLMsingle_cleanmask.py
 ```
 
 **Input**:
@@ -180,47 +180,6 @@ includes any voxel from the functional union mask with at least one normalized N
 mask excludes any voxel with normalized NaN scores from the functional union mask.
 
 NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
-
-
-
-
-
-This script identifies voxels with nan scores, and creates masks to exclude them from analyses.
-It also applies those masks to the following analyses:
-- betas exported per trial and per image
-- noise ceiling computations
-
-TODO
-- top image per beta within functional ROIs
-- TSNE plots
-- classification analyses (e.g., SVM)
-- retinotopy? (seems ok)
-- fLoc: seems ok, but exclude from ROI masks?
-
-
-Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
-```bash
-module load python/3.7
-source /project/rrg-pbellec/mstlaure/.virtualenvs/things_memory_results/bin/activate
-python -m GLMs_cleanmask
-```
-
-**Input**:
-- All 6 subject's *bold.nii.gz files, for all sessions (~36) and runs (6 per session) \
-(e.g., sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
-- The functional mask averaged from each run's functional run (e.g., 01_umask_T1w.nii)
-- Output files from the noiseceiling and beta sorting (per trial and per image) scripts
-
-**Output**:
-- One mask that includes all voxels with at least one normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_nanmask_T1w.nii)
-- One mask that includes all voxels with no normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_goodvoxmask_T1w.nii)
-- noise ceiling maps (e.g., sub01_T1w_modelD_NoiseCeil_Final_noBlanks_goodvoxMask.mat)
-- betas per trial (e.g., results/betas/betas_per_trial/01_things_T1w_betas_goodvoxMask.h5)
-- betas per image (e.g., results/betas/betas_per_img/01_things_T1w_betas_goodvoxMask.h5)
-
-
-NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
-
 
 ------------
 **Step 4. Compute noise ceilings on trial-unique betas**

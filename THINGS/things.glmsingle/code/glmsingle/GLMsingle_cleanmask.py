@@ -21,8 +21,7 @@ if __name__ == '__main__':
     (to be excluded) and one mask of vxels with no NaN scores within the
     functional union mask.
     '''
-    #in_path = Path('../../../things.fmriprep').resolve()
-    in_path = Path('../../../../../things_memory_results/data/things.fmriprep').resolve()
+    in_path = Path('../../../things.fmriprep').resolve()
     out_path = Path('../../').resolve()
 
     sub_list = ['01', '02', '03', '06']
