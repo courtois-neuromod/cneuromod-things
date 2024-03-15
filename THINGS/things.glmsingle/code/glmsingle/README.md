@@ -38,32 +38,6 @@ a unique number to each stimulus image seen by the participant (>4000). The numb
 Matrices are saved as lists of coordinates (onset TR, condition number) per trial
 that will be used to generate sparse design matrices (TRs per run, total number of conditions) in matlab.
 
-
-------------
-TODO: remove, since step already described under things.behaviour
-TODO: adjust downstream scripts that rely on this step's output... (removed memorability metrics, file name change...)
-
-## Step 1b. Generate a single .tsv file with trial-specific metrics from *events.tsv files
-
-Assign image-wise annotations and performance metrics to a concatenation of
-each trial for each subject. See ``cneuromod-things/THINGS/things.behaviour/README.md``
-under **Image Recognition Performance Metrics**  for more details.
-
-This step is not required to run GLMsingle to extract trialwise betas from the
-data, but its output is needed for downstream analyses. It uses annotations from
-the THINGS and THINGSplus databases, which can be downloaded [here](https://osf.io/jum2f/)
-and saved directly under ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/annotations/THINGS+``.
-
-Launch the following script to process a subject's sessions
-```bash
-EVDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
-ANDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things/things.stimuli/annotations"
-OUTDIR="cneuromod-things/THINGS/things.behaviour"
-
-python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}" --out_dir="${OUTDIR}" --sub="01"
-```
-## TODO: remove step 1b: refer to doc and script and output under things.behaviour
-
 ------------
 ## Step 2. Generate matrices of masked bold data from *_bold.nii.gz files
 
@@ -116,7 +90,7 @@ files produced in step 2.
 per session for each subject
 
 ------------
-## Step 4. Run GLMsingle on _maskedBOLD.h5 and _sparsedesign.h5 files from Steps 1 and 2
+## Step 4. Run GLMsingle on _maskedBOLD.h5 and _sparsedesign.h5 files
 
 Run GLMsingle in matlab to compute trialwise beta scores for each voxel within the
 functional brain mask.
@@ -183,7 +157,7 @@ NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other 
 
 ------------
 
-## Step 6. Compute noise ceilings on trial-unique betas**
+## Step 6. Compute noise ceilings on trial-unique betas
 
 Derive voxelwise noise ceilings from beta scores estimated with GLMsingle.
 
