@@ -171,7 +171,7 @@ extracted. Run the ``behav_data_annotate.py`` script, as described under
 
 To compute noise ceilings, launch the following script for each subject:
 ```bash
-python GLMsingle_noiseCeiling.py --sub_num="01"
+python GLMsingle_noiseceilings.py --sub_num="01"
 ```
 
 **Input**:
@@ -207,7 +207,8 @@ freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_N
 ```
 
 ------------
-**Step 5. Export betas per trial in HDF5 file (organized per session and run; 1 file per subject)**
+
+## Step 7. Export betas per trial in HDF5 file
 
 Server: beluga (Compute Canada) \
 Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results \
@@ -228,8 +229,9 @@ and model (B, C or D), e.g., TYPED_FITHRF_GLMDENOISE_RR.mat
 
 **Output**:
 - A single .h5 file that contains data organized in groups whose key is the session number, and sub-key is the run number \
-- the .h5 file also includes a functional mask array with dims corresponding to the input bold volumes, and its 4x4 affine matrix. Those two arrays can be used to rebuild brain volumes (in native space) from the 1D masked beta arrays. \
-e.g.,
+- the .h5 file also includes a functional mask array with dims corresponding to the input bold volumes, and its 4x4 affine matrix. Those two arrays can be used to rebuild brain volumes (in native space) from the 1D masked beta arrays.
+
+E.g.,
 ```python
 import nibabel as nib
 from nilearn.masking import unmask

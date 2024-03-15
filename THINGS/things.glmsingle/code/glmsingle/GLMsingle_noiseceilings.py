@@ -205,10 +205,11 @@ def compute_noise_ceiling_nsd(things_dir, mat_file, sub_num, n=3, rm_blanks=Fals
     '''
     Step 2: compute the average noise variance
     '''
-    img_vector, rep_labels = get_img_vector(things_dir, sub_num, sess_file, sessions, n, rm_blanks=rm_blanks)
+    img_vector, rep_labels = get_img_vector(
+        things_dir, sub_num, sess_file, sessions, n, rm_blanks=rm_blanks,
+    )
     noise_var = get_noise_variance(z_betas, img_vector, rep_labels)
     noise_std = noise_var**(0.5)
-    #noise_std = np.sqrt(noise_var)
     '''
     Step 3: compute the average signal variance
     '''
@@ -258,16 +259,17 @@ if __name__ == '__main__':
         f"{data_path}/input/sub-{sub_num}_task-things_"
         "space-T1w_desc-func-clean_mask.nii"
     )
-    nc_nii = unmask(nc_arr, union_mask)
-    outpath_nii = Path(
-        f"{data_path}/output/sub-{sub_num}_task-things_"
-        "space-T1w_res-func_modelD_noise-ceilings.nii.gz"
-    )
-    nib.save(nc_nii, outpath_nii)
 
-    nc_arr = apply_mask(nc_nii, clean_mask)
+    nc_arr = apply_mask(unmask(nc_arr, union_mask), clean_mask)
     outpath_mat = Path(
         f"{data_path}/output/sub-{sub_num}_task-things_"
         "space-T1w_res-func_modelD_noise-ceilings.mat"
     )
     savemat(outpath_mat, {'NC': nc_arr})
+
+    nc_nii = unmask(nc_arr, clean_mask)  # remove NaN voxels
+    outpath_nii = Path(
+        f"{data_path}/output/sub-{sub_num}_task-things_"
+        "space-T1w_res-func_modelD_noise-ceilings.nii.gz"
+    )
+    nib.save(nc_nii, outpath_nii)
