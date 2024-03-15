@@ -182,58 +182,55 @@ mask excludes any voxel with normalized NaN scores from the functional union mas
 NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
 
 ------------
-**Step 4. Compute noise ceilings on trial-unique betas**
-Code is adapted from NSD's datapaper methodology
 
-Server: beluga (Compute Canada) \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMs_noiseCeiling.py
+## Step 6. Compute noise ceilings on trial-unique betas**
 
-Update and launch the following script for each output file (either one per subject per model, or one per subject per model per chunk of voxels
+Derive voxelwise noise ceilings from beta scores estimated with GLMsingle.
+
+The noise ceiling estimation is adapted from the [Natural Scene Dataset's datapaper methodology](https://www.nature.com/articles/s41593-021-00962-x).
+
+**Preliminary step**:\
+To leave out "blank" trials (trials with no recorded subject
+response) from noise ceiling computations, trialwise performance needs to be
+extracted. Run the ``behav_data_annotate.py`` script, as described under
+**Trial-Wise Image Ratings and Annotations** in the ``cneuromod-things/THINGS/things.behaviour`` README. Output is saved as ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``.
+
+To compute noise ceilings, launch the following script for each subject:
 ```bash
-./launch_GLMs_noiseCeil.sh 01
+python GLMsingle_noiseCeiling.py --sub_num="01"
 ```
 
 **Input**:
-- A single .mat file created in Step 3 (GLMsingle output), which contains trial-unique betas per voxel for a specific subject \
-and model (B, C or D), e.g., TYPED_FITHRF_GLMDENOISE_RR.mat
-- runlist_THINGS.h5 created in Step 2b, a single file with lists of valid runs per session for all subjects \
-(saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/bold_files)
-- A subject's sub-(sub_num)_things_sparsedesign.h5 files created in Step 1 \
-(saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/design_files)
-- OPTION to discard trials with no answer: \
-requires sub-{sub_num}_things_SVM_y.tsv, a single .tsv file per subject with trial-specific \
-performance and stimulus-related metrics from events.tsv files created in Step 1b. \
-(saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/SVM_design_files)
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- ``task-things_desc-runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
+- A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1.
+- A subject's ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii`` and
+``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
+- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
-- A single .mat file with a noise ceiling estimation per voxel (masked and flattened 1D matrix of lengh = num voxels)
+- ``sub-{sub_num}_task-things_space-T1w_res-func_modelD_noise-ceilings.mat``,
+a single .mat file with a noise ceiling estimation per voxel (masked, flattened 1D matrix of lengh = number of voxels)
+- ``sub-{sub_num}_task-things_space-T1w_res-func_modelD_noise-ceilings.nii.gz``, a brain volume
+of voxelwise noise ceilings masked with Step 5's clean mask, in subject's (T1w) EPI space.
 
-**Visualization**
-To convert vectorized noise ceiling data into volume:
-from scipy.io import loadmat, savemat
-import nibabel as nib
-import numpy as np
-from nilearn.masking import unmask
 
-mask = nib.load(f'{sub_num}_umask_T1w.nii')
-nc = np.squeeze(loadmat(f'sub{sub_num}_T1w_modelD_NoiseCeil.mat')['NC'])
-nc_vol = unmask(nc, mask)
-nib.save(nc_vol, f'sub{sub_num}_T1w_modelD_NoiseCeil.nii')
-
-To convert .nii volume into freesurfer surface:
+To convert ``.nii.gz`` volume into freesurfer surface:
+```bash
 SUB_NUM="01"
-VOLFILE="sub${SUB_NUM}_T1w_modelD_NoiseCeil.nii"
-L_OUTFILE="lh.s${SUB_NUM}_T1w_modelD_noiseCeiling.mgz"
-R_OUTFILE="sub-${SUB_NUM}/rh.s${SUB_NUM}_T1w_modelD_noiseCeiling.mgz"
+VOLFILE="sub-${SUB_NUM}_task-things_space-T1w_res-func_modelD_noise-ceilings.nii.gz"
+L_OUTFILE="lh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz"
+R_OUTFILE="rh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz"
 mri_vol2surf --src ${VOLFILE} --out ${L_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi lh
 mri_vol2surf --src ${VOLFILE} --out ${R_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi rh
+```
 
-To overlay surface data on inflated brain infreesurfer's freeview
-freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/lh.inflated:overlay=lh.s${SUB_NUM}_T1w_modelD_noiseCeiling.mgz:overlay_threshold=5,0 -viewport 3d
+To overlay surface data onto inflated brain infreesurfer's freeview:
+```bash
+freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/lh.inflated:overlay=lh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz:overlay_threshold=5,0 -viewport 3d
 
-freeview -f $SUBJECTS_DIR/sub-03/surf/rh.inflated:overlay=sub-03/rh.s03_T1w_R2_modelD.mgz:overlay_threshold=4,0 -viewport 3d
+freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz:overlay_threshold=5,0 -viewport 3d
+```
 
 ------------
 **Step 5. Export betas per trial in HDF5 file (organized per session and run; 1 file per subject)**
@@ -316,51 +313,3 @@ from nilearn.masking import unmask
 mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine'])) \
 velcro_04s_unmasked_betas = unmask(np.array(h5file['velcro_04s']['betas']), mask)
 ```
-
-------------
-
-**Step 7. Clean-up operation**
-
-When z-scoring (per run) the BOLD data given to GLMsingle toolbox, some voxels within
-the functional mask (union of all run functional masks) contained nan scores (due to low/no signal on some runs).
-
-This script identifies voxels with nan scores, and creates masks to exclude them from analyses.
-It also applies those masks to the following analyses:
-- betas exported per trial and per image
-- noise ceiling computations
-
-TODO
-- top image per beta within functional ROIs
-- TSNE plots
-- classification analyses (e.g., SVM)
-- retinotopy? (seems ok)
-- fLoc: seems ok, but exclude from ROI masks?
-
-
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/data/things.fmriprep \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMsingle_create_nanMask.py
-
-Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
-```bash
-module load python/3.7
-source /project/rrg-pbellec/mstlaure/.virtualenvs/things_memory_results/bin/activate
-python -m GLMs_create_nanMask
-```
-
-**Input**:
-- All 6 subject's *bold.nii.gz files, for all sessions (~36) and runs (6 per session) \
-(e.g., sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
-- The functional mask averaged from each run's functional run (e.g., 01_umask_T1w.nii)
-- Output files from the noiseceiling and beta sorting (per trial and per image) scripts
-
-**Output**:
-- One mask that includes all voxels with at least one normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_nanmask_T1w.nii)
-- One mask that includes all voxels with no normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_goodvoxmask_T1w.nii)
-- noise ceiling maps (e.g., sub01_T1w_modelD_NoiseCeil_Final_noBlanks_goodvoxMask.mat)
-- betas per trial (e.g., results/betas/betas_per_trial/01_things_T1w_betas_goodvoxMask.h5)
-- betas per image (e.g., results/betas/betas_per_img/01_things_T1w_betas_goodvoxMask.h5)
-
-
-NOTE: sub-06 session 8, run 6 was corrupted (brain voxels misaligned with other fmriprepped runs). All final analyses were redone without that run.
