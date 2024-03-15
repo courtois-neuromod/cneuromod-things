@@ -105,7 +105,6 @@ def compile_betas_hdf5(data_dir, sub_num, zbetas=False):
     subj_h5file.create_dataset('mask_affine', data=clean_mask.affine)
 
     subj_h5file.close()
-    sub_run_list.close()
 
 
 if __name__ == '__main__':

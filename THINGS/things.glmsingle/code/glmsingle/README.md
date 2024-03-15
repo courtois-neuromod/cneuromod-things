@@ -214,7 +214,7 @@ freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_N
 
 ## Step 7. Export betas per trial in HDF5 file
 
-Export trialwise beta scores into a nested .h5 file per subject,
+Export trialwise normalized (z-scored) beta scores into a nested .h5 file per subject,
 in which betas are organized per run within session.
 
 Betas are saved into arrays (trials, voxels) where each row is a 1D array of
@@ -225,25 +225,27 @@ Launch the following script for each subject
 DATADIR="cneuromod-things/THINGS/things.glmsingle"
 python GLMsingle_betas_per_trial.py --data_dir="${DATADIR}" --zbetas --sub_num="01"
 ```
+Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas
 
 **Input**:
-- A single .mat file created in Step 3, which contains trial-unique betas per voxel for a specific subject \
-and model (B, C or D), e.g., TYPED_FITHRF_GLMDENOISE_RR.mat
-- runlist_THINGS.h5 created in Step 2b, a single file with lists of valid runs per session for all subjects \
- (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/bold_files)
-- the mask file (.nii) used/generated in Step 2 (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/masks/{sub_num}_umask_T1w.nii)
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- ``task-things_desc-runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
+- A subject's ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii`` and
+``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
 
 **Output**:
-- A single .h5 file that contains data organized in groups whose key is the session number, and sub-key is the run number \
-- the .h5 file also includes a functional mask array with dims corresponding to the input bold volumes, and its 4x4 affine matrix. Those two arrays can be used to rebuild brain volumes (in native space) from the 1D masked beta arrays.
+- ``sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5``, a single ``.h5`` file that contains beta scores organized in nested groups whose key is the session number and sub-key is the run number. Betas are saved into arrays (trials, voxels) where each row is a 1D array of flattened voxel scores masked with the clean functional mask.
+- beside betas, the ``.h5`` file also contains the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space).
 
-E.g.,
+E.g., to convert the 5th trial of the 2nd run from session 10 into a brain volume:
 ```python
 import nibabel as nib
 from nilearn.masking import unmask
-mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine'])) \
-velcro_04s_unmasked_betas = unmask(np.array(h5file['velcro_04s']['betas']), mask)
+
+mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
+s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], mask)
 ```
+
 ------------
 **Step 6. Export betas averaged per image in HDF5 file (1 file per subject)**
 
