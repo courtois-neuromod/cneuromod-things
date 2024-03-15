@@ -206,7 +206,6 @@ mri_vol2surf --src ${VOLFILE} --out ${R_OUTFILE} --regheader "sub-${SUB_NUM}" --
 To overlay surface data onto inflated brain infreesurfer's freeview:
 ```bash
 freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/lh.inflated:overlay=lh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz:overlay_threshold=5,0 -viewport 3d
-
 freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_NUM}_task-things_space-T1w_modelD_noise-ceilings.mgz:overlay_threshold=5,0 -viewport 3d
 ```
 
