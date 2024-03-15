@@ -243,7 +243,7 @@ import nibabel as nib
 from nilearn.masking import unmask
 
 mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
-s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], mask)
+s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], mask)  # trials indexed from 0
 ```
 
 ------------
@@ -294,6 +294,6 @@ e.g.,
 ```python
 import nibabel as nib
 from nilearn.masking import unmask
-mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine'])) \
+mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
 velcro_04s_unmasked_betas = unmask(np.array(h5file['velcro_04s']['betas']), mask)
 ```
