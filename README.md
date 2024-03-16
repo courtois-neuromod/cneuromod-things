@@ -158,8 +158,8 @@ Project Organization
     │            │     │    ├── GLMsingle_run.m    
     │            │     │    ├── GLMsingle_noiseceilings.py          
     │            │     │    ├── GLMsingle_betas_per_trial.py  
-    │            │     │    └── ...      
-    │            │     └── noiseceilings    
+    │            │     │    └── GLMsingle_betas_per_img.py
+    │            │     └── top_vox    
     │            │
     │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject
     │            │

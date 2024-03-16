@@ -216,15 +216,15 @@ freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_N
 Export trialwise normalized (z-scored) beta scores into a nested .h5 file per subject,
 in which betas are organized per run within session.
 
-Betas are saved into arrays (trials, voxels) where each row is a 1D array of
+Betas are saved into arrays of dim=(trials, voxels) where each row is a 1D array of
 flattened voxel scores masked with the ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` functional mask.
 
-Launch the following script for each subject
+Run the following script for each subject:
 ```bash
 DATADIR="cneuromod-things/THINGS/things.glmsingle"
 python GLMsingle_betas_per_trial.py --data_dir="${DATADIR}" --zbetas --sub_num="01"
 ```
-Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas
+Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas (not z-scored)
 
 **Input**:
 - A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
@@ -233,8 +233,8 @@ Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas
 ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
 
 **Output**:
-- ``sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5``, a single ``.h5`` file that contains beta scores organized in nested groups whose key is the session number and sub-key is the run number. Betas are saved into arrays (trials, voxels) where each row is a 1D array of flattened voxel scores masked with the clean functional mask.
-- beside betas, the ``.h5`` file also contains the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space).
+- ``sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5``, a single ``.h5`` file that contains beta scores organized in nested groups whose key is the session number and sub-key is the run number. Betas are saved into arrays of dim=(trials, voxels) where each row is a 1D array of flattened voxel scores masked with the clean functional mask.
+- Beside the betas, the ``.h5`` file also contains the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space).
 
 E.g., to convert the 5th trial of the 2nd run from session 10 into a brain volume:
 ```python
@@ -246,53 +246,43 @@ s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], ma
 ```
 
 ------------
-**Step 6. Export betas averaged per image in HDF5 file (1 file per subject)**
+## Step 8. Export betas averaged per image in HDF5 file
 
-Note: the script is overly complicated at the moment because it performs validations on:
-- the trial-specific metrics from the input .tsv file (step 1b)
-- the subject-specific image-to-number mapping (step 1)
-- the design matrices used for glm_single (step 1)
-It could be simplified to rely strictly on the .tsv file rather than on the .h5 design matrix
+Average trialwise beta scores per stimulus image, and save scores as one 1D arrays of flattened voxels per image in one .h5 file per subject.
 
-Server: beluga (Compute Canada) \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results \
-Script: GLMs_betas_per_image.py
+Annotations from the THINGS and THINGSplus dataset, including ratings at the image and category level (e.g., size, concreteness, etc), are saved with each image's mean voxelwise betas.
+
+The script also performs validations on trialwise metrics from ``*events.tsv`` files, subject-specific image-to-number mappings, and the design matrices given to GLMsingle.
 
 Launch the following script for each subject
 ```bash
-./launch_GLMs_betasPerImg.sh 01
+DATADIR="cneuromod-things/THINGS"
+python GLMsingle_betas_per_img.py --things_dir="${DATADIR}" --zbetas --sub_num="01"
 ```
 
 **Input**:
-- A single .mat file created in Step 3, which contains trial-unique betas per voxel for a specific subject \
-and model (B, C or D), e.g., TYPED_FITHRF_GLMDENOISE_RR.mat
-- runlist_THINGS.h5 created in Step 2b, a single file with lists of valid runs per session for all subjects \
- (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/bold_files)
-- The .json file that assigns a unique number to each stimulus image seen by the participant (>4000) generated at Step 1 \
-(saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/design_files/sub-{sub_num}_image_design_refnumbers.json)
-- A subject's sub-(sub_num)_things_sparsedesign.h5 file (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/design_files) created in Step 1
-- The sub-{sub_num}_things_SVM_y.tsv file (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/SVM_design_files) created in Step 1b
-- the mask file (.nii) used/generated in Step 2 (saved under /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/masks/{sub_num}_umask_T1w.nii)
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- ``task-things_desc-runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
+- ``sub-{sub_num}_task-things_desc-image-design-refnumbers.json``, a file created in Step 1 that assigns a unique number to each stimulus image seen by the participant (>4000)
+- A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1
+- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` (see Step 6).
+- A subject's ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii`` and
+``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
 
-**Output**:
-A single .h5 file that contains data organized in groups whose key is the image name (e.g., 'camel_02s'). \
-Under each image, each group includes:
-- 'betas': the mean masked betas, a flattened series of betas from GLMsingle's model D averaged per image (up to 3 repetitions)
+**Output**: \
+``sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-img.h5``, a file that contains beta scores organized in groups whose key is the image name (e.g., 'camel_02s'). Under each image, each group includes:
+- 'betas': the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the clean functional mask.
 - 'num_reps': the number of times the image was repeated
 - 'blank': the number of trials with no recorded answers (no button press)
-- image-specific metrics from the THINGS database : 'image_category', 'things_category_nr', \
-'things_image_nr', 'categ_arousal',  'categ_concreteness', 'categ_consistency', 'categ_nameability', \ 'categ_recognizability', 'categ_size', 'categ_wordfreq_COCA', 'highercat27_names', 'highercat53_names', \
-'highercat53_num', 'img_consistency', 'img_memorability', 'img_nameability', 'img_recognizability', \
-'categ_manmade', 'categ_precious', 'categ_living', 'categ_heavy', 'categ_natural', 'categ_moves', \
-'categ_grasp', 'categ_hold', 'categ_be_moved', and 'categ_pleasant').\
+- the following image-specific annotations from the THINGS and THINGSplus database : 'image_category', 'things_category_nr', 'things_image_nr', 'categ_arousal',  'categ_concreteness', 'categ_consistency', 'categ_nameability', 'categ_size', 'categ_wordfreq_COCA', 'highercat27_names', 'highercat53_names', 'highercat53_num', 'img_consistency', 'img_nameability', 'categ_manmade', 'categ_precious', 'categ_living', 'categ_heavy', 'categ_natural', 'categ_moves', 'categ_grasp', 'categ_hold', 'categ_be_moved', and 'categ_pleasant').\
+
 The .h5 file also includes:
-- a functional mask array with dims corresponding to the input bold volumes, and its 4x4 affine matrix. \
-Those two arrays can be used to rebuild brain volumes (in native space) from the 1D masked beta arrays. \
-e.g.,
+- the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space). \
+E.g.,
 ```python
 import nibabel as nib
 from nilearn.masking import unmask
+
 mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
 velcro_04s_unmasked_betas = unmask(np.array(h5file['velcro_04s']['betas']), mask)
 ```
