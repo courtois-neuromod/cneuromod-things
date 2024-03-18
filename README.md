@@ -159,7 +159,8 @@ Project Organization
     │            │     │    ├── GLMsingle_noiseceilings.py          
     │            │     │    ├── GLMsingle_betas_per_trial.py  
     │            │     │    └── GLMsingle_betas_per_img.py
-    │            │     └── top_vox    
+    │            │     └── top_image    
+    │            │          └── ...        
     │            │
     │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject
     │            │
@@ -186,8 +187,6 @@ Project Organization
     │                  │
     │                  ├── QC   <- quality checks
     │                  │    └── sub-0*_task-things_desc-headmotion.tsv
-    │                  ├── temp_files   <- intermediate steps
-    │                  │    └── ...
     │                  ├── top_image
     │                  │    └── ...
     │                  └── tsne
