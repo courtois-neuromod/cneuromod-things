@@ -4,6 +4,7 @@ from pathlib import Path
 
 import h5py
 import nibabel as nib
+from nilearn.masking import unmask, apply_mask
 import numpy as np
 import pandas as pd
 from scipy.stats import zscore
@@ -36,8 +37,9 @@ def get_arguments():
     return parser.parse_args()
 
 
-# Removed categ_recognizability, img_recognizability, img_memorability
-# Not in new version
+# Removed:
+# categ_recognizability, img_recognizability; not in updated THINGSplus version
+# img_memorability; permission needed to share
 col_names = [
                 'image_name', 'image_category',
                 'things_image_nr', 'things_category_nr',

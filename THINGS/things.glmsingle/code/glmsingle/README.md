@@ -274,7 +274,7 @@ python GLMsingle_betas_per_img.py --things_dir="${DATADIR}" --zbetas --sub_num="
 - 'betas': the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the clean functional mask.
 - 'num_reps': the number of times the image was repeated
 - 'blank': the number of trials with no recorded answers (no button press)
-- the following image-specific annotations from the THINGS and THINGSplus database : 'image_category', 'things_category_nr', 'things_image_nr', 'categ_arousal',  'categ_concreteness', 'categ_consistency', 'categ_nameability', 'categ_size', 'categ_wordfreq_COCA', 'highercat27_names', 'highercat53_names', 'highercat53_num', 'img_consistency', 'img_nameability', 'categ_manmade', 'categ_precious', 'categ_living', 'categ_heavy', 'categ_natural', 'categ_moves', 'categ_grasp', 'categ_hold', 'categ_be_moved', and 'categ_pleasant').\
+- the following image-specific annotations from the THINGS and THINGSplus database : 'image_category', 'things_category_nr', 'things_image_nr', 'categ_arousal',  'categ_concreteness', 'categ_consistency', 'categ_nameability', 'categ_size', 'categ_wordfreq_COCA', 'highercat27_names', 'highercat53_names', 'highercat53_num', 'img_consistency', 'img_nameability', 'categ_manmade', 'categ_precious', 'categ_living', 'categ_heavy', 'categ_natural', 'categ_moves', 'categ_grasp', 'categ_hold', 'categ_be_moved', and 'categ_pleasant'.
 
 The .h5 file also includes:
 - the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space). \
