@@ -238,9 +238,12 @@ Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas (not z-scored)
 
 E.g., to convert the 5th trial of the 2nd run from session 10 into a brain volume:
 ```python
+import h5py
 import nibabel as nib
 from nilearn.masking import unmask
 
+sub_num = '01'
+h5file = h5py.File(f'path/to/sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5', 'r')
 mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
 s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], mask)  # trials indexed from 0
 ```
@@ -280,9 +283,12 @@ The .h5 file also includes:
 - the raw 3D array and 4x4 affine matrix of the clean functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space). \
 E.g.,
 ```python
+import h5py
 import nibabel as nib
 from nilearn.masking import unmask
 
+sub_num = '01'
+h5file = h5py.File(f'path/to/sub-{sub_num}_task-things_space-T1w_res-func_desc-zscored-betas-per-img.h5', 'r')
 mask = nib.nifti1.Nifti1Image(np.array(h5file['mask_array']), affine=np.array(h5file['mask_affine']))
 velcro_04s_unmasked_betas = unmask(np.array(h5file['velcro_04s']['betas']), mask)
 ```
