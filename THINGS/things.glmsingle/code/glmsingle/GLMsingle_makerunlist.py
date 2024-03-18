@@ -1,4 +1,4 @@
-from pathlib import Path
+import argparse
 
 import h5py
 import numpy as np
@@ -9,9 +9,17 @@ if __name__ == '__main__':
     Dumb little script outputs one .h5 file of runs nested under sessions per subject,
     to import in matlab and loop over while running GLMsingle
     '''
-    data_path = Path('../../').resolve()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--data_dir',
+        required=True,
+        type=str,
+        help='path to things.glmsingle data directory',
+    )
+    args = parser.parse_args()
 
-    h5file = h5py.File(f"{data_path}/task-things_desc-runlist.h5",'w')
+    data_dir = args.data_dir
+    h5file = h5py.File(f"{data_dir}/task-things_desc-runlist.h5",'w')
 
     sub_list = ['01', '02', '03', '06']
 
@@ -19,7 +27,7 @@ if __name__ == '__main__':
         h5file.create_group(sub)
 
         subj_h5file = h5py.File(
-            f'{data_path}/sub-{sub}/GLMsingle/input/sub-{sub}_task-things_space-T1w_maskedBOLD.h5', 'r'
+            f'{data_dir}/sub-{sub}/GLMsingle/input/sub-{sub}_task-things_space-T1w_maskedBOLD.h5', 'r'
         )
 
         subj_sessions = [str(x) for x in subj_h5file.keys() if x != 'TR']
