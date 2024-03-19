@@ -1,7 +1,7 @@
 THINGS behavioural data analyses
 ================================
 
-**Image Recognition Performance Metrics**
+## Image Recognition Performance Metrics
 
 Metrics of behavioural performance on the continuous image recognition task (hits, false alarm, d', reaction times) are computed per run, per session (6 runs except for session 1) and per subject (across all sessions) from run-specific ``*events.tsv`` files.
 
@@ -32,7 +32,7 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 
 
 
-**Trial-Wise Image Ratings and Annotations**
+## Trial-Wise Image Ratings and Annotations
 
 Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``things.behaviour`` dataset.
 
@@ -64,7 +64,6 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 
 *Output*:
 
-- ``sub-0*/beh/sub-0*_task-things_desc-annotation-per-trial_beh.tsv``, trialwise annotations for a concatenation of all events.tsv files.
-# TODO: Columns are described in ?? annotations_descriptors.json (make file)
+- ``sub-0*/beh/sub-0*_task-things_desc-annotation-per-trial_beh.tsv``, trialwise annotations for a concatenation of all events.tsv files. Columns are described in ``task-things_trial-annotations_dataset_description.json`` (TODO: make .json file)
 - ``sub-0*/beh/sub-0*_task-things_desc-catNum.tsv``, list of categories of images shown to the subject throughout the experiment
 - ``sub-0*/beh/sub-0*_task-things_desc-imgNum.tsv``, list of image numbers for images shown to the subject throughout the experiment
