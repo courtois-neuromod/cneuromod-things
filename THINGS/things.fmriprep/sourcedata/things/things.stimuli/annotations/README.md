@@ -3,7 +3,7 @@ THINGS image annotations
 
 Image annotations for the THINGS image dataset, which comprises the current stimulus set, can be retrieved from the [THINGS Initiative](https://things-initiative.org/) website [here](https://osf.io/jum2f/).
 
-To characterize stimulus content, we created 13 boolean flags that reflect whether an image contains faces or body parts (animal or human), and whether it features a complex scene, an enriched background or a lone object devoid of context. A manual annotator rated all 4k+ images in the CNeuroMod-things stimulus set with the 13 flags, which are defined below. Each image was annotated twice for consistency. Results are compiled in ``task-thing_desc-manal_image-annotations.tsv`` and columns are described in ``task-things_desc-manual_annotations_desccription.json``.
+To characterize stimulus content, we created 13 boolean flags that reflect whether an image contains faces or body parts (animal or human), and whether it features a complex scene, an enriched background or a lone object devoid of context. A manual annotator rated all 4k+ images in the CNeuroMod-things stimulus set with the 13 flags, which are defined below. Each image was annotated twice for consistency. Results are compiled in ``task-thing_desc-manual_annotation.tsv`` and columns are described in ``task-things_desc-manual_annotation.json``.
 
 **face** \
 Contains any face, whole or partial (e.g., eyes or smile), central or in the periphery (incidental to the image’s main focus). Faces can be human or not, real or artificial (a doll’s face, a cartoon cat face, a face reflected in a soap bubble).

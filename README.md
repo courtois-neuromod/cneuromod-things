@@ -102,7 +102,7 @@ Project Organization
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
     │    │               ├── things.stimuli
-    │    │               │     └── annotations <- image content annotations and manual
+    │    │               │     └── annotations <- image content annotations
     │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
     │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
@@ -110,19 +110,18 @@ Project Organization
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
     │    │               │            │     ├── imageLabeling_objectWise.tsv
     │    │               │            │     ├── objectProperties_meanRatings.tsv  
-    │    │               │            │     ├── size_meanRatings.tsv  
-    │    │               │            │     ├── things_concepts.tsv  
-    │    │               │            │     └── THINGS_Memorability_Scores.csv  ** EXCLUDE!!    
-    │    │               │            ├── task-things_desc-manual_annotations_description.json
-    │    │               │            └── task-things_desc-manual_image-annotations.tsv
+    │    │               │            │     ├── size_meanRatings.tsv    
+    │    │               │            │     └── things_concepts.tsv   
+    │    │               │            ├── task-things_desc-manual_annotation.json
+    │    │               │            └── task-things_desc-manual_annotation.tsv
     │    │               ├── code
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
     │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
     │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
     │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
-    │    │               ├── task-things_eyetrack_description.json
-    │    │               └── task-things_events_description.json
+    │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
+    │    │               └── task-things_events.json
     │    │
     │    ├── things.behaviour        <- performance on the image recognition task
     │    │       ├── README.md
@@ -132,15 +131,15 @@ Project Organization
     │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
     │    │       ├── sub-0*
     │    │       │     └── beh
-    │    │       │          ├── sub-0*_task-things_desc-annotation-per-trial_beh.tsv      
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_annotation.tsv      
     │    │       │          ├── sub-0*_task-things_desc-catNum.tsv  
     │    │       │          ├── sub-0*_task-things_desc-imgNum.tsv  
-    │    │       │          ├── sub-0*_task-things_desc-score-per-trial_beh.tsv    
-    │    │       │          ├── sub-0*_task-things_desc-score-per-run_beh.tsv    
-    │    │       │          ├── sub-0*_task-things_desc-score-per-session_beh.tsv    
-    │    │       │          └── sub-0*_task-things_desc-score-global_beh.tsv    
-    │    │       ├── task-things_annotations_dataset_description.json  <- TODO
-    │    │       └── task-things_beh_dataset_description.json
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perRun_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
+    │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
+    │    │       ├── task-things_desc-perTrial_annotation.json  <- TODO
+    │    │       └── task-things_beh.json
     │    │
     │    └── things.glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output

@@ -441,19 +441,19 @@ def process_runs(
         '''
         o_path = f"{out_path}/{sub_num}/beh/{sub_num}_task-things_desc-"
         df_trials.to_csv(
-            f"{o_path}score-per-trial_beh.tsv",
+            f"{o_path}perTrial_beh.tsv",
             sep='\t', header=True, index=False,
         )
         df_runs.to_csv(
-            f"{o_path}score-per-run_beh.tsv",
+            f"{o_path}perRun_beh.tsv",
             sep='\t', header=True, index=False,
         )
         df_sessions.to_csv(
-            f"{o_path}score-per-session_beh.tsv",
+            f"{o_path}perSession_beh.tsv",
             sep='\t', header=True, index=False,
         )
         df_subjects.to_csv(
-            f"{o_path}score-global_beh.tsv",
+            f"{o_path}global_beh.tsv",
             sep='\t', header=True, index=False,
         )
 

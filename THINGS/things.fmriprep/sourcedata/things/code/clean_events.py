@@ -125,7 +125,7 @@ def get_timing(
     # DataFrame of raw datapoints per trial concatenated across sessions and runs
     df_trials = None
     cols_to_keep = []
-    run_error_report = open(f'{out_path}/sub-{sub_num}_error_run_report.txt', 'w+')
+    run_error_report = open(f'{out_path}/sub-{sub_num}_desc-run_errorReport.txt', 'w+')
 
     # process files per session
     for ses_num in tqdm.tqdm(ses_list, desc='concatenating event files per session'):
@@ -235,7 +235,7 @@ def fix_entries(
     """
     shown_images = {}
     # text file that documents trials with erroneous labels
-    error_report = open(f'{out_path}/sub-{sub_num}_error_trial_report.txt', 'w+')
+    error_report = open(f'{out_path}/sub-{sub_num}_desc-trial_errorReport.txt', 'w+')
 
     df_trials.insert(loc=2, column='atypical', value=False, allow_duplicates=True)
     df_trials.insert(loc=3, column='atypical_log', value='', allow_duplicates=True)
@@ -350,7 +350,7 @@ def fix_entries(
 
     # scanning dates should not be included in saved files as they are identifiers; comment out line below to debug
     df_trials.drop(columns=['date_time'])
-    df_trials.to_csv(f'{out_path}/sub-{sub_num}_things_concattrials.tsv', sep='\t', header=True, index=False)
+    df_trials.to_csv(f'{out_path}/sub-{sub_num}_task-things_concatTrials.tsv', sep='\t', header=True, index=False)
     error_report.close()
 
     return df_trials

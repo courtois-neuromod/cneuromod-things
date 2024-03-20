@@ -169,7 +169,7 @@ def get_img_vector(data_dir, sub_num, sess_file, sessions, rm_blanks=False):
     checked_imgs = {}
     df_path = Path(
         f"{data_dir}/things.behaviour/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv"
+        f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv"
     )
     sub_df = pd.read_csv(df_path, sep = '\t')
 

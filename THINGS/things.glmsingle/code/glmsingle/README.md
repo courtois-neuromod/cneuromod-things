@@ -169,7 +169,7 @@ The noise ceiling estimation is adapted from the [Natural Scene Dataset's datapa
 To leave out "blank" trials (trials with no recorded subject
 response) from noise ceiling computations, trialwise performance needs to be
 extracted. Run the ``behav_data_annotate.py`` script, as described under
-**Trial-Wise Image Ratings and Annotations** in the ``cneuromod-things/THINGS/things.behaviour`` README. Output is saved as ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``.
+**Trial-Wise Image Ratings and Annotations** in the ``cneuromod-things/THINGS/things.behaviour`` README. Output is saved as ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``.
 
 To compute noise ceilings, launch the following script for each subject:
 ```bash
@@ -183,7 +183,7 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 - A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1.
 - A subject's ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
-- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
+- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
 - ``sub-{sub_num}_task-things_space-T1w_res-func_modelD_noise-ceilings.mat``,
@@ -268,7 +268,7 @@ python GLMsingle_betas_per_img.py --things_dir="${DATADIR}" --zbetas --sub_num="
 - ``task-things_desc-runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - ``sub-{sub_num}_task-things_desc-image-design-refnumbers.json``, a file created in Step 1 that assigns a unique number to each stimulus image seen by the participant (>4000)
 - A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1
-- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` (see Step 6).
+- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` (see Step 6).
 - A subject's ``sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii`` masks created in Steps 2 and 5, respectively.
 

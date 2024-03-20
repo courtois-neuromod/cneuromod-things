@@ -390,7 +390,7 @@ def process_files(
 
         # Add columns of imported manual annotations
         img_manual = pd.read_csv(
-            f"{annot_path}/task-things_desc-manual_image-annotations.tsv",
+            f"{annot_path}/task-things_desc-manual_annotation.tsv",
             sep= '\t')
         img_manual = img_manual.set_index('image_name')
         for m_name in COL_MANUAL:
@@ -402,7 +402,7 @@ def process_files(
 
     sub_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv",
+        f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv",
         sep='\t', header=True, index=False,
     )
 
