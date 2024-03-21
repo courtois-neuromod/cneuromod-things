@@ -1,51 +1,203 @@
 cneuromod-things
 ==============================
 
-Data, scripts and derrivatives for the CNeuroMod-THINGS dataset
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset
+
+TODO: Add task and dataset description
 
 Project Organization
 ------------
 
     ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data               <- Where the dataset will be installed
+    ├── README.md          <- The top-level README for this repository.
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    ├── anatomical         <- Anatomical datasets and scripts
+    │    ├── README.md          <- Anatomical dataset overview, including links to instructions for flat maps
+    │    ├── anat.smriprep         <- smriprep anatomical output
+    │    ├── anat.freesurfer       <- freesurfer output, patches to generate flat maps
+    │    │      └── doc         
+    │    │           └── flatmaps.md   <- Instructions to generate flat maps in pycortex
+    │    └── anat.pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
+    ├── floc                    <- fLoc visual localizer datasets and scripts
+    │    ├── README.md          <- Overview of fLoc dataset and scripts
+    │    ├── floc.fmriprep         <- fmriprep output
+    │    │    ├── sub-0*
+    │    │    │     └── ses-*
+    │    │    │          └── func    <- preprocessed fMRI files in T1w space
+    │    │    │               ├── sub-0*_ses-0*_task-fLoc_run-*_space-T1w_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               └── sub-0*_ses-0*_task-fLoc_run-*_desc-confounds_part-mag_timeseries.tsv  <- noise confounds
+    │    │    │  
+    │    │    └── sourcedata         <- raw files
+    │    │         └── floc    <- bidsified raw fMRI data & output   
+    │    │               ├── sub-0*
+    │    │               │     └── ses-*
+    │    │               │          └── func
+    │    │               │               └── sub-0*_ses-00*_task-fLoc_run-0*_events.tsv  <- events.tsv files
+    │    │               └── floc.stimuli
+    │    │                     └── images   <- stimulus images per category
+    │    │
+    │    └── floc.rois        <- fLoc scripts and datasets
+    │            ├── code            <- scripts to run glm and generate ROIs
+    │            │     ├── README.md    
+    │            │     ├── requirements.txt          
+    │            │     ├── run_glm    
+    │            │     └── make_rois    
+    │            │
+    │            └── sub-0*
+    │                  ├── glm
+    │                  │    └── ...
+    │                  └── rois
+    │                       └── ...
     │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
+    ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
+    │    ├── README.md          <- Overview of retinotopy dataset and scripts
+    │    ├── retino.fmriprep         <- fmriprep output
+    │    │    ├── sub-0*
+    │    │    │     └── ses-*
+    │    │    │          └── func    <- preprocessed fMRI files in T1w space
+    │    │    │               ├── sub-0*_ses-0*_task-{bars, rings, wedges}_space-T1w_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               └── sub-0*_ses-0*_task-{bars, rings, wedges}_desc-confounds_timeseries.tsv  <- noise confounds
+    │    │    │  
+    │    │    └── sourcedata         <- raw files
+    │    │         └── retino    <- bidsified raw fMRI data & output   
+    │    │               ├── sub-0*
+    │    │               │     └── ses-*
+    │    │               │          └── func
+    │    │               │               └── sub-0*_ses-*_task-{bars, rings, wedges}_events.tsv  <- events.tsv files
+    │    │               └── retino.stimuli
+    │    │                     ├── images
+    │    │                     └── apertures
+    │    │
+    │    └── retino.prf        <- prf and visual ROIs scripts and datasets
+    │            ├── code            <- scripts to run glm single and process output
+    │            │     ├── README.md    
+    │            │     ├── requirements.txt          
+    │            │     ├── run_prf    
+    │            │     └── make_rois    
+    │            │
+    │            └── sub-0*
+    │                  ├── temp_files   <- intermediate steps
+    │                  │    └── ...
+    │                  ├── rois
+    │                  │    └── ...
+    │                  └── prf
+    │                       └── ...
     │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+    ├── THINGS                  <- THINGS datasets, scripts and derivatives
+    │    ├── README.md          <- Overview of THINGS datasets and scripts
+    │    ├── things.fmriprep         <- fmriprep output
+    │    │    ├── sub-0*
+    │    │    │     └── ses-*
+    │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv  <- noise confounds
+    │    │    │  
+    │    │    └── sourcedata         <- raw files
+    │    │         └── things    <- bidsified raw fMRI data & output   
+    │    │               ├── sub-0*
+    │    │               │     └── ses-*
+    │    │               │          └── func
+    │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
+    │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
+    │    │               ├── things.stimuli
+    │    │               │     └── annotations <- image content annotations
+    │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
+    │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
+    │    │               │            │     ├── arousal_meanRatings.tsv
+    │    │               │            │     ├── category53_wideFormat.tsv
+    │    │               │            │     ├── imageLabeling_imageWise.tsv  
+    │    │               │            │     ├── imageLabeling_objectWise.tsv
+    │    │               │            │     ├── objectProperties_meanRatings.tsv  
+    │    │               │            │     ├── size_meanRatings.tsv    
+    │    │               │            │     └── things_concepts.tsv   
+    │    │               │            ├── task-things_desc-manual_annotation.json
+    │    │               │            └── task-things_desc-manual_annotation.tsv
+    │    │               ├── code
+    │    │               │     ├── README.md
+    │    │               │     ├── requirements.txt    
+    │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
+    │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
+    │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
+    │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
+    │    │               └── task-things_events.json
+    │    │
+    │    ├── things.behaviour        <- performance on the image recognition task
+    │    │       ├── README.md
+    │    │       ├── code
+    │    │       │     ├── requirements.txt
+    │    │       │     ├── behav_data_annotate.py      <- builds trial-wise annotations   
+    │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
+    │    │       ├── sub-0*
+    │    │       │     └── beh
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_annotation.tsv      
+    │    │       │          ├── sub-0*_task-things_catNum.tsv  
+    │    │       │          ├── sub-0*_task-things_imgNum.tsv  
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perRun_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
+    │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
+    │    │       ├── task-things_desc-perTrial_annotation.json  <- TODO
+    │    │       └── task-things_beh.json
+    │    │
+    │    └── things.glmsingle        <- glm single derivatives
+    │            ├── code            <- scripts to run glm single and process output
+    │            │     ├── requirements.txt      
+    │            │     ├── qc
+    │            │     │    ├── README.md               
+    │            │     │    └── compile_headmotion.py   
+    │            │     ├── glmsingle       
+    │            │     │    ├── GLMsingle  <- GLMsingle repo submodule (c4e298e)    
+    │            │     │    ├── README.md       
+    │            │     │    ├── GLMsingle_makedesign.py                   
+    │            │     │    ├── GLMsingle_preprocBOLD.py
+    │            │     │    ├── GLMsingle_makerunlist.py  
+    │            │     │    ├── GLMsingle_cleanmask.py  
+    │            │     │    ├── GLMsingle_run.m    
+    │            │     │    ├── GLMsingle_noiseceilings.py          
+    │            │     │    ├── GLMsingle_betasPerTrial.py  
+    │            │     │    └── GLMsingle_betasPerImg.py
+    │            │     └── top_image    
+    │            │          └── ...        
+    │            │
+    │            ├── task-things_runlist.h5    <- list of valid runs per subject
+    │            │
+    │            └── sub-0*
+    │                  ├── glmsingle
+    │                  │    ├── input    
+    │                  │    │     ├── sub-*_task-things_model-glmsingle_desc-sparse_design.h5
+    │                  │    │     ├── sub-*_task-things_imgDesignNumbers.json
+    │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5     
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-union_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
+    │                  │    │     └── ...    
+    │                  │    └── output    
+    │                  │          ├── T1w
+    │                  │          │     ├── TYPEA_ONOFF.mat    
+    │                  │          │     ├── TYPEB_FITHRF.mat   
+    │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
+    │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz.nii.gz  
+    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mat
+    │                  │
+    │                  ├── qc   <- quality checks
+    │                  │    └── sub-0*_task-things_headmotion.tsv
+    │                  ├── top_image
+    │                  │    └── ...
+    │                  └── tsne
+    │                       └── ...
+    │            
     │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
-
+    └── datapaper          <- Report, figures, visualization notebooks
+        ├── figures        <- Graphics and figures from the report
+        ├── notebooks      <- Code to generate datapaper figures
+        │       ├── behav_analysis.ipynb      <- behav figures     
+        │       └── head_motion.ipynb         <- framewise displacement figs    
+        └── report         <- Data paper manuscript
 
 --------
 
