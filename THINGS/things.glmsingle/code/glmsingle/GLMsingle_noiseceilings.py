@@ -34,7 +34,7 @@ def get_sess_vector(things_dir, sub_num):
     '''
     Create vector that labels each trial by its session
     '''
-    session_file_path = f"{things_dir}/things.glmsingle/task-things_desc-runlist.h5"
+    session_file_path = f"{things_dir}/things.glmsingle/task-things_runlist.h5"
     sess_file = h5py.File(session_file_path, 'r')
     sessions = [f'{x}' for x in list(sess_file[sub_num]['sessions'])]
 
@@ -69,7 +69,7 @@ def get_img_vector(things_dir, sub_num, sess_file, sessions, n=3, rm_blanks=Fals
     '''
     img_vector = []
     des_path = Path(
-        f"{things_dir}/things.glmsingle/sub-{sub_num}/GLMsingle/"
+        f"{things_dir}/things.glmsingle/sub-{sub_num}/glmsingle/"
         f"input/sub-{sub_num}_task-things_sparsedesign.h5"
     )
     des_file = h5py.File(des_path, 'r')
@@ -77,7 +77,7 @@ def get_img_vector(things_dir, sub_num, sess_file, sessions, n=3, rm_blanks=Fals
     if rm_blanks:
         df_path = Path(
             f"{things_dir}/things.behaviour/sub-{sub_num}/beh/"
-            f"sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv"
+            f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv"
         )
         sub_df = pd.read_csv(df_path, sep = '\t')
 
@@ -245,7 +245,7 @@ if __name__ == '__main__':
     things_dir = args.things_dir
     sub_num = args.sub_num
 
-    data_path = f"{things_dir}/things.glmsingle/sub-{sub_num}/GLMsingle"
+    data_path = f"{things_dir}/things.glmsingle/sub-{sub_num}/glmsingle"
     in_file = f"{data_path}/output/T1w/TYPED_FITHRF_GLMDENOISE_RR.mat"
 
     nc_arr = compute_noise_ceiling(
@@ -259,23 +259,23 @@ if __name__ == '__main__':
     # unmask array with union functional mask, and remask with no-NaN mask
     union_mask = nib.load(
         f"{data_path}/input/sub-{sub_num}_task-things_"
-        "space-T1w_desc-func-union_mask.nii"
+        "space-T1w_label-brain_desc-union_mask.nii"
     )
     clean_mask = nib.load(
         f"{data_path}/input/sub-{sub_num}_task-things_"
-        "space-T1w_desc-func-clean_mask.nii"
+        "space-T1w_label-brain_desc-unionNonNaN_mask.nii"
     )
 
     nc_arr = apply_mask(unmask(nc_arr, union_mask), clean_mask)
     outpath_mat = Path(
         f"{data_path}/output/sub-{sub_num}_task-things_"
-        "space-T1w_res-func_modelD_noise-ceilings.mat"
+        "space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mat"
     )
     savemat(outpath_mat, {'NC': nc_arr})
 
     nc_nii = unmask(nc_arr, clean_mask)  # remove NaN voxels
     outpath_nii = Path(
         f"{data_path}/output/sub-{sub_num}_task-things_"
-        "space-T1w_res-func_modelD_noise-ceilings.nii.gz"
+        "space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz"
     )
     nib.save(nc_nii, outpath_nii)

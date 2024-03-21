@@ -4,7 +4,7 @@ addpath(genpath([code_dir '/GLMsingle/matlab']));
 
 % add path to .h5 data files (vectorized bold data and design matrices)
 addpath(genpath(data_dir));
-addpath(genpath([data_dir '/sub-' sub_num '/GLMsingle/input']));
+addpath(genpath([data_dir '/sub-' sub_num '/glmsingle/input']));
 
 % Parameters specified when calling script (as reference)
 %sub_num = '03';
@@ -24,7 +24,7 @@ tr_count = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], '/TR_count');
 total_conditions = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], '/total_conditions');
 
 % List of valid sessions for that subject
-sessions = h5read('task-things_desc-runlist.h5', ['/' sub_num '/sessions']);
+sessions = h5read('task-things_runlist.h5', ['/' sub_num '/sessions']);
 
 % Create list of design and BOLD data matrices
 count = 1;
@@ -37,7 +37,7 @@ xvalscheme = {[] [] [] [] [] [] [] [] [] [] [] [] []};
 
 for i = 1:length(sessions)
   ses = int2str(sessions(i));
-  runs = h5read('task-things_desc-runlist.h5', ['/' sub_num '/' ses]);
+  runs = h5read('task-things_runlist.h5', ['/' sub_num '/' ses]);
   ses = num2str(sessions(i), '%02d');
 
   for j = 1:length(runs)
@@ -78,7 +78,7 @@ end
 opt = struct('wantmemoryoutputs',[0 0 0 0], 'sessionindicator', session_indx, 'chunknum', str2double(chunk_size), 'xvalscheme', {xvalscheme});
 
 % Specify output directory
-outputdir = [data_dir '/sub-' sub_num '/GLMsingle/output/'];
+outputdir = [data_dir '/sub-' sub_num '/glmsingle/output/'];
 
 % Run GLMsingle
 [results] = GLMestimatesingletrial(design,data,stimdur,tr,[outputdir bold_type],opt);

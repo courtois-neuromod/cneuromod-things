@@ -38,9 +38,9 @@ if __name__ == '__main__':
     suffix = '_space-T1w_desc-preproc_part-mag_bold.nii.gz'
 
     for sub_num in sub_list:
-        mask_path = f'{out_path}/sub-{sub_num}/GLMsingle/input'
+        mask_path = f'{out_path}/sub-{sub_num}/glmsingle/input'
         mask = nib.load(
-            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii'
+            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii'
         )
 
         bold_files = sorted(
@@ -74,9 +74,9 @@ if __name__ == '__main__':
 
         nib.save(
             global_nan_mask,
-            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_desc-NaNvals_mask.nii'
+            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii'
         )
         nib.save(
             global_goodvox_mask,
-            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii',
+            f'{mask_path}/sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii',
         )

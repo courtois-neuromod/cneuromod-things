@@ -76,8 +76,8 @@ def extract_motion(
         sub_df = pd.concat((sub_df, df_run), ignore_index=True)
 
     sub_df.to_csv(
-        f'{out_path}/sub-{sub_num}/QC/sub-{sub_num}_'
-        'task-things_desc-headmotion.tsv',
+        f'{out_path}/sub-{sub_num}/qc/sub-{sub_num}_'
+        'task-things_headmotion.tsv',
         sep='\t', header=True, index=False,
     )
 

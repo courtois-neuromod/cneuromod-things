@@ -251,12 +251,12 @@ def process_files(
     Path(f"{out_path}/sub-{sub_num}/beh").mkdir(parents=True, exist_ok=True)
     imgNum_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-imgNum.tsv",
+        f"sub-{sub_num}_task-things_imgNum.tsv",
         sep='\t', header=True, index=False,
     )
     catNum_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-catNum.tsv",
+        f"sub-{sub_num}_task-things_catNum.tsv",
         sep='\t', header=True, index=False,
     )
 
