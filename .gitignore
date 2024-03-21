@@ -92,7 +92,7 @@ THINGS/things.fmriprep/sourcedata/things/things.stimuli/annotations/THINGS+/*sv
 THINGS/things.behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
 
 # THINGS head motion data
-THINGS/things.glmsingle/sub-0*/qc/sub-0*_task-things_desc-headmotion.tsv
+THINGS/things.glmsingle/sub-0*/qc/sub-0*_task-things_headmotion.tsv
 
 # THINGS GLMsingle data
 THINGS/things.glmsingle/*.h5
