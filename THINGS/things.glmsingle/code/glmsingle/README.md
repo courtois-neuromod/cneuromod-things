@@ -34,7 +34,7 @@ python GLMsingle_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --s
 **Output**:
 - A ``sub-{sub_num}_task-things_imgDesignNumbers.json`` file that assigns
 a unique number to each stimulus image seen by the participant (>4000). The number-image mapping is unique to each participant
-- ``sub-{sub_num}_task-things_sparsedesign.h5``, a HDF5 file with one design matrix per session & run. \
+- ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5``, a HDF5 file with one design matrix per session & run. \
 Matrices are saved as lists of coordinates (onset TR, condition number) per trial
 that will be used to generate sparse design matrices (TRs per run, total number of conditions) in matlab.
 
@@ -91,7 +91,7 @@ files produced in step 2.
 per session for each subject
 
 ------------
-## Step 4. Run GLMsingle on _maskedBOLD.h5 and _sparsedesign.h5 files
+## Step 4. Run GLMsingle on _maskedBOLD.h5 and _desc-sparse_design.h5 files
 
 Run GLMsingle in matlab to compute trialwise beta scores for each voxel within the
 functional brain mask.
@@ -117,7 +117,7 @@ Note: load ``StdEnv/2020``, ``nixpkgs/16.09`` and ``matlab/2020a`` modules to ru
 Alliance Canada (168h job per subject, 36 CPUs per task, 5000M memory/CPU)
 
 **Input**:
-- Subject's ``sub-{sub_num}_things_sparsedesign.h5`` file created in Step 1.
+- Subject's ``sub-{sub_num}_things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1.
 - Subject's ``sub-{sub_num}_task-things_space-{MNI, T1w}_maskedBOLD.h5`` file created in Step 2.
 - ``task-things_runlist.h5``, the file with embedded lists of valid runs per session
 for all subjects created in Step 3. \
@@ -183,7 +183,7 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 **Input**:
 - A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
-- A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1.
+- A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1.
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
 - A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
@@ -274,7 +274,7 @@ python GLMsingle_betasPerImg.py --things_dir="${DATADIR}" --zbetas --sub_num="01
 - A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - ``sub-{sub_num}_task-things_imgDesignNumbers.json``, a file created in Step 1 that assigns a unique number to each stimulus image seen by the participant (>4000)
-- A subject's ``sub-{sub_num}_task-things_sparsedesign.h5`` file created in Step 1
+- A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1
 - A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` (see Step 6).
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.

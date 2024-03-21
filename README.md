@@ -166,7 +166,7 @@ Project Organization
     │            └── sub-0*
     │                  ├── glmsingle
     │                  │    ├── input    
-    │                  │    │     ├── sub-*_task-things_sparsedesign.h5
+    │                  │    │     ├── sub-*_task-things_model-glmsingle_desc-sparse_design.h5
     │                  │    │     ├── sub-*_task-things_imgDesignNumbers.json
     │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5     
     │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-union_mask.nii
