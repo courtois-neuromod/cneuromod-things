@@ -17,11 +17,11 @@ stimdur = 2.98;
 
 % load data from subject bold and design .h5 files
 % Doc on reading HDF5 in matlab https://www.mathworks.com/help/matlab/ref/h5read.html#mw_5606c3c2-015b-4c12-8653-4c7f53ab2dc1
-tr = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], '/TR');
+tr = h5read(['sub-' sub_num '_task-things_model-glmsingle_desc-sparse_design.h5'], '/TR');
 % Number of TRs per run, and total number of unique image stimuli,
 % to generate sparse design matrix from trial onset coordinates.
-tr_count = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], '/TR_count');
-total_conditions = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], '/total_conditions');
+tr_count = h5read(['sub-' sub_num '_task-things_model-glmsingle_desc-sparse_design.h5'], '/TR_count');
+total_conditions = h5read(['sub-' sub_num '_task-things_model-glmsingle_desc-sparse_design.h5'], '/total_conditions');
 
 % List of valid sessions for that subject
 sessions = h5read('task-things_runlist.h5', ['/' sub_num '/sessions']);
@@ -46,7 +46,7 @@ for i = 1:length(sessions)
     data{count} = run_data;
 
     run_num = num2str(runs(j), '%02d');
-    run_design_coord = h5read(['sub-' sub_num '_task-things_sparsedesign.h5'], ['/' ses '/' run_num '/design_coord']);
+    run_design_coord = h5read(['sub-' sub_num '_task-things_model-glmsingle_desc-sparse_design.h5'], ['/' ses '/' run_num '/design_coord']);
     rows = run_design_coord(1, :) + 1;
     cols = run_design_coord(2, :) + 1;
     vals = repelem([1], length(rows));

@@ -94,9 +94,9 @@ def compile_design_hdf5(data_path, out_path, sub_num, sparse=True):
     https://www.mathworks.com/help/matlab/math/constructing-sparse-matrices.html
     '''
     if sparse:
-        subj_h5file = h5py.File(f'{out_path}/sub-{sub_num}_task-things_sparsedesign.h5','w')
+        subj_h5file = h5py.File(f'{out_path}/sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5','w')
     else:
-        subj_h5file = h5py.File(f'{out_path}/sub-{sub_num}_task-things_fulldesign.h5','w')
+        subj_h5file = h5py.File(f'{out_path}/sub-{sub_num}_task-things_model-glmsingle_design.h5','w')
 
     TRs_per_run = 188 # 190 - 2 after removing first two volumes
     tr_count = subj_h5file.create_dataset('TR_count', data=[TRs_per_run])

@@ -70,7 +70,7 @@ def get_img_vector(things_dir, sub_num, sess_file, sessions, n=3, rm_blanks=Fals
     img_vector = []
     des_path = Path(
         f"{things_dir}/things.glmsingle/sub-{sub_num}/glmsingle/"
-        f"input/sub-{sub_num}_task-things_sparsedesign.h5"
+        f"input/sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5"
     )
     des_file = h5py.File(des_path, 'r')
 
