@@ -251,12 +251,12 @@ def process_files(
     Path(f"{out_path}/sub-{sub_num}/beh").mkdir(parents=True, exist_ok=True)
     imgNum_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-imgNum.tsv",
+        f"sub-{sub_num}_task-things_imgNum.tsv",
         sep='\t', header=True, index=False,
     )
     catNum_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-catNum.tsv",
+        f"sub-{sub_num}_task-things_catNum.tsv",
         sep='\t', header=True, index=False,
     )
 
@@ -390,7 +390,7 @@ def process_files(
 
         # Add columns of imported manual annotations
         img_manual = pd.read_csv(
-            f"{annot_path}/task-things_desc-manual_image-annotations.tsv",
+            f"{annot_path}/task-things_desc-manual_annotation.tsv",
             sep= '\t')
         img_manual = img_manual.set_index('image_name')
         for m_name in COL_MANUAL:
@@ -402,7 +402,7 @@ def process_files(
 
     sub_df.to_csv(
         f"{out_path}/sub-{sub_num}/beh/"
-        f"sub-{sub_num}_task-things_desc-annotation-per-trial_beh.tsv",
+        f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv",
         sep='\t', header=True, index=False,
     )
 

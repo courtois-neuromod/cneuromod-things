@@ -18,7 +18,7 @@ The file ``qc_notes.md`` contains additional details about any issue with the ex
 
 *Output*:
 
-- De-identified, validated and updated ``*events.tsv`` files (to be released). Columns and their values are described in ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/task-things_events_description.json``
-- ``sub-*_error_run_report.txt``, a text file that lists every run for which there is no psychopy log file (in those cases, trialwise timestamps are estimated from eyetracking data), or for which atypical entries (needing corrections) were flagged.
-- ``sub-*_error_trial_report.txt``, a text file that lists every trial for which a correction was made (e.g., to the repetition number, condition, subcondition or accuracy) due to a deviation from the pre-planned protocol (e.g., a session was administered out of order).
-- ``sub-*_things_concattrials.tsv``, a temp file that concatenates all trials across sessions, for QCing (cannot be released because it contains scanning dates).
+- De-identified, validated and updated ``*events.tsv`` files (to be released). Columns and their values are described in ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/task-things_events.json``
+- ``sub-*_desc-run_errorReport.txt``, a text file that lists every run for which there is no psychopy log file (in those cases, trialwise timestamps are estimated from eyetracking data), or for which atypical entries (needing corrections) were flagged.
+- ``sub-*_desc-trial_errorReport.txt``, a text file that lists every trial for which a correction was made (e.g., to the repetition number, condition, subcondition or accuracy) due to a deviation from the pre-planned protocol (e.g., a session was administered out of order).
+- ``sub-*_task-things_concatTrials.tsv``, a temp file that concatenates all trials across sessions, for QCing (cannot be released because it contains scanning dates).

@@ -60,11 +60,11 @@ def compile_maskedBOLD_hdf5(data_path, out_path, sub_num, mni=False):
     )
     mask = intersect_masks(mask_list, threshold=0)
 
-    sub_out_path = f"{out_path}/sub-{sub_num}/GLMsingle/input"
+    sub_out_path = f"{out_path}/sub-{sub_num}/glmsingle/input"
     Path(sub_out_path).mkdir(parents=True, exist_ok=True)
     nib.save(
         mask,
-        f"{sub_out_path}/sub-{sub_num}_task-things_space-{mspace}_desc-func-union_mask.nii"
+        f"{sub_out_path}/sub-{sub_num}_task-things_space-{mspace}_label-brain_desc-union_mask.nii"
     )
 
     '''

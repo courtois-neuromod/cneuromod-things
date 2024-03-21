@@ -102,7 +102,7 @@ Project Organization
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
     │    │               ├── things.stimuli
-    │    │               │     └── annotations <- image content annotations and manual
+    │    │               │     └── annotations <- image content annotations
     │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
     │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
@@ -110,19 +110,18 @@ Project Organization
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
     │    │               │            │     ├── imageLabeling_objectWise.tsv
     │    │               │            │     ├── objectProperties_meanRatings.tsv  
-    │    │               │            │     ├── size_meanRatings.tsv  
-    │    │               │            │     ├── things_concepts.tsv  
-    │    │               │            │     └── THINGS_Memorability_Scores.csv  ** EXCLUDE!!    
-    │    │               │            ├── task-things_desc-manual_annotations_description.json
-    │    │               │            └── task-things_desc-manual_image-annotations.tsv
+    │    │               │            │     ├── size_meanRatings.tsv    
+    │    │               │            │     └── things_concepts.tsv   
+    │    │               │            ├── task-things_desc-manual_annotation.json
+    │    │               │            └── task-things_desc-manual_annotation.tsv
     │    │               ├── code
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
     │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
     │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
     │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
-    │    │               ├── task-things_eyetrack_description.json
-    │    │               └── task-things_events_description.json
+    │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
+    │    │               └── task-things_events.json
     │    │
     │    ├── things.behaviour        <- performance on the image recognition task
     │    │       ├── README.md
@@ -132,20 +131,20 @@ Project Organization
     │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
     │    │       ├── sub-0*
     │    │       │     └── beh
-    │    │       │          ├── sub-0*_task-things_desc-annotation-per-trial_beh.tsv      
-    │    │       │          ├── sub-0*_task-things_desc-catNum.tsv  
-    │    │       │          ├── sub-0*_task-things_desc-imgNum.tsv  
-    │    │       │          ├── sub-0*_task-things_desc-score-per-trial_beh.tsv    
-    │    │       │          ├── sub-0*_task-things_desc-score-per-run_beh.tsv    
-    │    │       │          ├── sub-0*_task-things_desc-score-per-session_beh.tsv    
-    │    │       │          └── sub-0*_task-things_desc-score-global_beh.tsv    
-    │    │       ├── task-things_annotations_dataset_description.json  <- TODO
-    │    │       └── task-things_beh_dataset_description.json
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_annotation.tsv      
+    │    │       │          ├── sub-0*_task-things_catNum.tsv  
+    │    │       │          ├── sub-0*_task-things_imgNum.tsv  
+    │    │       │          ├── sub-0*_task-things_desc-perTrial_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perRun_beh.tsv    
+    │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
+    │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
+    │    │       ├── task-things_desc-perTrial_annotation.json  <- TODO
+    │    │       └── task-things_beh.json
     │    │
     │    └── things.glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── requirements.txt      
-    │            │     ├── QCing
+    │            │     ├── qc
     │            │     │    ├── README.md               
     │            │     │    └── compile_headmotion.py   
     │            │     ├── glmsingle       
@@ -157,22 +156,22 @@ Project Organization
     │            │     │    ├── GLMsingle_cleanmask.py  
     │            │     │    ├── GLMsingle_run.m    
     │            │     │    ├── GLMsingle_noiseceilings.py          
-    │            │     │    ├── GLMsingle_betas_per_trial.py  
-    │            │     │    └── GLMsingle_betas_per_img.py
+    │            │     │    ├── GLMsingle_betasPerTrial.py  
+    │            │     │    └── GLMsingle_betasPerImg.py
     │            │     └── top_image    
     │            │          └── ...        
     │            │
-    │            ├── task-things_desc-runlist.h5    <- list of valid runs per subject
+    │            ├── task-things_runlist.h5    <- list of valid runs per subject
     │            │
     │            └── sub-0*
-    │                  ├── GLMsingle
+    │                  ├── glmsingle
     │                  │    ├── input    
     │                  │    │     ├── sub-*_task-things_sparsedesign.h5
-    │                  │    │     ├── sub-*_task-things_desc-image-design-refnumbers.json
+    │                  │    │     ├── sub-*_task-things_imgDesignNumbers.json
     │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5     
-    │                  │    │     ├── sub-*_task-things_space-T1w_desc-func-union_mask.nii
-    │                  │    │     ├── sub-*_task-things_space-T1w_desc-func-clean_mask.nii
-    │                  │    │     ├── sub-*_task-things_space-T1w_desc-NaNvals_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-union_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
+    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
     │                  │    │     └── ...    
     │                  │    └── output    
     │                  │          ├── T1w
@@ -180,13 +179,13 @@ Project Organization
     │                  │          │     ├── TYPEB_FITHRF.mat   
     │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-zscored-betas-per-img.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_res-func_desc-zscored-betas-per-trial.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.nii.gz  
-    │                  │          └── sub-0*_task-things_space-T1w_res-func_modelD_noise-ceilings.mat
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz.nii.gz  
+    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mat
     │                  │
-    │                  ├── QC   <- quality checks
-    │                  │    └── sub-0*_task-things_desc-headmotion.tsv
+    │                  ├── qc   <- quality checks
+    │                  │    └── sub-0*_task-things_headmotion.tsv
     │                  ├── top_image
     │                  │    └── ...
     │                  └── tsne

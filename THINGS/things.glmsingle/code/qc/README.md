@@ -8,7 +8,7 @@ Launch the following script to process a subject's sessions
 DATADIR="cneuromod-things/THINGS/data/things.fmriprep"
 OUTDIR="cneuromod-things/THINGS/data/things.glmsingle"
 
-python QCing/compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
+python qc/compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
 
 
@@ -18,4 +18,4 @@ python QCing/compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}"
 
 *Output*:
 
-- ``sub-0*/beh/sub-0*_task-things_desc-headmotion.tsv``, a concatenation of framewise motion for all runs. Includes framewise displacement (in mm), as well as 6 motion coordinates (translation and rotation in x, y and z).
+- ``sub-0*/qc/sub-0*_task-things_headmotion.tsv``, a concatenation of framewise motion for all runs. Includes framewise displacement (in mm), as well as 6 motion coordinates (translation and rotation in x, y and z).

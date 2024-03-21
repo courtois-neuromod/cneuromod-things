@@ -42,18 +42,18 @@ def compile_betas_hdf5(data_dir, sub_num, zbetas=False):
     load list of sessions and their runs for that subject
     '''
     sub_run_list = h5py.File(
-        f"{data_dir}/task-things_desc-runlist.h5", 'r')[sub_num]
+        f"{data_dir}/task-things_runlist.h5", 'r')[sub_num]
 
     '''
     Load union and clean (no NaN voxels) functional masks
     '''
     union_mask = nib.load(
-        f"{data_dir}/sub-{sub_num}/GLMsingle/input/"
-        f"sub-{sub_num}_task-things_space-T1w_desc-func-union_mask.nii"
+        f"{data_dir}/sub-{sub_num}/glmsingle/input/"
+        f"sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii"
     )
     clean_mask = nib.load(
-        f"{data_dir}/sub-{sub_num}/GLMsingle/input/"
-        f"sub-{sub_num}_task-things_space-T1w_desc-func-clean_mask.nii"
+        f"{data_dir}/sub-{sub_num}/glmsingle/input/"
+        f"sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii"
     )
     num_vox = int(np.sum(union_mask.get_fdata()))
 
@@ -61,7 +61,7 @@ def compile_betas_hdf5(data_dir, sub_num, zbetas=False):
     Get subject's GLMs output file
     '''
     mat_file = Path(
-        f"{data_dir}/sub-{sub_num}/GLMsingle/output/T1w/"
+        f"{data_dir}/sub-{sub_num}/glmsingle/output/T1w/"
         "TYPED_FITHRF_GLMDENOISE_RR.mat"
     )
     gfile = h5py.File(mat_file, 'r')
@@ -76,10 +76,10 @@ def compile_betas_hdf5(data_dir, sub_num, zbetas=False):
     '''
     prepare final output file (beta arrays sorted per session and run)
     '''
-    zname = '-zscored' if zbetas else ''
+    zname = 'desc-zscore_' if zbetas else ''
     subj_h5file = h5py.File(
-        f"{data_dir}/sub-{sub_num}/GLMsingle/output/sub-{sub_num}_"
-        f"task-things_space-T1w_res-func_desc{zname}-betas-per-trial.h5",
+        f"{data_dir}/sub-{sub_num}/glmsingle/output/sub-{sub_num}_task-things_"
+        f"space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_{zname}statseries.h5",
         'w',
     )
 

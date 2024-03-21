@@ -74,7 +74,7 @@ def compile_design_hdf5(data_path, out_path, sub_num, sparse=True):
             image_refnums[img] = total_image_count
             total_image_count += 1
 
-    with open(f'{out_path}/sub-{sub_num}_task-things_desc-image-design-refnumbers.json', 'w') as outfile:
+    with open(f'{out_path}/sub-{sub_num}_task-things_imgDesignNumbers.json', 'w') as outfile:
         json.dump(image_refnums, outfile)
 
     '''
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     '''
     args = get_arguments()
 
-    out_dir = f"{args.out_dir}/sub-{args.sub}/GLMsingle/input"
+    out_dir = f"{args.out_dir}/sub-{args.sub}/glmsingle/input"
     Path(out_dir).mkdir(parents=True, exist_ok=True)
 
     compile_design_hdf5(args.data_dir, out_dir, args.sub, sparse=True)
