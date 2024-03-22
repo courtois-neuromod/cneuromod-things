@@ -189,27 +189,27 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 - A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
-- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mat``,
+- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat``,
 a single .mat file with a noise ceiling estimation per voxel saved as a
 flattened 1D array whose lengh corresponds to the number of voxels within the ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` functional mask.
-- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz``, a brain volume
+- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, a brain volume
 of voxelwise noise ceilings masked with Step 5's no-NaN mask, in subject's (T1w) EPI space.
 
 
 To convert ``.nii.gz`` volume into freesurfer surface:
 ```bash
 SUB_NUM="01"
-VOLFILE="sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz"
-L_OUTFILE="lh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mgz"
-R_OUTFILE="rh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mgz"
+VOLFILE="sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz"
+L_OUTFILE="lh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mgz"
+R_OUTFILE="rh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mgz"
 mri_vol2surf --src ${VOLFILE} --out ${L_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi lh
 mri_vol2surf --src ${VOLFILE} --out ${R_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi rh
 ```
 
 To overlay surface data onto inflated brain infreesurfer's freeview:
 ```bash
-freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/lh.inflated:overlay=lh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mgz:overlay_threshold=5,0 -viewport 3d
-freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mgz:overlay_threshold=5,0 -viewport 3d
+freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/lh.inflated:overlay=lh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mgz:overlay_threshold=5,0 -viewport 3d
+freeview -f $SUBJECTS_DIR/sub-${SUB_NUM}/surf/rh.inflated:overlay=rh.sub-${SUB_NUM}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mgz:overlay_threshold=5,0 -viewport 3d
 ```
 
 ------------

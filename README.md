@@ -181,8 +181,8 @@ Project Organization
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz.nii.gz  
-    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.mat
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz.nii.gz  
+    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat
     │                  │
     │                  ├── qc   <- quality checks
     │                  │    └── sub-0*_task-things_headmotion.tsv
