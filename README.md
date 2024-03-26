@@ -3,16 +3,17 @@ cneuromod-things
 
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
-Files related to the main task are found under ``THINGS``.
+Files related to the main task are found under ``THINGS``:
 - ``things.fmriprep`` includes raw and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
 - ``things.behaviour`` includes analyses of the subjects' performance on the continuous recognition task.
 - ``things.glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
 
-Files also include data, scripts and derivatives for two complementary vision localizer tasks,
-``fLoc`` and ``retino`` (population receptive field), and ``anatomical`` data
-that include flat maps to visualize voxelwise statistics on the cortex.
+In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
+``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
+that include flat maps to visualize voxelwise statistics on the cortex are also included.
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data files saved in the current repository.
+
 TODO: add refs to manuscript
 
 Project Organization
