@@ -45,9 +45,6 @@ For this script to run, the following annotation files must be downloaded from t
 * ``THINGSplus/Metadata/Image-specific/imageLabeling_imageWise.tsv``
 * ``THINGSplus/Metadata/Image-specific/imageLabeling_objectWise.tsv``
 
-Output columns are described in ...
-#TODO make file task-things_desc-perTrial_annotation.json
-
 Launch the following script to process a subject's sessions
 ```bash
 EVDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
@@ -64,6 +61,6 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 
 *Output*:
 
-- ``sub-0*/beh/sub-0*_task-things_desc-perTrial_annotation.tsv``, trialwise annotations for a concatenation of all events.tsv files. Columns are described in ``task-things_desc-perTrial_annotation.json`` (TODO: make .json file)
+- ``sub-0*/beh/sub-0*_task-things_desc-perTrial_annotation.tsv``, trialwise annotations for a concatenation of all events.tsv files. Columns are described in ``task-things_desc-perTrial_annotation.json``
 - ``sub-0*/beh/sub-0*_task-things_catNum.tsv``, list of categories of images shown to the subject throughout the experiment
 - ``sub-0*/beh/sub-0*_task-things_imgNum.tsv``, list of image numbers for images shown to the subject throughout the experiment

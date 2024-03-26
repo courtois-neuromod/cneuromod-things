@@ -111,8 +111,9 @@ def update_checkedimgs(df, run_imgNum, ref_img, checked_imgs):
         iname = df_2add['image_name'].iloc[i]
         checked_imgs[iname] = {}
         checked_imgs[iname]['blanks'] = 0
-        for feat in col_names:
-            checked_imgs[iname][feat] = df_2add[feat].iloc[i]
+        # UPDATE: do not add image annotations directly in beta .h5 file
+        #for feat in col_names:
+        #    checked_imgs[iname][feat] = df_2add[feat].iloc[i]
 
 
 def avg_beta(
@@ -275,14 +276,8 @@ if __name__ == '__main__':
 
     Betas are saved into a 1D array of flattened masked voxels for each image.
 
-    The following image-specific annotations from the THINGS and THINGSplus database are
-    also saved for each image: 'image_category', 'things_category_nr',
-    'things_image_nr', 'categ_arousal',  'categ_concreteness',
-    'categ_consistency', 'categ_nameability', 'categ_size', 'categ_wordfreq_COCA',
-    'highercat27_names', 'highercat53_names', 'highercat53_num', 'img_consistency',
-    'img_nameability', 'categ_manmade', 'categ_precious', 'categ_living', 'categ_heavy',
-    'categ_natural', 'categ_moves', 'categ_grasp', 'categ_hold', 'categ_be_moved',
-    and 'categ_pleasant'.
+    The following image-specific metrics are also saved for each image:
+    the number of repetitions, and the number of blank trials (no reccorded button press).
     """
     args = get_arguments()
 
