@@ -40,7 +40,7 @@
     "ran": "Should always be 1.",
     "order": "order in which the images were presented within the current fMRI run, from 0",
     "session_trial_time": "logged computer clock time for each trial",
-    "atypical": "boolean flag indicates trials whose entries required relabelling (e.g., condition unseen -> seen) because it was shown out of the pre-planned order",
+    "atypical": "boolean flag indicates trials whose entries required relabelling (e.g., condition unseen -> seen) because a run was shown out of the pre-planned order",
     "atypical_log": "logged details about what corrections/relabelling were applied to a trial entry; default is empty (no logged issue)",
     "exclude_session": "boolean flag. True indicates sessions with trial conditions altered due to sessions being administered out of order. We recommend not to include these sessions in analyses of memory effects (e.g., atypical number of image repetitions), but these sessions are appropriate to study image and concept representations in the brain.",
     "delay_days": "for 2nd and 3rd image showings, number of days elapsed since the image was last shown. 0.0 indicates within-session repetitions",

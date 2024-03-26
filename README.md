@@ -1,9 +1,19 @@
 cneuromod-things
 ==============================
 
-Data, scripts and derivatives for the CNeuroMod-THINGS dataset
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
-TODO: Add task and dataset description
+Files related to the main task are found under ``THINGS``.
+- ``things.fmriprep`` includes raw and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
+- ``things.behaviour`` includes analyses of the subjects' performance on the continuous recognition task.
+- ``things.glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
+
+Files also include data, scripts and derivatives for two complementary vision localizer tasks,
+``fLoc`` and ``retino`` (population receptive field), and ``anatomical`` data
+that include flat maps to visualize voxelwise statistics on the cortex.
+
+``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data files saved in the current repository.
+TODO: add refs to manuscript
 
 Project Organization
 ------------
@@ -91,8 +101,10 @@ Project Organization
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_desc-brain_part-mag_mask.nii.gz
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-preproc_part-mag_bold.nii.gz
-    │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv  <- noise confounds
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-brain_part-mag_mask.nii.gz    
+    │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv    <- noise confounds
     │    │    │  
     │    │    └── sourcedata         <- raw files
     │    │         └── things    <- bidsified raw fMRI data & output   
@@ -138,7 +150,7 @@ Project Organization
     │    │       │          ├── sub-0*_task-things_desc-perRun_beh.tsv    
     │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
     │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
-    │    │       ├── task-things_desc-perTrial_annotation.json  <- TODO
+    │    │       ├── task-things_desc-perTrial_annotation.json
     │    │       └── task-things_beh.json
     │    │
     │    └── things.glmsingle        <- glm single derivatives
@@ -158,7 +170,7 @@ Project Organization
     │            │     │    ├── GLMsingle_noiseceilings.py          
     │            │     │    ├── GLMsingle_betasPerTrial.py  
     │            │     │    └── GLMsingle_betasPerImg.py
-    │            │     └── top_image    
+    │            │     └── descriptive    
     │            │          └── ...        
     │            │
     │            ├── task-things_runlist.h5    <- list of valid runs per subject
@@ -180,7 +192,9 @@ Project Organization
     │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5      
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz.nii.gz  
     │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat
     │                  │
