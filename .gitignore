@@ -101,6 +101,7 @@ THINGS/things.glmsingle/sub-0*/glmsingle/output/T1w/*
 
 # THINGS events files data
 THINGS/things.fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
+fLoc/floc.fmriprep/sourcedata/floc/sub-0*/ses-0*/func/sub-0*_ses-0*_task-fLoc_run-0*events.tsv
 
 # raw QC notes w identifiers
 THINGS/things.fmriprep/sourcedata/things/code/raw_qc_notes.md
