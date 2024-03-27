@@ -8,7 +8,7 @@ Launch the following script to process a subject's sessions
 DATADIR="cneuromod-things/THINGS/data/things.fmriprep"
 OUTDIR="cneuromod-things/THINGS/data/things.glmsingle"
 
-python qc/compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
+python compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
 
 

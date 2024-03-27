@@ -1,7 +1,4 @@
 
-
-
-
 Descriptive analyses
 ================================
 
@@ -24,3 +21,14 @@ python extract_annotations.py --things_dir="${DATADIR}"
 *Output*:
 
 - ``things.glm/task-things_imgAnnotations.json``, a dictionary with THINGS, THINGSplus and manual annotations for each image in the dataset, with image names as key.
+
+------------------
+
+## Step 2. Rank images per beta score within each voxel
+
+preleminary step: generate ROI masks for low and high level visual areas with fLoc and pRF (retino) analyses
+
+
+------------------
+
+# Step 3. Ccompute metrics to generate t-SNE plots

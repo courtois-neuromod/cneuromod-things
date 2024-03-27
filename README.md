@@ -52,12 +52,15 @@ Project Organization
     │            ├── code            <- scripts to run glm and generate ROIs
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
-    │            │     ├── run_glm    
-    │            │     └── make_rois    
+    │            │     ├──
+    │            │     ├──         
+    │            │     └──     
+    │            │
+    │            ├── parcels
     │            │
     │            └── sub-0*
     │                  ├── glm
-    │                  │    └── ...
+    │                  │    └── sub-0*_task-floc_model-GLM_design.h5
     │                  └── rois
     │                       └── ...
     │
@@ -172,9 +175,12 @@ Project Organization
     │            │     │    ├── GLMsingle_betasPerTrial.py  
     │            │     │    └── GLMsingle_betasPerImg.py
     │            │     └── descriptive    
+    │            │          ├── README.md         
+    │            │          ├── extract_annotations.py  
     │            │          └── ...        
     │            │
     │            ├── task-things_runlist.h5    <- list of valid runs per subject
+    │            ├── task-things_imgAnnotations.json    <- dictionary of compiled image annotations
     │            │
     │            └── sub-0*
     │                  ├── glmsingle
