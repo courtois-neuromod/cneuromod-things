@@ -249,23 +249,21 @@ def run_glm(fmri_img, design_matrices, mask, args):
                  }
 
     data_space = 'MNI152NLin2009cAsym' if args.mni else 'T1w'
-    if args.smooth:
-        out_space += '_sm'
-
+    slabel = "smooth" if args.smooth else "unsmooth"
     for index, (c_id, contrast_val) in tqdm(enumerate(contrasts.items()), desc='computing and exporting contrasts'):
         t_map = fmri_glm.compute_contrast(
             contrast_val, output_type='stat', stat_type='t'
         )
         t_map.to_filename(
             f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
-            f"space-{data_space}_model-GLM_stats-tscores_desc-{c_id}_statseries.nii.gz",
+            f"space-{data_space}_model-GLM_stats-tscores_contrast-{c_id}_desc-{slabel}_statseries.nii.gz",
         )
         effect_size = fmri_glm.compute_contrast(
             contrast_val, output_type='effect_size',
         )
         effect_size.to_filename(
             f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
-            f"space-{data_space}_model-GLM_stats-betas_desc-{c_id}_statseries.nii.gz",
+            f"space-{data_space}_model-GLM_stats-betas_contrast-{c_id}_desc-{slabel}_statseries.nii.gz",
         )
 
 

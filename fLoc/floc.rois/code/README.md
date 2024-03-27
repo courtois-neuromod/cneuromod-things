@@ -41,6 +41,7 @@ BOLDDIR="cneuromod-things/fLoc/floc.fmriprep"
 OUTDIR="cneuromod-things/fLoc/floc.rois"
 
 python floc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --smooth --sub="01"
+python floc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
 
 **Input**:
@@ -51,7 +52,7 @@ Note that the script can process scans in MNI or subject (T1w) space (default is
 
 **Output**:
 - Two mask files generated from the union of the run ``_mask.nii.gz`` files save with the _bold.nii.gz files. ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
-- One volume of t-scores and one of beta values (``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-{tscores, betas}_desc-{contrast}_statseries.nii.gz``) for each of the 9 GLM contrasts listed below.
+- One volume of t-scores and one of beta values (``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-{tscores, betas}_contrast-{contrast}_desc-{smooth, unsmooth}_statseries.nii.gz``) for each of the 9 GLM contrasts listed below.
 - The following four contrasts are as specified in the work of the Kanwisher group:
 > * face > object  
 > * scene > object  

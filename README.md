@@ -63,8 +63,10 @@ Project Organization
     │                  │    ├── sub-0*_task-floc_model-GLM_design.h5
     │                  │    ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
     │                  │    ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-tscores_desc-{contrast}_statseries.nii.gz    
-    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-betas_desc-{contrast}_statseries.nii.gz
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-tscores_contrast-{contrast}_desc-smooth_statseries.nii.gz    
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-betas_contrast-{contrast}_desc-smooth_statseries.nii.gz
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-tscores_contrast-{contrast}_desc-unsmooth_statseries.nii.gz    
+    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-betas_contrast-{contrast}_desc-unsmooth_statseries.nii.gz
     │                  └── rois
     │                       └── ...
     │
