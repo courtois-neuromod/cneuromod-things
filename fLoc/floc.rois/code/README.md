@@ -28,7 +28,7 @@ python floc_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="0
 (e.g., ``sub-03_ses-001_task-fLoc_run-01_events.tsv``)
 
 **Output**:
-- ``sub-01_task-floc_model-GLM_design.h5``, a HDF5 file with one dataset group per run per session; each group (run) includes three datasets (arrays): 'onset', 'duration' and 'trial_type'
+- ``sub-{sub_num}_task-floc_model-GLM_design.h5``, a HDF5 file with one dataset group per run per session; each group (run) includes three datasets (arrays): 'onset', 'duration' and 'trial_type'
 
 ------------
 ## Step 2. Run first-level GLM in nilearn on fLoc BOLD data using design .h5 files from Step 1
@@ -44,18 +44,14 @@ python floc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" 
 ```
 
 **Input**:
-- A subject's ``sub-{sub_num}_floc_nilearndesign.h5`` file created in Step 1.
-- All of a subject's ``*bold.nii.gz`` files, for all sessions (~6) and runs (2 per session) \
-(e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``)
-- All of a subject's confound *desc-confounds_timeseries.tsv files, for all sessions (~6) and runs (2 per session) \
-(e.g., sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
-- A mask file (.nii); if no mask exists, the script generates it from the union of _mask.nii.gz \
-files found in the same directories as the _bold.nii.gz files
-UPDATE: ideally, use the clean "goodvoxels" mask generated in step 1b.
-- Note that the script can process scans in MNI or T1w space (as specified in the bash script)
+- A subject's ``sub-{sub_num}_task-floc_model-GLM_design.h5`` file created in Step 1.
+- All of a subject's ``*bold.nii.gz`` files, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``)
+- All of a subject's confound ``*desc-confounds_timeseries.tsv files``, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``) \
+Note that the script can process scans in MNI or subject (T1w) space (default is T1w)
 
 **Output**:
-- One volume (.nii.gz) of beta values and one volume of t-scores for each GLM contrast (e.g., face > object; scene > (face + object, + body + characters)) specified in the script.
+- Two mask files generated from the union of the run ``_mask.nii.gz`` files save with the _bold.nii.gz files. ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
+- One volume of t-scores and one of beta values (``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-{tscores, betas}_desc-{contrast}_statseries.nii.gz``) for each of the 9 GLM contrasts listed below.
 - The following four contrasts are as specified in the work of the Kanwisher group:
 > * face > object  
 > * scene > object  

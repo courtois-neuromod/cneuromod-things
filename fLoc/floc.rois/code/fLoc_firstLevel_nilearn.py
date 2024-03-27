@@ -1,5 +1,5 @@
 import glob, os, json
-import argparse
+import argparse, subprocess
 
 import h5py
 import nibabel as nib
@@ -133,42 +133,68 @@ def prepare_data(args):
 
     bold_list = []
     design_list = []
-
     for bold_path in tqdm(bold_files, desc='building data and design matrices'):
         chunks = os.path.basename(bold_path).split('_')
         ses_num = chunks[1][-2:]
         run_num = f'{int(chunks[3][-1]):02}'
 
         try:
-            conf_path = os.path.join(conf_dir, os.path.basename(bold_path)[:-20] + 'bold.nii.gz')
-            confounds, sample_mask = load_confounds([conf_path], strategy=["high_pass", "motion", "wm_csf", "global_signal"],
-                                                    motion="basic", wm_csf="basic", global_signal="basic")
-
+            temp_bold = f"{out_dir}/sub-{sub_num}/glm/{os.path.basename(bold_path).replace('_part-mag', '')}"
+            conf_path = bold_path.replace(
+                "_space-T1w_desc-preproc_part-mag_bold.nii.gz",
+                "_desc-confounds_part-mag_timeseries.tsv",
+            )
+            temp_conf = f"{out_dir}/sub-{sub_num}/glm/{os.path.basename(conf_path).replace('_part-mag', '')}"
+            subprocess.run(
+                f"cp {conf_path} {temp_conf}", shell = True,
+                executable="/bin/bash",
+            )
+            confounds, sample_mask = load_confounds(
+                [temp_bold],
+                strategy=["high_pass", "motion", "wm_csf", "global_signal"],
+                motion="basic", wm_csf="basic", global_signal="basic",
+            )
+            subprocess.run(
+                f"rm -f {temp_conf}", shell = True,
+                executable="/bin/bash",
+            )
             niifile = nib.load(bold_path)
-            #if smooth:
-            #    niifile = smooth_img(imgs=niifile, fwhm=5)
 
             # Remove first 3 volumes of each run
-            niifile = unmask(apply_mask(niifile, mask, dtype=np.single)[3:155, :], mask)
+            niifile = unmask(
+                apply_mask(niifile, clean_mask, dtype=np.single)[3:155, :],
+                clean_mask,
+            )
             bold_list.append(niifile)
 
-            #masked_bold = apply_mask(niifile, mask, dtype=np.single)
-            #bold_clean = clean(masked_bold, detrend=True, standardize='zscore',
-            #                   standardize_confounds=True, t_r=1.49, confounds=confounds, ensure_finite=True)[3:155, :]
-            #assert(bold_clean.shape[0] == TRs_per_run)
-            #bold_clean = unmask(bold_clean, mask)
-            #bold_list.append(bold_clean)
-
-            #masked_bold = np.nan_to_num(zscore(apply_mask(nib.load(bold_path), mask, dtype=np.single)[3:155, :])).T
-            #assert(masked_bold.shape[1] == TRs_per_run)
-            #bold_list.append(masked_bold)
-
-            events_df = pd.DataFrame(np.array(subj_design[ses_num][run_num]['onset']), columns = ['onset'])
-            events_df.insert(loc=1, column='duration', value=np.array(subj_design[ses_num][run_num]['duration']), allow_duplicates=True)
-            events_df.insert(loc=2, column='trial_type', value=np.array(subj_design[ses_num][run_num]['trial_type']).astype(str), allow_duplicates=True)
-            design_matrix = make_first_level_design_matrix(frame_times, events_df, add_regs=confounds.iloc[3:155, :], drift_model='cosine', hrf_model = 'spm', high_pass = .01)
+            events_df = pd.DataFrame(
+                np.array(subj_design[ses_num][run_num]['onset']),
+                columns = ['onset'],
+            )
+            events_df.insert(
+                loc=1,
+                column='duration',
+                value=np.array(subj_design[ses_num][run_num]['duration']),
+                allow_duplicates=True,
+            )
+            events_df.insert(
+                loc=2,
+                column='trial_type',
+                value=np.array(subj_design[ses_num][run_num]['trial_type']).astype(str),
+                allow_duplicates=True,
+            )
+            design_matrix = make_first_level_design_matrix(
+                frame_times,
+                events_df,
+                add_regs=confounds.iloc[3:155, :],
+                drift_model='cosine',
+                hrf_model = 'spm',
+                high_pass = .01,
+            )
             '''
-            No run includes all 8 subconditions; this process makes sure all design matrices have the same columns across runs
+            No run includes all 8 subconditions;
+            this process makes sure all design matrices have the
+            same columns across runs
             '''
             dm_labels = list(design_matrix.columns)
             for cat_label in cat_labels:
@@ -183,7 +209,7 @@ def prepare_data(args):
 
     subj_design.close()
 
-    return bold_list, design_list, mask
+    return bold_list, design_list, clean_mask
 
 
 # Function from: https://nilearn.github.io/stable/auto_examples/04_glm_first_level/plot_fiac_analysis.html#sphx-glr-auto-examples-04-glm-first-level-plot-fiac-analysis-py
@@ -192,38 +218,55 @@ def pad_vector(contrast_, n_columns):
     return np.hstack((contrast_, np.zeros(n_columns - len(contrast_))))
 
 
-def run_glm(fmri_img, design_matrices, mask, sub_num, out_dir, smooth=False, mni=False):
+def run_glm(fmri_img, design_matrices, mask, args):
+    sub_num = args.sub_num
+    out_dir = args.out_dir
 
     hrf_model = 'spm' #'spm + derivative'  # The hemodynamic response function is the SPM canonical one.
-    smoothing_fwhm = 5 if smooth else None
+    smoothing_fwhm = 5 if args.smooth else None
 
-    fmri_glm = FirstLevelModel(t_r=1.49, slice_time_ref=0., noise_model='ar1',
-                               standardize=True, mask_img=mask, drift_model='cosine',
-                               high_pass=.01, smoothing_fwhm=smoothing_fwhm, hrf_model=hrf_model)
-
+    fmri_glm = FirstLevelModel(
+        t_r=1.49, slice_time_ref=0., noise_model='ar1',
+        standardize=True, mask_img=mask, drift_model='cosine',
+        high_pass=.01, smoothing_fwhm=smoothing_fwhm, hrf_model=hrf_model,
+    )
     fmri_glm = fmri_glm.fit(fmri_img, design_matrices=design_matrices)
 
     n_columns = design_matrices[0].shape[1]
-    #cat_labels = ['adult', 'body', 'car', 'corridor', 'house', 'instrument', 'limb', 'word', 'baseline']
+    """
+    cat_labels = ['adult', 'body', 'car', 'corridor', 'house',
+                  'instrument', 'limb', 'word', 'baseline']
+    """
     contrasts = {'faces': pad_vector([7, -1, -1, -1, -1, -1, -1, -1], n_columns),
                  'bodies': pad_vector([-1, 3, -1, -1, -1, -1, 3, -1], n_columns),
                  'characters': pad_vector([-1, -1, -1, -1, -1, -1, -1, 7], n_columns),
                  'objects': pad_vector([-1, -1, 3, -1, -1, 3, -1, -1], n_columns),
                  'places': pad_vector([-1, -1, -1, 3, 3, -1, -1, -1], n_columns),
-                 'face-min-object': pad_vector([2, 0, -1, 0, 0, -1, 0, 0, 0], n_columns),
-                 'scene-min-object': pad_vector([0, 0, -1, 1, 1, -1, 0, 0, 0], n_columns),
-                 'body-min-object': pad_vector([0, 1, -1, 0, 0, -1, 1, 0, 0], n_columns),
-                 'object-min-rest': pad_vector([0, 0, 1, 0, 0, 1, 0, 0, -2], n_columns)
+                 'faceMinObject': pad_vector([2, 0, -1, 0, 0, -1, 0, 0, 0], n_columns),
+                 'sceneMinObject': pad_vector([0, 0, -1, 1, 1, -1, 0, 0, 0], n_columns),
+                 'bodyMinObject': pad_vector([0, 1, -1, 0, 0, -1, 1, 0, 0], n_columns),
+                 'objectMinRest': pad_vector([0, 0, 1, 0, 0, 1, 0, 0, -2], n_columns)
                  }
 
-    out_space = 'MNI' if mni else 'T1w'
-    if smooth:
+    data_space = 'MNI152NLin2009cAsym' if args.mni else 'T1w'
+    if args.smooth:
         out_space += '_sm'
-    for index, (contrast_id, contrast_val) in tqdm(enumerate(contrasts.items()), desc='computing and exporting contrasts'):
-        t_map = fmri_glm.compute_contrast(contrast_val, output_type='stat', stat_type='t')
-        t_map.to_filename(os.path.join(out_dir, f'sub-{sub_num}_floc_{contrast_id}_tscore_{out_space}_goodvox.nii.gz'))
-        effect_size = fmri_glm.compute_contrast(contrast_val, output_type='effect_size')
-        effect_size.to_filename(os.path.join(out_dir, f'sub-{sub_num}_floc_{contrast_id}_betas_{out_space}_goodvox.nii.gz'))
+
+    for index, (c_id, contrast_val) in tqdm(enumerate(contrasts.items()), desc='computing and exporting contrasts'):
+        t_map = fmri_glm.compute_contrast(
+            contrast_val, output_type='stat', stat_type='t'
+        )
+        t_map.to_filename(
+            f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
+            f"space-{data_space}_model-GLM_stats-tscores_desc-{c_id}_statseries.nii.gz",
+        )
+        effect_size = fmri_glm.compute_contrast(
+            contrast_val, output_type='effect_size',
+        )
+        effect_size.to_filename(
+            f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
+            f"space-{data_space}_model-GLM_stats-betas_desc-{c_id}_statseries.nii.gz",
+        )
 
 
 if __name__ == '__main__':
