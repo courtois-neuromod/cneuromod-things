@@ -1,5 +1,6 @@
-import glob, json
+import glob, json, re
 import argparse
+from functools import singledispatch
 
 import numpy as np
 import pandas as pd
@@ -41,6 +42,21 @@ def get_arguments():
     return parser.parse_args()
 
 
+def convert(val_name, val):
+    if val_name == 'highercat53_names':
+        str_list = val.split("'")
+        return [str_list[x] for x in range(1, len(str_list), 2)]
+    elif val_name == 'highercat53_num':
+        str_list = re.split(", ", val[1:-1]) if len(val[1:-1]) > 0 else []
+        return [int(x) for x in str_list]
+    elif isinstance(val, np.int64):
+        return int(val)
+    elif isinstance(val, np.float64):
+        return float(val)
+    else:
+        return str(val)
+
+
 if __name__ == '__main__':
     args = get_arguments()
 
@@ -63,7 +79,7 @@ if __name__ == '__main__':
         if img not in img_annot:
             img_annot[img] = {}
             for col_val in COL_NAMES:
-                img_annot[img][col_val] = df[col_val].iloc[i]
+                img_annot[img][col_val] = convert(col_val, df[col_val].iloc[i])
 
     with open(f"{args.things_dir}/things.glmsingle/task-things_imgAnnotations.json", 'w') as outfile:
         json.dump(img_annot, outfile)
