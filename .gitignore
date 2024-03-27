@@ -96,6 +96,7 @@ THINGS/things.glmsingle/sub-0*/qc/sub-0*_task-things_headmotion.tsv
 
 # THINGS GLMsingle data
 THINGS/things.glmsingle/*.h5
+THINGS/things.glmsingle/task-things_imgAnnotations.json
 THINGS/things.glmsingle/sub-0*/glmsingle/*/sub-0*
 THINGS/things.glmsingle/sub-0*/glmsingle/output/T1w/*
 
