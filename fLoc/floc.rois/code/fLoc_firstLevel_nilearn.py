@@ -89,7 +89,7 @@ def prepare_data(args):
     Generate a mask from the union of brain voxels across sessions and runs.
     Exclude voxels with no signal variability.
     '''
-    sub_num = args.sub_num
+    sub_num = args.sub
     out_dir = args.out_dir
     if args.mni:
         mask_suffix = '_space-MNI152NLin2009cAsym_desc-brain_part-mag_mask.nii.gz'
@@ -193,35 +193,38 @@ def prepare_data(args):
             )
             '''
             No run includes all 8 subconditions;
-            this process makes sure all design matrices have the
-            same columns across runs
+            this process makes sure all design matrices have the same columns
+            across runs
             '''
             dm_labels = list(design_matrix.columns)
             for cat_label in cat_labels:
                 if cat_label not in dm_labels:
-                    design_matrix.insert(loc=0, column=cat_label, value=0.0, allow_duplicates=True)
+                    design_matrix.insert(
+                        loc=0, column=cat_label, value=0.0, allow_duplicates=True,
+                    )
             design_matrix = design_matrix[cat_labels + dm_labels[6:]]
-
+            
             design_list.append(design_matrix)
 
         except:
-            print('something went wrong loading session ' + str(ses_num) + ', run ' + run_num)
+            print(
+                f'something went wrong loading session {str(ses_num)}, run {run_num}'
+            )
 
     subj_design.close()
 
     return bold_list, design_list, clean_mask
 
 
-# Function from: https://nilearn.github.io/stable/auto_examples/04_glm_first_level/plot_fiac_analysis.html#sphx-glr-auto-examples-04-glm-first-level-plot-fiac-analysis-py
+# Function from https://nilearn.github.io/stable/auto_examples/04_glm_first_level/plot_fiac_analysis.html#sphx-glr-auto-examples-04-glm-first-level-plot-fiac-analysis-py
 def pad_vector(contrast_, n_columns):
     """A small routine to append zeros in contrast vectors"""
     return np.hstack((contrast_, np.zeros(n_columns - len(contrast_))))
 
 
 def run_glm(fmri_img, design_matrices, mask, args):
-    sub_num = args.sub_num
+    sub_num = args.sub
     out_dir = args.out_dir
-
     hrf_model = 'spm' #'spm + derivative'  # The hemodynamic response function is the SPM canonical one.
     smoothing_fwhm = 5 if args.smooth else None
 
@@ -231,39 +234,45 @@ def run_glm(fmri_img, design_matrices, mask, args):
         high_pass=.01, smoothing_fwhm=smoothing_fwhm, hrf_model=hrf_model,
     )
     fmri_glm = fmri_glm.fit(fmri_img, design_matrices=design_matrices)
-
     n_columns = design_matrices[0].shape[1]
     """
+    As a reference
     cat_labels = ['adult', 'body', 'car', 'corridor', 'house',
                   'instrument', 'limb', 'word', 'baseline']
     """
-    contrasts = {'faces': pad_vector([7, -1, -1, -1, -1, -1, -1, -1], n_columns),
-                 'bodies': pad_vector([-1, 3, -1, -1, -1, -1, 3, -1], n_columns),
-                 'characters': pad_vector([-1, -1, -1, -1, -1, -1, -1, 7], n_columns),
-                 'objects': pad_vector([-1, -1, 3, -1, -1, 3, -1, -1], n_columns),
-                 'places': pad_vector([-1, -1, -1, 3, 3, -1, -1, -1], n_columns),
-                 'faceMinObject': pad_vector([2, 0, -1, 0, 0, -1, 0, 0, 0], n_columns),
-                 'sceneMinObject': pad_vector([0, 0, -1, 1, 1, -1, 0, 0, 0], n_columns),
-                 'bodyMinObject': pad_vector([0, 1, -1, 0, 0, -1, 1, 0, 0], n_columns),
-                 'objectMinRest': pad_vector([0, 0, 1, 0, 0, 1, 0, 0, -2], n_columns)
-                 }
+    contrasts = {
+        'faces': pad_vector([7, -1, -1, -1, -1, -1, -1, -1], n_columns),
+        'bodies': pad_vector([-1, 3, -1, -1, -1, -1, 3, -1], n_columns),
+        'characters': pad_vector([-1, -1, -1, -1, -1, -1, -1, 7], n_columns),
+        'objects': pad_vector([-1, -1, 3, -1, -1, 3, -1, -1], n_columns),
+        'places': pad_vector([-1, -1, -1, 3, 3, -1, -1, -1], n_columns),
+        'faceMinObject': pad_vector([2, 0, -1, 0, 0, -1, 0, 0, 0], n_columns),
+        'sceneMinObject': pad_vector([0, 0, -1, 1, 1, -1, 0, 0, 0], n_columns),
+        'bodyMinObject': pad_vector([0, 1, -1, 0, 0, -1, 1, 0, 0], n_columns),
+        'objectMinRest': pad_vector([0, 0, 1, 0, 0, 1, 0, 0, -2], n_columns)
+    }
 
     data_space = 'MNI152NLin2009cAsym' if args.mni else 'T1w'
     slabel = "smooth" if args.smooth else "unsmooth"
-    for index, (c_id, contrast_val) in tqdm(enumerate(contrasts.items()), desc='computing and exporting contrasts'):
+
+    for index, (c_id, contrast_val) in tqdm(
+        enumerate(contrasts.items()), desc='computing and exporting contrasts',
+    ):
         t_map = fmri_glm.compute_contrast(
             contrast_val, output_type='stat', stat_type='t'
         )
         t_map.to_filename(
             f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
-            f"space-{data_space}_model-GLM_stats-tscores_contrast-{c_id}_desc-{slabel}_statseries.nii.gz",
+            f"space-{data_space}_model-GLM_stats-tscores_contrast-{c_id}_"
+            f"desc-{slabel}_statseries.nii.gz",
         )
         effect_size = fmri_glm.compute_contrast(
             contrast_val, output_type='effect_size',
         )
         effect_size.to_filename(
             f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_"
-            f"space-{data_space}_model-GLM_stats-betas_contrast-{c_id}_desc-{slabel}_statseries.nii.gz",
+            f"space-{data_space}_model-GLM_stats-betas_contrast-{c_id}_"
+            f"desc-{slabel}_statseries.nii.gz",
         )
 
 

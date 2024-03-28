@@ -52,8 +52,8 @@ Project Organization
     │            ├── code            <- scripts to run glm and generate ROIs
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
-    │            │     ├──
-    │            │     ├──         
+    │            │     ├── fLoc_makedesign.py
+    │            │     ├── fLoc_firstLevel_nilearn.py  
     │            │     └──     
     │            │
     │            ├── parcels

@@ -20,7 +20,7 @@ Launch the following script, specifying the subject number.
 DATADIR="cneuromod-things/fLoc/floc.fmriprep/sourcedata/floc"
 OUTDIR="cneuromod-things/fLoc/floc.rois"
 
-python floc_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
+python fLoc_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
 
 **Input**:
@@ -40,8 +40,8 @@ Launch the following script, specifying the subject number.
 BOLDDIR="cneuromod-things/fLoc/floc.fmriprep"
 OUTDIR="cneuromod-things/fLoc/floc.rois"
 
-python floc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --smooth --sub="01"
-python floc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --sub="01"
+python fLoc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --smooth --sub="01"
+python fLoc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
 
 **Input**:
