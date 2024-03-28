@@ -110,7 +110,7 @@ THINGS/things.fmriprep/sourcedata/things/code/raw_qc_notes.md
 fLoc/floc.rois/sub-0*/glm/sub-*
 fLoc/floc.fmriprep/sourcedata/floc/sub-0*/ses-0*/func/sub-0*_ses-0*_task-fLoc_run-0*events.tsv
 fLoc/floc.rois/standard_masks/standard_rois/*nii
-fLoc/floc.rois/standard_masks/kanwisher_parcels/*/*nii
+fLoc/floc.rois/standard_masks/kanwisher_parcels/*
 
 # output figures
 datapaper/figures/*.png
