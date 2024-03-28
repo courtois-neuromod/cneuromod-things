@@ -71,14 +71,11 @@ To obtain ROI masks in subject space, we started from normalized (CVS space) par
 
 The following command lines derive ROI masks from those group parcels, and warp the parcels and ROI masks from CVS to MNI to subject (T1w) space.
 
-**Links and documentation**
-- CVS parcels (``cvs_avg35`` template) in ``.nii`` format were downloaded from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
-- Instructions to convert parcels from CVS (cvs_avg35) to MNI space [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581)
-- Instructions to convert parcels from MNI to T1w space with fmriprep output [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8)
-
 ### 3.0 Download the Kanwisher parcels
 
-Save parcels under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
+Download CVS parcels (``cvs_avg35`` template) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
+
+Save parcel files under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
 
 ### 3.1 Extract normalized (CVS) ROI masks from group parcels (e.g., FFA, PPA)
 
@@ -98,25 +95,128 @@ DATADIR="cneuromod-things/fLoc/floc.rois"
 python fLoc_split_CVSparcels_perROI.py --data_dir="${DATADIR}"
 ```
 
-Script: register_FSrois_2mni.sh \
-Server: beluga \
-CVS parcels dowloaded from Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/floc/parcels_kanwisher \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results
+**Input**:
+- the Kanwisher ROI files for each contrast (face, scene, object, body; e.g., ``cvs_scene_parcels/cvs_scene_parcels/fROIs-fwhm_5-0.0001.nii``)
+**Output**:
+- For each contrast (face, scene, body, object), a series of binary ROI masks in ``cvs_avg35`` space (e.g., ``parcel-kanwisher_space-CVSavg35_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii``). Note that, for each ROI label, the script produces a left, a right and a bilateral mask.
 
-Call script within interactive session on beluga (quick):
+
+### 3.2 Warp parcels and ROI masks from CVS to MNI space
+
+Use Freesurfer and FSL to convert CVS parcels and masks from CVS to MNI space as a intermediate step to deriving masks in subject space. Instructions to convert parcels from CVS (cvs_avg35) to MNI space are found [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581).
+
+First, you'll need FLS and Freesurfer installed, and your ``$FSLDIR`` and ``$SUBJECTS_DIR`` variables defined.
+You can check by making sure that typing ``$SUBJECTS_DIR`` in your terminal returns a directory path.
+Something like ``/home/my_username/.local/easybuild/software/2020/Core/freesurfer/7.1.1/subjects``. \
+*Note: load ``StdEnv/2020``, ``gcc/9.3.0``, ``fsl/6.0.3``, and ``freesurfer/7.1.1`` modules to run the following commands on Alliance Canada.*
+
+Second, you may need to register the ``cvs_avg35`` template to ``MNI125`` space. **This step only needs to be performed once.** It saves the transformation file ``reg.mni152.2mm.dat`` under ``${SUBJECTS_DIR}/cvs_avg35/mri/transforms/``
+
+Type, from anywhere:
 ```bash
-./register_FSrois_2mni.sh
+mni152reg --s cvs_avg35
 ```
 
-**Input**:
-- the Kanwisher ROI files for each contrast (face, scene, object, body; e.g., cvs_scene_parcels/cvs_scene_parcels/fROIs-fwhm_5-0.0001.nii)
-- Subjects' anatomical scan in native space (e.g., floc.fmriprep/sourcedata/smriprep/sub-01_desc-preproc_T1w.nii.gz)
-- the fmriprep inverse transformation file from MNI to T1w (e.g., sub-02_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5)
+Third, warp the Kanwisher parcels from CVS to MNI152 space for each contrast (face, scene, body, scene).
+```bash
+PARCELDIR="cneuromod-things/fLoc/floc.rois/standard_masks/kanwisher_parcels"
 
-**Output**:
-- For each contrast (face, scene, body, object), an ROI volume in MNI space (e.g., object_parcels_cvs2mni.nii)
-- For each subject, for each contrast, an ROI volume in native T1w space (e.g., sub-03_face_parcels_mni2t1w.nii)
+for PARAM in body face object scene
+do
+  mri_vol2vol --targ ${PARCELDIR}/cvs/cvs_${PARAM}_parcels/cvs_${PARAM}_parcels/fROIs-fwhm_5-0.0001.nii \
+  --mov ${FSLDIR}/data/standard/MNI152_T1_2mm.nii.gz \
+  --o ${PARCELDIR}/mni/parcel-kanwisher_space-MNI152T1_res-2mm_contrast-${PARAM}_mask.nii \
+  --inv --reg ${SUBJECTS_DIR}/cvs_avg35/mri/transforms/reg.mni152.2mm.dat
+done
+```
+
+Fourth, warp the Kanwisher ROI masks from CVS to MNI152 space for each ROI
+```bash
+ROIDIR="cneuromod-things/fLoc/floc.rois/standard_masks/standard_rois"
+
+for PARAM in body_roi-EBA face_roi-FFA face_roi-OFA face_roi-pSTS scene_roi-MPA scene_roi-OPA scene_roi-PPA
+do
+  mri_vol2vol --targ ${ROIDIR}/parcel-kanwisher_space-CVSavg35_contrast-${PARAM}_desc-bilat_mask.nii \
+  --mov $FSLDIR/data/standard/MNI152_T1_2mm.nii.gz \
+  --o ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-bilat_mask.nii \
+  --inv --reg ${SUBJECTS_DIR}/cvs_avg35/mri/transforms/reg.mni152.2mm.dat
+
+  mri_vol2vol --targ ${ROIDIR}/parcel-kanwisher_space-CVSavg35_contrast-${PARAM}_desc-L_mask.nii \
+  --mov $FSLDIR/data/standard/MNI152_T1_2mm.nii.gz \
+  --o ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-L_mask.nii \
+  --inv --reg ${SUBJECTS_DIR}/cvs_avg35/mri/transforms/reg.mni152.2mm.dat
+
+  mri_vol2vol --targ ${ROIDIR}/parcel-kanwisher_space-CVSavg35_contrast-${PARAM}_desc-R_mask.nii \
+  --mov $FSLDIR/data/standard/MNI152_T1_2mm.nii.gz \
+  --o ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-R_mask.nii \
+  --inv --reg ${SUBJECTS_DIR}/cvs_avg35/mri/transforms/reg.mni152.2mm.dat
+done
+```
+
+### 3.3 Warp parcels and ROI masks from MNI to subject (T1w)) space
+
+Use ANTs to warp parcels and ROI masks from MNI152 to subject space. Instructions to convert parcels from MNI to T1w space using output from fmriprep can be found [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8). \
+*Note: load ``StdEnv/2020``, ``gcc/9.3.0`` and ``ants/2.3.5`` modules to run the following commands on Alliance Canada.*
+
+You will need a reference anatomical image and transformation matrices outputted by fmriprep to warp the masks to each subject's space.
+
+First, warp the Kanwisher parcels from MNI152 to T1w.
+```bash
+PARCELDIR="cneuromod-things/fLoc/floc.rois/standard_masks/kanwisher_parcels/mni"
+OUTDIR="cneuromod-things/fLoc/floc.rois"
+SPREPDIR="cneuromod-things/anatomical/anat.smriprep"
+
+for PARAM in body face object scene
+do
+  for SUBNUM in 01 02 03 06
+  do
+    OUTSUB="${OUTDIR}/sub-${SUBNUM}/rois/from_atlas"
+
+    antsApplyTransforms --default-value 0 --dimensionality 3 --float 0 \
+    --input ${PARCELDIR}/parcel-kanwisher_space-MNI152T1_res-2mm_contrast-${PARAM}_mask.nii \
+    --interpolation Linear \
+    --output ${OUTSUB}/sub-${SUBNUM}_parcel-kanwisher_space-T1w_contrast-${PARAM}_mask.nii \
+    --reference-image ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_desc-preproc_T1w.nii.gz \
+    --transform ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+  done
+done
+```
+
+Second, warp the Kanwisher ROI masks from MNI152 to T1w.
+```bash
+ROIDIR="cneuromod-things/fLoc/floc.rois/standard_masks/standard_rois"
+OUTDIR="cneuromod-things/fLoc/floc.rois"
+SPREPDIR="cneuromod-things/anatomical/anat.smriprep"
+
+for PARAM in body_roi-EBA face_roi-FFA face_roi-OFA face_roi-pSTS scene_roi-MPA scene_roi-OPA scene_roi-PPA
+do
+  for SUBNUM in 01 02 03 06
+  do
+    OUTSUB="${OUTDIR}/sub-${SUBNUM}/rois/from_atlas"
+
+    antsApplyTransforms --default-value 0 --dimensionality 3 --float 0 \
+    --input ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-bilat_mask.nii \
+    --interpolation Linear \
+    --output ${OUTSUB}/sub-${SUBNUM}_parcel-kanwisher_space-T1w_contrast-${PARAM}_desc-bilat_mask.nii \
+    --reference-image ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_desc-preproc_T1w.nii.gz \
+    --transform ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+
+    antsApplyTransforms --default-value 0 --dimensionality 3 --float 0 \
+    --input ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-L_mask.nii \
+    --interpolation Linear \
+    --output ${OUTSUB}/sub-${SUBNUM}_parcel-kanwisher_space-T1w_contrast-${PARAM}_desc-L_mask.nii \
+    --reference-image ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_desc-preproc_T1w.nii.gz \
+    --transform ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+
+    antsApplyTransforms --default-value 0 --dimensionality 3 --float 0 \
+    --input ${ROIDIR}/parcel-kanwisher_space-MNI152T1_contrast-${PARAM}_desc-R_mask.nii \
+    --interpolation Linear \
+    --output ${OUTSUB}/sub-${SUBNUM}_parcel-kanwisher_space-T1w_contrast-${PARAM}_desc-R_mask.nii \
+    --reference-image ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_desc-preproc_T1w.nii.gz \
+    --transform ${SPREPDIR}/sub-${SUBNUM}/anat/sub-${SUBNUM}_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+  done
+done
+```
 
 ------------
 **Step 4. Create union masks between T1w-warped group ROIs and subjects' t-score maps from the fLoc dataset**
@@ -140,53 +240,6 @@ Call script within interactive session on beluga (quick), with subject number gi
 - For each subject, for each contrast (face, scene, body, object), an ROI mask (volume) in T1w space that corresponds to the union between the warped group mask and the voxels who's t values are above the specified threshold (e.g., s01_T1w_fLoc_faces_tscore_t5.0.nii.gz). An ROI is calculated for both the Kanwisher (e.g. face > object) and the NSD (face > [object, body. scene, character]) contrast.
 - The same contrasts as above, but masked and flattened with the THINGS functional mask used to process the THINGS dataset with GLMsingle, so that matching voxels align between THINGS betas and the fLoc ROIs when both are flattened into 1D vectors (e.g., s03_fLoc_faces_tscore_t5.0_thingsmaskT1w_flat.npy).
 
------------
-
-**Step 5. Extract unique parcels for specific ROIs (e.g., FFA) from normalized CVS parcel files**
-
-The cvs parcel files each contain many ROIs per contrast. Rather than creating a single file with all the parcels from a single fLoc contrasts, create a separate mask (in cvs_avg35 space) for each region of interest.
-
-Script: split_cvs_parcels_per_ROI.py \
-Server: beluga \
-CVS parcels dowloaded from Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
-Link to paper [here](https://web.mit.edu/bcs/nklab/media/pdfs/julian.neuroimage.2012.pdf) \
-
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/floc/parcels_kanwisher \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results
-
-Call script within interactive session on beluga (quick)
-```bash
-./launch_splitROIs.sh
-```
-
-**Input**:
-- the Kanwisher ROI files for each contrast (face, scene, object, body; e.g., cvs_scene_parcels/cvs_scene_parcels/fROIs-fwhm_5-0.0001.nii)
-**Output**:
-- For each contrast (face, scene, body, object), a series of binary ROI masks in cvs_avg35 space (e.g., scene_OPA_cvs2mni.nii). Note that, for each ROI label, the script produces a left, right and bilateral mask
-
------------
-
-**Step 6. Warp separate group ROIs from normalized CVS space into T1w native space for each subject**
-
-Basically like step 3, but to convert separate ROI binary masks from cvs_avg35 space into Tw1 space
-
-Script: register_FSrois_2mni_perParcel.sh \
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/floc/parcels_kanwisher/cvs_per_ROI \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results
-
-Call script within interactive session on beluga (quick):
-```bash
-./register_FSrois_2mni_perParcel.sh
-```
-
-**Input**:
-- the series of binary ROI masks extracted from the Kanwisher contrast files in step 5 (e.g., face_FFA_R_cvs2mni.nii)
-
-**Output**:
-- For each ROI, a binary mask (volume) in MNI space (e.g., object_parcels_cvs2mni.nii)
-- For each subject, for each ROI, a binary mask (volume) in native T1w space (e.g., sub-03_face_FFA_R_mni2t1w.nii)
-
 
 ------------
 **Step 7. Create union masks between T1w-warped binary ROI masks derived from groups and the subjects' own t-score maps derived from the fLoc dataset**
@@ -209,3 +262,7 @@ Call script within interactive session on beluga (quick), with subject number gi
 **Output**:
 - For each subject, for each ROI (e.g., face_FFA_L), an ROI binary mask (volume) in T1w space that corresponds to the union between the warped group mask for that parcel and the voxels who's t values are above the specified threshold (e.g., sub-01_fLoc_T1w_face_FFA_t2.5.nii.gz). ROIs are delineated for the Kanwisher (e.g. face > object) contrast (not NSD), bilaterally and per hemisphere.
 - The same contrasts as above, but masked and flattened with the THINGS functional mask used to process the THINGS dataset with GLMsingle, so that matching voxels align between THINGS betas and the fLoc ROIs when both are flattened into 1D vectors (e.g., sub-03_fLoc_face_FFA_t2.5_thingsmaskT1w_flat.npy), for bilateral ROIs only.
+
+
+------------
+**Step ??. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**
