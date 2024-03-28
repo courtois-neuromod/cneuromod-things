@@ -31,7 +31,7 @@ python fLoc_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="0
 - ``sub-{sub_num}_task-floc_model-GLM_design.h5``, a HDF5 file with one dataset group per run per session; each group (run) includes three datasets (arrays): 'onset', 'duration' and 'trial_type'
 
 ------------
-## Step 2. Run first-level GLM in nilearn on fLoc BOLD data using design .h5 files from Step 1
+## Step 2. Run first-level GLM in nilearn on fLoc BOLD data
 
 Derive GLM contrasts from multiple sessions and runs of fLoc task with a first-level GLM with nilearn.
 
