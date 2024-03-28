@@ -218,27 +218,25 @@ done
 All parcels and ROI masks in subject space are saved under ``fLoc/floc.rois/sub-{sub_num}/rois/from_atlas``. There are three masks per ROI (left hemisphere, right hemisphere, and bilateral).
 
 ------------
-**Step 4. Create union masks between T1w-warped group ROIs and subjects' t-score maps from the fLoc dataset**
 
-Script: create_subject_rois.py \
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/floc \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results
+## Step 4. Create union masks between T1w-warped group parcels and subjects' task-derived t-score maps
 
-Call script within interactive session on beluga (quick), with subject number given as argument
+This step is to identify category-sensitive voxels in a data-driven manner (using contrast maps derived from their fLoc data), but constrained by group priors (the warped Kanwisher masks).
+
+Launch the following script, specifying the subject number.
 ```bash
-./launch_createROIs.sh 01
+DATADIR="path/to/cneuromod-things/fLoc/floc.roi"
+
+python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --use_smooth --sub="01"
+python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --sub="01"
 ```
 
 **Input**:
-- subjects' t-score maps from each series of contrast (kanwisher and nsd) generated in Step 2 (e.g., sub-02_floc_objects_tscore_T1w.nii.gz)
-- ROI parcels warped to subjects' native T1w space for each contrast (e.g., sub-03_face_parcels_mni2t1w.nii) computed in Step 3
-- subjects' functional union mask used to process the THINGS (not the fLoc union mask!) dataset with GLMsingle (e.g., 01_umask_T1w.nii), so the masked (flattened) voxels are aligned between beta maps and roi maps
+- ``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-tscores_contrast-*_desc-{smooth, unsmooth}_statseries.nii.gz``, subjects' t-score maps from each of the contrasts (kanwisher-style and NSD-style) generated in Step 2.
+-  ``sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-{body, face, object, scene}_mask.nii``, parcel masks warped to subjects' native T1w space for the face, scene, body and object contrasts generated in Step 3
 
 **Output**:
-- For each subject, for each contrast (face, scene, body, object), an ROI mask (volume) in T1w space that corresponds to the union between the warped group mask and the voxels who's t values are above the specified threshold (e.g., s01_T1w_fLoc_faces_tscore_t5.0.nii.gz). An ROI is calculated for both the Kanwisher (e.g. face > object) and the NSD (face > [object, body. scene, character]) contrast.
-- The same contrasts as above, but masked and flattened with the THINGS functional mask used to process the THINGS dataset with GLMsingle, so that matching voxels align between THINGS betas and the fLoc ROIs when both are flattened into 1D vectors (e.g., s03_fLoc_faces_tscore_t5.0_thingsmaskT1w_flat.npy).
-
+- For each constrast, ``sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-{smooth, unsmooth}_mask.nii.gz``, a parcel mask in subject space (``.nii.gz``) that corresponds to the union between the warped group parcel and the voxels with t-scores above the specified alpha threshold in the subject's contrast map. A parcel is created using both the Kanwisher-style (e.g. face > object) and the NSD-style (face > [object, body. scene, character]) fLoc contrast.
 
 ------------
 **Step 7. Create union masks between T1w-warped binary ROI masks derived from groups and the subjects' own t-score maps derived from the fLoc dataset**
@@ -264,4 +262,6 @@ Call script within interactive session on beluga (quick), with subject number gi
 
 
 ------------
-**Step ??. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**
+## TODO: Step 6. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**
+
+Point to manual under anat; update once the anat.pycortex submodule has been generated

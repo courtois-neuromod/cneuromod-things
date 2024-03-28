@@ -55,7 +55,7 @@ Project Organization
     │            │     ├── fLoc_makedesign.py
     │            │     ├── fLoc_firstLevel_nilearn.py  
     │            │     ├── fLoc_split_CVSparcels_perROI.py  
-    │            │     └──     
+    │            │     └── fLoc_reconcile_parcelMasks.py
     │            │
     │            ├── standard_masks
     │            │     ├── kanwisher_parcels
@@ -80,8 +80,8 @@ Project Organization
     │                  │    ├── sub-*_task-floc_model-GLM_design.h5
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-{smooth, unsmooth}_statseries.nii.gz    
-    │                  │    └── ...
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-smooth_statseries.nii.gz    
+    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-unsmooth_statseries.nii.gz
     │                  └── rois
     │                       ├── from_atlas            <- Kanwisher parcels and ROI masks warped to subject space
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-{body, face, object, scene}_mask.nii    
@@ -89,6 +89,10 @@ Project Organization
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
     │                       │     └── sub-*_parcel-kanwisher_space-T1w_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
     │                       └── task-derived          <- parcels and ROI masks derived from the fLoc task
+    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-smooth_mask.nii.gz    
+    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-unsmooth_mask.nii.gz
+    │                             ├── ...  
+    │                             └── ...
     │
     ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
