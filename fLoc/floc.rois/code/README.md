@@ -54,16 +54,16 @@ Note that the script can process scans in MNI or subject (T1w) space (default is
 - Two mask files generated from the union of the run ``_mask.nii.gz`` files save with the _bold.nii.gz files. ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
 - One volume of t-scores and one of beta values (``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-{tscores, betas}_contrast-{contrast}_desc-{smooth, unsmooth}_statseries.nii.gz``) for each of the 9 GLM contrasts listed below.
 - The following four contrasts are as specified in the work of the Kanwisher group:
-> * face > object  
-> * scene > object  
-> * body > object  
-> * object > rest
+> * ``faceMinObject``: face > object
+> * ``sceneMinObject``: scene > object
+> * ``bodyMinObject``: body > object
+> * ``objectMinRest``: object > rest
 - The following contrasts are as specified in the NSD data paper, who used a localizer task paradigm similar to ours:
-> * face > (object, scene, body, character)
-> * scene > (object, face, body, character)
-> * body > (object, scene, face, character)
-> * character > (object, scene, body, face)
-> * object > (face, scene, body, character)
+> * ``faces``: face > (object, scene, body, character)
+> * ``places``: scene > (object, face, body, character)
+> * ``bodies``: body > (object, scene, face, character)
+> * ``characters``: character > (object, scene, body, face)
+> * ``objects``: object > (face, scene, body, character)
 
 ------------
 **Step 3. Warp group ROIs from normalized CVS space into T1w native space for each subject**

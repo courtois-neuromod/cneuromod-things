@@ -9,8 +9,6 @@ from scipy.stats import zscore
 from tqdm import tqdm
 
 from nilearn.masking import unmask, apply_mask, intersect_masks
-from nilearn.signal import clean
-from nilearn.image import smooth_img
 from nilearn.interfaces.fmriprep import load_confounds
 from nilearn.glm.first_level import FirstLevelModel, make_first_level_design_matrix
 
@@ -57,7 +55,10 @@ def qc_mask_voxels(bold_files, umask, data_space, out_dir, sub_num, mni):
     notnan_masks = []
 
     for i in tqdm(range(len(bold_files)), desc='QCing bold files'):
-        meanz_vals = np.mean(zscore(apply_mask(nib.load(bold_files[i]), umask, dtype=np.single)), axis=0)
+        meanz_vals = np.mean(
+            zscore(apply_mask(nib.load(bold_files[i]), umask, dtype=np.single)),
+            axis=0,
+        )
         nan_masks.append(unmask(np.isnan(meanz_vals), umask))
         notnan_masks.append(unmask(~np.isnan(meanz_vals), umask))
 
@@ -203,7 +204,7 @@ def prepare_data(args):
                         loc=0, column=cat_label, value=0.0, allow_duplicates=True,
                     )
             design_matrix = design_matrix[cat_labels + dm_labels[6:]]
-            
+
             design_list.append(design_matrix)
 
         except:
