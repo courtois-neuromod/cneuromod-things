@@ -73,9 +73,7 @@ The following command lines derive ROI masks from those group parcels, and warp 
 
 ### 3.0 Download the Kanwisher parcels
 
-Download CVS parcels (``cvs_avg35`` template) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
-
-Save parcel files under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
+Download CVS parcels (``cvs_avg35`` template) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download). Save parcel files under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
 
 ### 3.1 Extract normalized (CVS) ROI masks from group parcels (e.g., FFA, PPA)
 
@@ -103,10 +101,9 @@ python fLoc_split_CVSparcels_perROI.py --data_dir="${DATADIR}"
 
 ### 3.2 Warp parcels and ROI masks from CVS to MNI space
 
-Use Freesurfer and FSL to convert CVS parcels and masks from CVS to MNI space as a intermediate step to deriving masks in subject space. Instructions to convert parcels from CVS (cvs_avg35) to MNI space are found [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581).
+Use Freesurfer and FSL to warp CVS parcels and masks to MNI space as a intermediate step to deriving masks in subject space. Instructions to convert parcels from CVS (cvs_avg35) to MNI space can be found [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581).
 
-First, you'll need FLS and Freesurfer installed, and your ``$FSLDIR`` and ``$SUBJECTS_DIR`` variables defined.
-You can check by making sure that typing ``$SUBJECTS_DIR`` in your terminal returns a directory path.
+First, you'll need FLS and Freesurfer installed, and your ``$FSLDIR`` and ``$SUBJECTS_DIR`` variables defined. You can check by making sure that typing ``$SUBJECTS_DIR`` in your terminal returns a directory path. \
 Something like ``/home/my_username/.local/easybuild/software/2020/Core/freesurfer/7.1.1/subjects``. \
 *Note: load ``StdEnv/2020``, ``gcc/9.3.0``, ``fsl/6.0.3``, and ``freesurfer/7.1.1`` modules to run the following commands on Alliance Canada.*
 
@@ -153,9 +150,9 @@ do
 done
 ```
 
-### 3.3 Warp parcels and ROI masks from MNI to subject (T1w)) space
+### 3.3 Warp parcels and ROI masks from MNI to subject space
 
-Use ANTs to warp parcels and ROI masks from MNI152 to subject space. Instructions to convert parcels from MNI to T1w space using output from fmriprep can be found [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8). \
+Use ANTs to warp parcels and ROI masks from MNI152 to subject (T1w) space. Instructions to convert parcels from MNI to T1w space using output from fmriprep can be found [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8). \
 *Note: load ``StdEnv/2020``, ``gcc/9.3.0`` and ``ants/2.3.5`` modules to run the following commands on Alliance Canada.*
 
 You will need a reference anatomical image and transformation matrices outputted by fmriprep to warp the masks to each subject's space.
@@ -217,6 +214,8 @@ do
   done
 done
 ```
+
+All parcels and ROI masks in subject space are saved under ``fLoc/floc.rois/sub-{sub_num}/rois/from_atlas``. There are three masks per ROI (left hemisphere, right hemisphere, and bilateral).
 
 ------------
 **Step 4. Create union masks between T1w-warped group ROIs and subjects' t-score maps from the fLoc dataset**
