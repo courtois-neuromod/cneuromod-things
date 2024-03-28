@@ -221,7 +221,7 @@ All parcels and ROI masks in subject space are saved under ``fLoc/floc.rois/sub-
 
 ## Step 4. Create union masks between T1w-warped group parcels and subjects' task-derived t-score maps
 
-This step is to identify category-sensitive voxels in a data-driven manner (using contrast maps derived from their fLoc data), but constrained by group priors (the warped Kanwisher masks).
+This step is to identify category-sensitive voxels in a data-driven manner (using contrast maps derived from subjects' fLoc data), but constrained by group priors (the warped Kanwisher masks).
 
 Launch the following script, specifying the subject number.
 ```bash
