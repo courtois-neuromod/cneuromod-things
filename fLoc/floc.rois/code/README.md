@@ -7,8 +7,6 @@ This pipeline derives subject-specific functional ROIs from the fLoc CNeuromod d
 - The CNeuromod fLoc task is based on [pyfLoc](https://github.com/NBCLab/pyfLoc),
 which was adapted from [VPNL/fLoc](https://github.com/VPNL/fLoc) as published in [Stigliani et al., 2015](https://www.jneurosci.org/content/35/36/12412)
 - ROI parcels (improve normalization in CVS space, n=40) were downloaded from the [Kanwisher group](https://web.mit.edu/bcs/nklab/GSS.shtml#download)
-- Instructions to convert parcels from CSV (cvs_avg35) to MNI space [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581)
-- Instructions to convert parcels from MNI to T1w space with fmriprep output [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8)
 
 ------------
 ## Step 1. Generate design matrices from events.tsv files
@@ -66,7 +64,39 @@ Note that the script can process scans in MNI or subject (T1w) space (default is
 > * ``objects``: object > (face, scene, body, character)
 
 ------------
-**Step 3. Warp group ROIs from normalized CVS space into T1w native space for each subject**
+
+## Step 3. Warp Kanwisher group parcels and ROI masks from normalized CVS space into subject (T1w) space
+
+To obtain ROI masks in subject space, we started from normalized (CVS space) parcels of voxels with face, body, scene and object preferences in derived from n=40 individuals by the Kanwisher group.
+
+The following command lines derive ROI masks from those group parcels, and warp the parcels and ROI masks from CVS to MNI to subject (T1w) space.
+
+**Links and documentation**
+- CVS parcels (``cvs_avg35`` template) in ``.nii`` format were downloaded from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) \
+- Instructions to convert parcels from CVS (cvs_avg35) to MNI space [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581)
+- Instructions to convert parcels from MNI to T1w space with fmriprep output [here](https://neurostars.org/t/how-to-transform-mask-from-mni-to-native-space-using-fmriprep-outputs/2880/8)
+
+### 3.0 Download the Kanwisher parcels
+
+Save parcels under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
+
+### 3.1 Extract normalized (CVS) ROI masks from group parcels (e.g., FFA, PPA)
+
+The CVS parcels each contain many ROIs per contrast. Create a separate mask (in cvs_avg35 space) for the following 7 regions of interest: FFA, OFA, pSTS, PPA, OPA, MPA and EBA.
+> * ``FFA``: fusiform face area
+> * ``OFA``: occipital face area
+> * ``pSTS``: posterior superior temporal sulcus
+> * ``PPA``: parahippocampal place area
+> * ``OPA``: occipital place area
+> * ``MPA``: medial place area
+> * ``EBA``: extrastriate body area
+
+Launch the following script
+```bash
+DATADIR="cneuromod-things/fLoc/floc.rois"
+
+python fLoc_split_CVSparcels_perROI.py --data_dir="${DATADIR}"
+```
 
 Script: register_FSrois_2mni.sh \
 Server: beluga \

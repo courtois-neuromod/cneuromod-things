@@ -48,27 +48,40 @@ Project Organization
     │    │               └── floc.stimuli
     │    │                     └── images   <- stimulus images per category
     │    │
-    │    └── floc.rois        <- fLoc scripts and datasets
+    │    └── floc.rois               <- fLoc scripts and datasets
     │            ├── code            <- scripts to run glm and generate ROIs
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
     │            │     ├── fLoc_makedesign.py
     │            │     ├── fLoc_firstLevel_nilearn.py  
+    │            │     ├── fLoc_split_CVSparcels_perROI.py  
     │            │     └──     
     │            │
-    │            ├── parcels
+    │            ├── standard_masks
+    │            │     ├── kanwisher_parcels
+    │            │     │    ├── cvs            
+    │            │     │    │    ├── cvs_body_parcels
+    │            │     │    │    ├── cvs_face_parcels
+    │            │     │    │    ├── cvs_object_parcels
+    │            │     │    │    ├── cvs_scene_parcels
+    │            │     │    │    └── readme.txt            
+    │            │     │    └── mni            
+    │            │     │         └── parcel-kanwisher_space-MNIT1_res-2mm_contrast-{body, face, object, scene}_mask.nii
+    │            │     └── standard_rois  <- unilateral and bilateral ROI masks in CVS and MNI space
+    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii
+    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
+    │            │          └── parcel-kanwisher_space-CVSavg35_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
     │            │
     │            └── sub-0*
     │                  ├── glm
-    │                  │    ├── sub-0*_task-floc_model-GLM_design.h5
-    │                  │    ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
-    │                  │    ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-tscores_contrast-{contrast}_desc-smooth_statseries.nii.gz    
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-betas_contrast-{contrast}_desc-smooth_statseries.nii.gz
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-tscores_contrast-{contrast}_desc-unsmooth_statseries.nii.gz    
-    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-betas_contrast-{contrast}_desc-unsmooth_statseries.nii.gz
+    │                  │    ├── sub-*_task-floc_model-GLM_design.h5
+    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii
+    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-{smooth, unsmooth}_statseries.nii.gz    
+    │                  │    └── ...
     │                  └── rois
-    │                       └── ...
+    │                       ├── from_atlas
+    │                       └── task-derived    
     │
     ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts

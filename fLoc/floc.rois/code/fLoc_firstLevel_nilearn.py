@@ -75,11 +75,11 @@ def qc_mask_voxels(bold_files, umask, data_space, out_dir, sub_num, mni):
 
     nib.save(
         global_nan_mask,
-        f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-things_space-{data_space}_label-brain_desc-unionNaN_mask.nii",
+        f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_space-{data_space}_label-brain_desc-unionNaN_mask.nii",
     )
     nib.save(
         global_goodval_mask,
-        f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-things_space-{data_space}_label-brain_desc-unionNonNaN_mask.nii",
+        f"{out_dir}/sub-{sub_num}/glm/sub-{sub_num}_task-floc_space-{data_space}_label-brain_desc-unionNonNaN_mask.nii",
     )
 
     return global_goodval_mask
