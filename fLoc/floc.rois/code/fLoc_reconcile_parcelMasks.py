@@ -113,7 +113,7 @@ def create_subject_parcels(
             submask_k,
             f"{data_dir}/sub-{sub_num}/rois/task-derived/"
             f"sub-{sub_num}_task-floc_space-T1w_stats-{dtype}_contrast-{k}_"
-            f"alpha-{alpha}_cutoff-{tval_k}_desc-{sm}_mask.nii.gz",
+            f"cutoff-{tval_k}_desc-{sm}_mask.nii.gz",
         )
 
         thresh_dmap_n, tshold_n = threshold_stats_img(
@@ -138,7 +138,7 @@ def create_subject_parcels(
             submask_n,
             f"{data_dir}/sub-{sub_num}/rois/task-derived/"
             f"sub-{sub_num}_task-floc_space-T1w_stats-{dtype}_contrast-{n}_"
-            f"alpha-{alpha}_cutoff-{tval_n}_desc-{sm}_mask.nii.gz",
+            f"cutoff-{tval_n}_desc-{sm}_mask.nii.gz",
         )
 
 

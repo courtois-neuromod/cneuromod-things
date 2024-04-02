@@ -236,30 +236,65 @@ python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --su
 -  ``sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-{body, face, object, scene}_mask.nii``, parcel masks warped to subjects' native T1w space for the face, scene, body and object contrasts generated in Step 3
 
 **Output**:
-- For each constrast, ``sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-{smooth, unsmooth}_mask.nii.gz``, a parcel mask in subject space (``.nii.gz``) that corresponds to the union between the warped group parcel and the voxels with t-scores above the specified alpha threshold in the subject's contrast map. A parcel is created using both the Kanwisher-style (e.g. face > object) and the NSD-style (face > [object, body. scene, character]) fLoc contrast.
+- For each constrast, ``sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-{smooth, unsmooth}_mask.nii.gz``, a parcel mask in subject space (``.nii.gz``) that corresponds to the union between the warped group parcel and the voxels with t-scores above the specified alpha threshold in the subject's contrast map. A parcel is created using both the Kanwisher-style (e.g. face > object) and the NSD-style (face > [object, body. scene, character]) fLoc contrast.
 
 ------------
-**Step 7. Create union masks between T1w-warped binary ROI masks derived from groups and the subjects' own t-score maps derived from the fLoc dataset**
+## Step 5. Create union masks between T1w-warped ROI masks subjects' task-derived t-score maps
 
-Script: create_subject_rois_perParcel.py \
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results/results/floc \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/things_memory_results
+This step is to generate subject-specific ROI masks in a data-driven manner by constraining t-score maps derived from subjects' fLoc data with group priors (ROI masks extracted from the Kanwisher parcels warped to subject space).
 
-Call script within interactive session on beluga (quick), with subject number given as argument
+Steps are the following:
+- 1. a cluster mask is created by thresholding clusters within the subject's relevant t-contrast map (e.g., face > other conditions for FFA; alpha=0.0001, t > 3.72, clusters > 20 voxels).
+- 2. an enlarged ROI mask is created by smoothing and thresholding the group-derived ROI mask (mask values > 0.01 post-smoothing, fwhm=5).
+- 3. a third mask is created by intersecting the smoothed ROI mask and the cluster mask.
+- 4. within this intersection mask, voxels are ranked according to their t-score on the relevant contrast. Voxels with the highest t-values (> 3.72) are selected in proportion to the size of the group-derived ROI mask (up to 80% of its pre-smoothing voxel count).
+
+To derive ROI masks, specify the subject number, smoothing (5) and mask proportion parameters (0.8).
 ```bash
-./launch_createROIs_perParcel.sh 01
+DATADIR="path/to/cneuromod-things"
+
+python fLoc_reconcile_ROImasks.py \
+    --data_dir="${DATADIR}" \
+    --alpha=0.0001 \
+    --use_smooth_bold \
+    --fwhm=5 \
+    --percent_cluster=0.8 \
+    --sub="01"
+```
+
+To generate more selective ROI masks with fewer higher-signal voxels (e.g., for voxel-wise representation analyses), create masks using fLoc contrasts generated from unsmoothed BOLD data, using the following parameters
+```bash
+DATADIR="path/to/cneuromod-things"
+FWHM="5"  # 5, 8, 12
+PER_CLUSTER="0.8"  # 0.5, 0.8 (default)
+
+python fLoc_reconcile_ROImasks.py \
+    --data_dir="${DATADIR}" \
+    --alpha=0.0001 \
+    --fwhm=5 \
+    --percent_cluster=0.3 \
+    --sub="01"
+```
+
+For ``sub-06``, who did not complete the fLoc task, generate ROI masks using voxelwise noise ceilings derived from the main THINGS task, rather than fLoc t-scores.
+```bash
+DATADIR="path/to/cneuromod-things"
+
+python fLoc_reconcile_ROImasks.py \
+    --data_dir="${DATADIR}" \
+    --no_data \
+    --fwhm=3 \
+    --sub="06"
 ```
 
 **Input**:
-- subjects' t-score maps from each series of contrast (kanwisher, NOT nsd) generated in Step 2 (e.g., sub-02_floc_body-min-object_tscore_T1w.nii.gz)
-- ROI parcels warped to subjects' native T1w space for each contrast's parcels of interest (e.g., sub-03_face_FFA_mni2t1w.nii) computed in Step 6
-- subjects' functional union mask used to process the THINGS (not the fLoc union mask!) dataset with GLMsingle (e.g., 01_umask_T1w.nii), so the masked (flattened) voxels are aligned between beta maps and roi maps
+- ``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-tscores_contrast-*_desc-{smooth, unsmooth}_statseries.nii.gzsubjects``, t-score maps generated in Step 2
+- Alternatively (when no t-score map is available), ``THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, noise-ceiling brain maps derived from the main THINGS task.
+- ``sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-*_desc-{L, R}_mask.nii``, group-derived ROI masks warped to subjects' native (T1w) space computed in Step 3.
 
 **Output**:
-- For each subject, for each ROI (e.g., face_FFA_L), an ROI binary mask (volume) in T1w space that corresponds to the union between the warped group mask for that parcel and the voxels who's t values are above the specified threshold (e.g., sub-01_fLoc_T1w_face_FFA_t2.5.nii.gz). ROIs are delineated for the Kanwisher (e.g. face > object) contrast (not NSD), bilaterally and per hemisphere.
-- The same contrasts as above, but masked and flattened with the THINGS functional mask used to process the THINGS dataset with GLMsingle, so that matching voxels align between THINGS betas and the fLoc ROIs when both are flattened into 1D vectors (e.g., sub-03_fLoc_face_FFA_t2.5_thingsmaskT1w_flat.npy), for bilateral ROIs only.
-
+- For each ROI (e.g., ``contrast-face_roi-FFA``), ``sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-{smooth, unsmooth}_mask.nii.gz``, an ROI binary mask (volume) in T1w space that corresponds to the union between the group-derived ROI mask (warped to subject space) and voxels with above-cutoff t-scores for the relevant fLoc contrast.
+- For ``sub-06``, who did not complete the fLoc task, ROI masks ``sub-{sub_num}_task-floc_space-T1w_stats-noiseCeil_contrast-*_cutoff-*_nvox-*_fwhm-*_mask.nii.gz`` correspond to the union between the group-derived ROI mask and voxels with above-threshold noise ceilings derived from the main THINGS task.
 
 ------------
 ## TODO: Step 6. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**

@@ -89,8 +89,8 @@ Project Organization
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
     │                       │     └── sub-*_parcel-kanwisher_space-T1w_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
     │                       └── task-derived          <- parcels and ROI masks derived from the fLoc task
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-smooth_mask.nii.gz    
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_alpha-0.0001_cutoff-*_desc-unsmooth_mask.nii.gz
+    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
+    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
     │                             ├── ...  
     │                             └── ...
     │
@@ -232,7 +232,7 @@ Project Organization
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_statseries.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5      
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz.nii.gz  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz  
     │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat
     │                  │
     │                  ├── qc   <- quality checks
