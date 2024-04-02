@@ -219,7 +219,7 @@ All parcels and ROI masks in subject space are saved under ``fLoc/floc.rois/sub-
 
 ------------
 
-## Step 4. Create union masks between T1w-warped group parcels and subjects' task-derived t-score maps
+## Step 4. Create union masks between group parcels and task-derived t-score maps
 
 This step is to identify category-sensitive voxels in a data-driven manner (using contrast maps derived from subjects' fLoc data), but constrained by group priors (the warped Kanwisher masks).
 
@@ -239,7 +239,7 @@ python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --su
 - For each constrast, ``sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-{smooth, unsmooth}_mask.nii.gz``, a parcel mask in subject space (``.nii.gz``) that corresponds to the union between the warped group parcel and the voxels with t-scores above the specified alpha threshold in the subject's contrast map. A parcel is created using both the Kanwisher-style (e.g. face > object) and the NSD-style (face > [object, body. scene, character]) fLoc contrast.
 
 ------------
-## Step 5. Create union masks between T1w-warped ROI masks subjects' task-derived t-score maps
+## Step 5. Create union masks between group-derived ROI masks and task-derived t-score maps
 
 This step is to generate subject-specific ROI masks in a data-driven manner by constraining t-score maps derived from subjects' fLoc data with group priors (ROI masks extracted from the Kanwisher parcels warped to subject space).
 
