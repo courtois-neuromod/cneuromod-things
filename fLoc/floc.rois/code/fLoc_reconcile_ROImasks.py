@@ -233,7 +233,7 @@ def create_subject_rois(
                     final_mask,
                     f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/task-derived"
                     f"/sub-{sub_num}_task-floc_space-T1w_stats-tscores_"
-                    f"contrast-{roi}_cutoff-{tvalue}_nvox-{vcount}_fwhm-{fwhm}_ratio-{percent_cluster}"
+                    f"contrast-{roi}_cutoff-{tvalue}_nvox-{vcount}_fwhm-{fwhm}_ratio-{percent_cluster}_"
                     f"desc-{sm}_mask.nii.gz",
                 )
 
