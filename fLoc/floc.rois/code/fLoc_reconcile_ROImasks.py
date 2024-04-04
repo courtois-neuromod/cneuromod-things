@@ -124,7 +124,6 @@ def create_subject_rois(
             tvals = []
             vcount = 0
             for i, h in enumerate(hemi):
-                roi_path = os.path.join(parcel_path, f'sub-{sub_num}_{roi}_{h}_mni2t1w.nii')
                 parcel = nib.load(
                     f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/from_atlas/"
                     f"sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-"
