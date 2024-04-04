@@ -112,6 +112,7 @@ fLoc/floc.fmriprep/sourcedata/floc/sub-0*/ses-0*/func/sub-0*_ses-0*_task-fLoc_ru
 fLoc/floc.rois/standard_masks/standard_rois/*nii
 fLoc/floc.rois/standard_masks/kanwisher_parcels/*
 fLoc/floc.rois/sub-*/rois/from_atlas/sub-0*
+fLoc/floc.rois/sub-*/rois/task-derived/sub-0*
 
 # output figures
 datapaper/figures/*.png
