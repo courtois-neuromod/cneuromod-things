@@ -97,7 +97,7 @@ def create_subject_rois(
         # load subject contrast from fLoc task
         sm = "smooth" if use_smooth_bold else "unsmooth"
         dmap = nib.load(
-            f"{data_dir}/fLoc/floc.roi/sub-{sub_num}/glm/"
+            f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/glm/"
             f"sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-tscores_"
             f"contrast-{c}_desc-{sm}_statseries.nii.gz"
         )

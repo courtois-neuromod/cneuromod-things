@@ -103,7 +103,7 @@ python fLoc_split_CVSparcels_perROI.py --data_dir="${DATADIR}"
 
 Use Freesurfer and FSL to warp CVS parcels and masks to MNI space as a intermediate step to deriving masks in subject space. Instructions to convert parcels from CVS (cvs_avg35) to MNI space can be found [here](https://neurostars.org/t/freesurfer-cvs-avg35-to-mni-registration/17581).
 
-First, you'll need FLS and Freesurfer installed, and your ``$FSLDIR`` and ``$SUBJECTS_DIR`` variables defined. You can check by making sure that typing ``$SUBJECTS_DIR`` in your terminal returns a directory path. \
+First, you'll need FLS and Freesurfer installed, and your ``$FSLDIR`` and ``$SUBJECTS_DIR`` variables defined. You can check by making sure that typing ``echo $SUBJECTS_DIR`` in your terminal returns a directory path. \
 Something like ``/home/my_username/.local/easybuild/software/2020/Core/freesurfer/7.1.1/subjects``. \
 *Note: load ``StdEnv/2020``, ``gcc/9.3.0``, ``fsl/6.0.3``, and ``freesurfer/7.1.1`` modules to run the following commands on Alliance Canada.*
 
@@ -225,7 +225,7 @@ This step is to identify category-sensitive voxels in a data-driven manner (usin
 
 Launch the following script, specifying the subject number.
 ```bash
-DATADIR="path/to/cneuromod-things/fLoc/floc.roi"
+DATADIR="path/to/cneuromod-things/fLoc/floc.rois"
 
 python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --use_smooth --sub="01"
 python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --sub="01"
