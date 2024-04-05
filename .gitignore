@@ -100,6 +100,9 @@ THINGS/things.glmsingle/task-things_imgAnnotations.json
 THINGS/things.glmsingle/sub-0*/glmsingle/*/sub-0*
 THINGS/things.glmsingle/sub-0*/glmsingle/output/T1w/*
 
+# THINGS descriptive analyses
+THINGS/things.glmsingle/sub-0*/descriptive/sub-0*
+
 # THINGS events files data
 THINGS/things.fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
 
