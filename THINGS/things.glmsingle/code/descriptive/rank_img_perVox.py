@@ -106,21 +106,22 @@ def rank_roi_betas(
         roi_name = f'{c[0]}_{c[1]}'
 
         desc = "desc-perTrial" if per_trial else "desc-perImage"
+        tval = ("%.2f" % nc_thresh)
         np.save(
             f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
-            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{nc_thresh}_"
+            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-ranks_{desc}_statseries.npy",
             roi_idx,
         )
         np.save(
             f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
-            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{nc_thresh}_"
+            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-betas_{desc}_statseries.npy",
             roi_bloc,
         )
         np.save(
             f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
-            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{nc_thresh}_"
+            f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-noiseCeilings_{desc}_statseries.npy",
             roi_NCs,
         )
