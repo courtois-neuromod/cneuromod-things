@@ -65,7 +65,7 @@ def rank_roi_betas(
     flat_noiseceil = apply_mask(nib.load(
         f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/"
         f"sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_"
-        "stats-noiseCeilings_statmap.mat",
+        "stats-noiseCeilings_statmap.nii.gz",
     ), things_mask)
 
     # list ROI masks from fLoc
