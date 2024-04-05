@@ -189,11 +189,8 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 - A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
-- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat``,
-a single .mat file with a noise ceiling estimation per voxel saved as a
-flattened 1D array whose lengh corresponds to the number of voxels within the ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` functional mask.
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, a brain volume
-of voxelwise noise ceilings masked with Step 5's no-NaN mask, in subject's (T1w) EPI space.
+of voxelwise noise ceilings estimation per voxel masked with Step 5's no-NaN mask, in subject's (T1w) EPI space.
 
 
 To convert ``.nii.gz`` volume into freesurfer surface:
