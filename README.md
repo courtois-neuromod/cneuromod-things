@@ -239,9 +239,8 @@ Project Organization
     │                  │    └── sub-0*_task-things_headmotion.tsv
     │                  └── descriptive
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
-    │                       ├── sub-*_task-things_space-T1w_stats-betas_desc-{perImage, perTrial}_statseries.npy
-    │                       ├── sub-*_task-things_space-T1w_stats-ranks_desc-{perImage, perTrial}_statseries.npy
-    │                       └── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perTrial, perImage}_statseries.npy
+    │                       ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
+    │                       └── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy
     │            
     │
     └── datapaper          <- Report, figures, visualization notebooks
