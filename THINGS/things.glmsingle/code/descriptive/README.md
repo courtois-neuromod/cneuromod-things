@@ -36,7 +36,7 @@ python rank_img_perVox.py --data_dir="${DATADIR}" --sub="01"
 ```
 
 **Input**:
-``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5``, the beta scores organized in groups whose key is the image name (e.g., 'camel_02s').
+- ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5``, the beta scores organized in groups whose key is the image name (e.g., 'camel_02s').
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5``, the beta scores organized in nested groups whose key is the session number and sub-key is the run number.
 - ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii``, the functional mask used to vectorize the brain beta scores.
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, the subject's noise ceiling map.

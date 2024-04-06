@@ -119,4 +119,5 @@ fLoc/floc.rois/sub-*/rois/task-derived/sub-0*
 
 # output figures
 datapaper/figures/*.png
+datapaper/figures/b_rankings/*.png
 datapaper/figures/*.svg
