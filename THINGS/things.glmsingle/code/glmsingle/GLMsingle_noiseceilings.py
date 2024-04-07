@@ -6,7 +6,6 @@ import nibabel as nib
 from nilearn.masking import unmask, apply_mask
 import numpy as np
 import pandas as pd
-from scipy.io import loadmat, savemat
 from scipy.stats import zscore
 import argparse
 
@@ -267,12 +266,6 @@ if __name__ == '__main__':
     )
 
     nc_arr = apply_mask(unmask(nc_arr, union_mask), clean_mask)
-    outpath_mat = Path(
-        f"{data_path}/output/sub-{sub_num}_task-things_"
-        "space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat"
-    )
-    savemat(outpath_mat, {'NC': nc_arr})
-
     nc_nii = unmask(nc_arr, clean_mask)  # remove NaN voxels
     outpath_nii = Path(
         f"{data_path}/output/sub-{sub_num}_task-things_"

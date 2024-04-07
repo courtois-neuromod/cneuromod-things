@@ -92,7 +92,7 @@ Project Organization
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
-    │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz 
+    │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
     │
     ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
@@ -207,6 +207,7 @@ Project Organization
     │            │     └── descriptive    
     │            │          ├── README.md         
     │            │          ├── extract_annotations.py  
+    │            │          ├── rank_img_perVox.py  
     │            │          └── ...        
     │            │
     │            ├── task-things_runlist.h5    <- list of valid runs per subject
@@ -231,22 +232,22 @@ Project Organization
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_statseries.h5  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5      
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz  
-    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.mat
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5        
+    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
     │                  │
     │                  ├── qc   <- quality checks
     │                  │    └── sub-0*_task-things_headmotion.tsv
-    │                  ├── top_image
-    │                  │    └── ...
-    │                  └── tsne
-    │                       └── ...
+    │                  └── descriptive
+    │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
+    │                       ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
+    │                       └── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy
     │            
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
         ├── notebooks      <- Code to generate datapaper figures
         │       ├── behav_analysis.ipynb      <- behav figures     
+        │       ├── beta_ranking.ipynb        <- beta ranking figures          
         │       └── head_motion.ipynb         <- framewise displacement figs    
         └── report         <- Data paper manuscript
 
