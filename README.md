@@ -247,6 +247,7 @@ Project Organization
         ├── figures        <- Graphics and figures from the report
         ├── notebooks      <- Code to generate datapaper figures
         │       ├── behav_analysis.ipynb      <- behav figures     
+        │       ├── beta_ranking.ipynb        <- beta ranking figures          
         │       └── head_motion.ipynb         <- framewise displacement figs    
         └── report         <- Data paper manuscript
 
