@@ -110,8 +110,8 @@ Project Organization
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-*_task-{bars, rings, wedges}_events.tsv  <- events.tsv files
     │    │               └── retino.stimuli
-    │    │                     ├── images
-    │    │                     └── apertures
+    │    │                     ├── {grid, images, scenes}.npz
+    │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
     │    └── retino.prf              <- prf and visual ROIs scripts and dataset
     │            ├── code            <- scripts to run glm single and process output
