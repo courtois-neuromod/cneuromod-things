@@ -30,7 +30,7 @@ Project Organization
     │    │           └── flatmaps.md   <- Instructions to generate flat maps in pycortex
     │    └── anat.pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
-    ├── floc                    <- fLoc visual localizer datasets and scripts
+    ├── floc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
     │    ├── floc.fmriprep         <- fmriprep output
     │    │    ├── sub-0*
@@ -113,12 +113,16 @@ Project Organization
     │    │                     ├── images
     │    │                     └── apertures
     │    │
-    │    └── retino.prf        <- prf and visual ROIs scripts and datasets
+    │    └── retino.prf              <- prf and visual ROIs scripts and dataset
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
-    │            │     ├── run_prf    
-    │            │     └── make_rois    
+    │            │     ├── make_apertureMasks.py
+    │            │     └── ...
+    │            │
+    │            ├── apertures       <- aperture masks
+    │            │     ├── task-retino_{bars, rings, wedges}_desc-perFrame_apertures.mat
+    │            │     └── task-retino_{bars, rings, wedges}_desc-perTR_apertures.mat
     │            │
     │            └── sub-0*
     │                  ├── temp_files   <- intermediate steps
@@ -128,9 +132,9 @@ Project Organization
     │                  └── prf
     │                       └── ...
     │
-    ├── THINGS                  <- THINGS datasets, scripts and derivatives
-    │    ├── README.md          <- Overview of THINGS datasets and scripts
-    │    ├── things.fmriprep         <- fmriprep output
+    ├── THINGS                    <- THINGS datasets, scripts and derivatives
+    │    ├── README.md            <- Overview of THINGS datasets and scripts
+    │    ├── things.fmriprep      <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
@@ -140,17 +144,18 @@ Project Organization
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-brain_part-mag_mask.nii.gz    
     │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv    <- noise confounds
     │    │    │  
-    │    │    └── sourcedata         <- raw files
-    │    │         └── things    <- bidsified raw fMRI data & output   
+    │    │    └── sourcedata      <- raw files
+    │    │         └── things     <- bidsified raw fMRI data & output   
     │    │               ├── sub-0*
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
     │    │               ├── things.stimuli
-    │    │               │     └── annotations <- image content annotations
-    │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
-    │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
+    │    │               │     ├── images_fmri <- stimulus images per category
+    │    │               │     └── annotations <- image annotations
+    │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
+    │    │               │            ├── THINGS+      <- download dset directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
     │    │               │            │     ├── category53_wideFormat.tsv
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
@@ -163,9 +168,9 @@ Project Organization
     │    │               ├── code
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
-    │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
-    │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
-    │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
+    │    │               │     ├── eyetracking          <- TODO: add scripts to process eyetracking data    
+    │    │               │     ├── qc_notes.md          <- notes on QCing runs & sessions        
+    │    │               │     └── clean_events.py      <- script to relabel/clean *events.tsv files
     │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
     │    │               └── task-things_events.json
     │    │
@@ -210,7 +215,7 @@ Project Organization
     │            │          ├── rank_img_perVox.py  
     │            │          └── ...        
     │            │
-    │            ├── task-things_runlist.h5    <- list of valid runs per subject
+    │            ├── task-things_runlist.h5             <- list of valid runs per subject
     │            ├── task-things_imgAnnotations.json    <- dictionary of compiled image annotations
     │            │
     │            └── sub-0*
@@ -235,7 +240,7 @@ Project Organization
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5        
     │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
     │                  │
-    │                  ├── qc   <- quality checks
+    │                  ├── qc     <- quality checks
     │                  │    └── sub-0*_task-things_headmotion.tsv
     │                  └── descriptive
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
