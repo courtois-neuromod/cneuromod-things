@@ -3,8 +3,7 @@ import argparse
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
-from scipy.io import loadmat, savemat
+from scipy.io import savemat
 
 
 def get_arguments():
@@ -36,7 +35,7 @@ def make_apertures(
 
     tasks = ['bars', 'rings', 'wedges']
     TR = 1.49
-    # frames per second
+    # task's frames per second (rate of aperture change)
     fps = 15.0
 
     stim_path = Path(
@@ -106,7 +105,7 @@ def make_apertures(
                 scaled_frames, idx_frames, reverse[i])
 
         savemat(
-            f"{out_path}/{task}_per_frame.mat",
+            f"{out_path}/task-retino_condition-{task}_desc-perFrame_apertures.mat",
             {task: frame_sequence.astype('bool')}
         )
 
@@ -132,7 +131,7 @@ def make_apertures(
                 frame_slice[:, :, slice] = frame_sequence[:, :, idx]
 
             savemat(
-                f"{out_path}/{task}_per_slice.mat",
+                f"{out_path}/task-retino_condition-{task}_desc-perSlice_apertures.mat",
                 {task: frame_slice.astype('bool')}
             )
 
@@ -150,10 +149,9 @@ def make_apertures(
                     slice_frames[:, :, t] = frame_sequence[:, :, idx]
 
                 savemat(
-                    f"{out_path}/{task}_per_TR_slice{slice_num}.mat",
+                    f"{out_path}/task-retino_condition-{task}_desc-perTR_slice-{slice_num}_apertures.mat",
                     {f"{task}_slice{slice_num}": slice_frames.astype('bool')}
                 )
-
 
         '''
         Frames averaged per TR
@@ -169,7 +167,7 @@ def make_apertures(
 
         # Save output
         savemat(
-            f"{out_path}/{task}_per_TR.mat",
+            f"{out_path}/task-retino_condition-{task}_desc-perTR_apertures.mat",
             {task: frame_TR.astype('f4')}
         )
 
