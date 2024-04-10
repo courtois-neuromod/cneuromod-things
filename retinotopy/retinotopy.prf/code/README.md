@@ -25,7 +25,7 @@ python make_apertureMasks.py --data_dir="${DATADIR}"
 ```
 
 **Input**:
-- ``retino.stimuli``'s  ``apertures_bars.npz``, ``apertures_ring.npz`` and ``apertures_wedge_newtr.npz`` files, the binary aperture masks used by the Psychopy script to create apertures within which patterns of visual stimuli become visible during the task. [1 = pixel where visual patterns are displayed at time t, 0 = voxel where no pattern is visible]
+- ``retinotopy/stimuli``'s  ``apertures_bars.npz``, ``apertures_ring.npz`` and ``apertures_wedge_newtr.npz`` files, the binary aperture masks used by the Psychopy script to create apertures within which patterns of visual stimuli become visible during the task. [1 = pixel where visual patterns are displayed at time t, 0 = voxel where no pattern is visible]
 
 **Output**:
 - ``{bars, rings, wedges}_per_frame.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task (task frame rate = 15 fps). Note that the aperture sequence was the same for every run of the same task (e.g., all ``rings`` runs used the same aperture sequence).

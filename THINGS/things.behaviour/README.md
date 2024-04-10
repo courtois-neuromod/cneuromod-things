@@ -36,7 +36,7 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 
 Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``things.behaviour`` dataset.
 
-For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/annotations/THINGS+``:
+For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
 * ``THINGS/things_concepts.tsv``
 * ``THINGSplus/Metadata/Concept-specific/arousal_meanRatings.tsv``
 * ``THINGSplus/Metadata/Concept-specific/category53_wideFormat.tsv``
@@ -48,7 +48,7 @@ For this script to run, the following annotation files must be downloaded from t
 Launch the following script to process a subject's sessions
 ```bash
 EVDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
-ANDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things/things.stimuli/annotations"
+ANDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things/stimuli/annotations"
 OUTDIR="cneuromod-things/THINGS/things.behaviour"
 
 python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}" --out_dir="${OUTDIR}" --sub="01"
@@ -57,7 +57,7 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 *Input*:
 
 - A subject's ``*events.tsv`` files, across sessions (~36) and runs (6 per session), e.g., ``sub-03_ses-17_task-thingsmemory_run-02_events.tsv``
-- Various annotation files saved under ``things.stimuli/annotations``. E.g., ``task-things_desc-manual_annotation.tsv``
+- Various annotation files saved under ``stimuli/annotations``. E.g., ``task-things_desc-manual_annotation.tsv``
 
 *Output*:
 
