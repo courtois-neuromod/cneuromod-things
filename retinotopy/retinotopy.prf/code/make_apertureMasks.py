@@ -4,6 +4,7 @@ from pathlib import Path
 
 import numpy as np
 from scipy.io import savemat
+from skimage.transform import resize
 
 
 def get_arguments():
@@ -18,6 +19,12 @@ def get_arguments():
         help='absolute path to cneuromod-things/retinotopy directory',
     )
     parser.add_argument(
+        '--target_dim',
+        type=int,
+        default=192,
+        help='target dimensions for resized apertures'
+    )
+    parser.add_argument(
         '--per_slice',
         action='store_true',
         default=False,
@@ -29,6 +36,7 @@ def get_arguments():
 
 def make_apertures(
     data_dir: str,
+    t_dim: int,
     per_slice: bool,
 ) -> None:
     """."""
@@ -104,10 +112,10 @@ def make_apertures(
             frame_sequence[:, :, idx_seq:idx_seq+fpt] = get_cycle(
                 scaled_frames, idx_frames, reverse[i])
 
-        savemat(
-            f"{out_path}/task-retinotopy_condition-{task}_desc-perFrame_apertures.mat",
-            {task: frame_sequence.astype('bool')}
-        )
+        #savemat(
+        #    f"{out_path}/task-retinotopy_condition-{task}_desc-perFrame_apertures.mat",
+        #    {task: frame_sequence.astype('bool')}
+        #)
 
 
         if per_slice:
@@ -156,19 +164,27 @@ def make_apertures(
         '''
         Frames averaged per TR
         202 TRs in total to match the number of TRs in a run's bold file
+
+        Resize apertures from 768x768 to 192x192 pixels
+        to speed up pRF processing
         '''
-        frame_TR = np.zeros([768, 768, int(np.ceil(300/TR))])
+        #frame_TR = np.zeros([768, 768, int(np.ceil(300/TR))])
+        frame_TR = np.zeros(
+            [t_dim, t_dim, int(np.ceil(300/TR))])
 
         for f in range(frame_TR.shape[2]):
             idx_0 = int(np.round(f*fps*TR))
             idx_n = int(np.round((f+1)*fps*TR))
-            frame_TR[:, :, f] = np.mean(
+            mean_frame = np.mean(
                 frame_sequence[:, :, idx_0:idx_n], axis=2)
+            frame_TR[:, :, f] = resize(
+                mean_frame, (t_dim, t_dim), preserve_range=True, anti_aliasing=True,
+            )
 
-        # Save output
+        # Save output, remove first 3 TRs of each task for signal equilibration
         savemat(
             f"{out_path}/task-retinotopy_condition-{task}_desc-perTR_apertures.mat",
-            {task: frame_TR.astype('f4')}
+            {task: frame_TR[:, :, 3:].astype('f4')}
         )
 
 
@@ -198,4 +214,4 @@ if __name__ == '__main__':
     '''
     args = get_arguments()
 
-    make_apertures(args.data_dir, args.per_slice)
+    make_apertures(args.data_dir, args.target_dim, args.per_slice)
