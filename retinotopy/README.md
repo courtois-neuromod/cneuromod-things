@@ -13,7 +13,7 @@ The stimulated visual field was a circular area with a diameter corresponding to
 
 ``retinotopy.fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/retinotopy`` submodule includes raw fMRI files, and ``*events.tsv`` files with bloc and imagewise metrics.
 
-``sourcedata/retinotopy`` also contains the ``retino.stimuli`` submodule, which includes the apertures and image stimuli.
+``sourcedata/retinotopy`` also contains the ``stimuli`` submodule, which includes the apertures and image stimuli.
 
 ## retinotopy.prf
 

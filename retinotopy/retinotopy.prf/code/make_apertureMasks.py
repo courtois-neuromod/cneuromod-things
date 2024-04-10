@@ -39,7 +39,7 @@ def make_apertures(
     fps = 15.0
 
     stim_path = Path(
-        f"{data_dir}/retinotopy.fmriprep/sourcedata/retinotopy/retino.stimuli/"
+        f"{data_dir}/retinotopy.fmriprep/sourcedata/retinotopy/stimuli/"
     )
     out_path = Path(f"{data_dir}/retinotopy.prf/apertures")
 
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     '''
     For each of the three retinotopy tasks (bars, rings and wedges),
     a series of frames is reconstructed from the Psychopy task script and the
-    aperture frames (retino.stimuli); aperture frame rate is 15 frames per sec.
+    aperture frames (stimuli); aperture frame rate is 15 frames per sec.
 
     Frames (apertures) are then averaged within TR to downsample their temporal
     resolution to match the bold signal acquisition.

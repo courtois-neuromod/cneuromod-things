@@ -45,7 +45,7 @@ Project Organization
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-00*_task-fLoc_run-0*_events.tsv  <- events.tsv files
-    │    │               └── floc.stimuli
+    │    │               └── stimuli
     │    │                     └── images   <- stimulus images per category
     │    │
     │    └── floc.rois               <- fLoc scripts and datasets
@@ -109,7 +109,7 @@ Project Organization
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-*_task-{bars, rings, wedges}_events.tsv  <- events.tsv files
-    │    │               └── retino.stimuli
+    │    │               └── stimuli
     │    │                     ├── {grid, images, scenes}.npz
     │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
@@ -151,7 +151,7 @@ Project Organization
     │    │               │          └── func
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
-    │    │               ├── things.stimuli
+    │    │               ├── stimuli
     │    │               │     ├── images_fmri <- stimulus images per category
     │    │               │     └── annotations <- image annotations
     │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
