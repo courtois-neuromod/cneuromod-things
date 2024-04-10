@@ -1,3 +1,8 @@
 [submodule "THINGS/things.glmsingle/code/glmsingle/GLMsingle"]
 	path = THINGS/things.glmsingle/code/glmsingle/GLMsingle
 	url = git@github.com:courtois-neuromod/GLMsingle.git
+[submodule "retinotopy/retinotopy.fmriprep"]
+	path = retinotopy/retinotopy.fmriprep
+	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.retinotopy.fmriprep
+	datalad-id = 48398cbc-de88-4e06-ad53-09fec11fe65b
+	datalad-url = "ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.retinotopy.fmriprep"
