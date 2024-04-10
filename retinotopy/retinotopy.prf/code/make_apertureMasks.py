@@ -15,7 +15,7 @@ def get_arguments():
         '--data_dir',
         required=True,
         type=str,
-        help='absolute path to cneuromod-things/retino directory',
+        help='absolute path to cneuromod-things/retinotopy directory',
     )
     parser.add_argument(
         '--per_slice',
@@ -39,9 +39,9 @@ def make_apertures(
     fps = 15.0
 
     stim_path = Path(
-        f"{data_dir}/retino.fmriprep/sourcedata/retino/retino.stimuli/"
+        f"{data_dir}/retinotopy.fmriprep/sourcedata/retinotopy/retino.stimuli/"
     )
-    out_path = Path(f"{data_dir}/retino.prf/apertures")
+    out_path = Path(f"{data_dir}/retinotopy.prf/apertures")
 
     for task in tasks:
         # frames per task
@@ -105,7 +105,7 @@ def make_apertures(
                 scaled_frames, idx_frames, reverse[i])
 
         savemat(
-            f"{out_path}/task-retino_condition-{task}_desc-perFrame_apertures.mat",
+            f"{out_path}/task-retinotopy_condition-{task}_desc-perFrame_apertures.mat",
             {task: frame_sequence.astype('bool')}
         )
 
@@ -131,7 +131,7 @@ def make_apertures(
                 frame_slice[:, :, slice] = frame_sequence[:, :, idx]
 
             savemat(
-                f"{out_path}/task-retino_condition-{task}_desc-perSlice_apertures.mat",
+                f"{out_path}/task-retinotopy_condition-{task}_desc-perSlice_apertures.mat",
                 {task: frame_slice.astype('bool')}
             )
 
@@ -149,7 +149,7 @@ def make_apertures(
                     slice_frames[:, :, t] = frame_sequence[:, :, idx]
 
                 savemat(
-                    f"{out_path}/task-retino_condition-{task}_desc-perTR_slice-{slice_num}_apertures.mat",
+                    f"{out_path}/task-retinotopy_condition-{task}_desc-perTR_slice-{slice_num}_apertures.mat",
                     {f"{task}_slice{slice_num}": slice_frames.astype('bool')}
                 )
 
@@ -167,7 +167,7 @@ def make_apertures(
 
         # Save output
         savemat(
-            f"{out_path}/task-retino_condition-{task}_desc-perTR_apertures.mat",
+            f"{out_path}/task-retinotopy_condition-{task}_desc-perTR_apertures.mat",
             {task: frame_TR.astype('f4')}
         )
 

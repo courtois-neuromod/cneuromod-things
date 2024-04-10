@@ -19,7 +19,7 @@ In preparation for analyzePRF, build TR-by-TR aperture masks using retino.stimul
 
 Launch the following script:
 ```bash
-DATADIR="path/to/cneuromod-things/retino"
+DATADIR="path/to/cneuromod-things/retinotopy"
 
 python make_apertureMasks.py --data_dir="${DATADIR}"
 ```

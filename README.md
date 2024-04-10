@@ -94,9 +94,9 @@ Project Organization
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
     │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
     │
-    ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
+    ├── retinotopy              <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
-    │    ├── retino.fmriprep         <- fmriprep output
+    │    ├── retinotopy.fmriprep         <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in T1w space
@@ -104,7 +104,7 @@ Project Organization
     │    │    │               └── sub-0*_ses-0*_task-{bars, rings, wedges}_desc-confounds_timeseries.tsv  <- noise confounds
     │    │    │  
     │    │    └── sourcedata         <- raw files
-    │    │         └── retino    <- bidsified raw fMRI data & output   
+    │    │         └── retinotopy    <- bidsified raw fMRI data & output   
     │    │               ├── sub-0*
     │    │               │     └── ses-*
     │    │               │          └── func
@@ -113,7 +113,7 @@ Project Organization
     │    │                     ├── {grid, images, scenes}.npz
     │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
-    │    └── retino.prf              <- prf and visual ROIs scripts and dataset
+    │    └── retinotopy.prf              <- prf and visual ROIs scripts and dataset
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
@@ -121,8 +121,8 @@ Project Organization
     │            │     └── ...
     │            │
     │            ├── apertures       <- aperture masks
-    │            │     ├── task-retino_{bars, rings, wedges}_desc-perFrame_apertures.mat
-    │            │     └── task-retino_{bars, rings, wedges}_desc-perTR_apertures.mat
+    │            │     ├── task-retinotopy_condition-{bars, rings, wedges}_desc-perFrame_apertures.mat
+    │            │     └── task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat
     │            │
     │            └── sub-0*
     │                  ├── temp_files   <- intermediate steps
