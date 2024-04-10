@@ -121,7 +121,7 @@ fLoc/floc.rois/sub-*/rois/from_atlas/sub-0*
 fLoc/floc.rois/sub-*/rois/task-derived/sub-0*
 
 # retino files
-retino/retino.prf/apertures/*
+retinotopy/retinotopy.prf/apertures/*
 
 # output figures
 datapaper/figures/*.png
