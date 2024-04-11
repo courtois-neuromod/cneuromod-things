@@ -15,7 +15,7 @@ Uses an adaptation of [Kay et al. (2013)](https://doi.org/10.1152/jn.00105.2013)
 ------------
 ## Step 1. Create TR-by-TR aperture masks of the retinotopy task
 
-In preparation for analyzePRF, build TR-by-TR aperture masks using ``retinotopy/stimuli``, based on the retinotopy task implementated in Psychopy.
+In preparation for analyzePRF, build TR-by-TR aperture masks using ``retinotopy/stimuli``, based on the retinotopy task implemented in Psychopy.
 
 Launch the following script:
 ```bash
@@ -28,10 +28,21 @@ python make_apertureMasks.py --data_dir="${DATADIR}"
 - ``retinotopy/stimuli``'s  ``apertures_bars.npz``, ``apertures_ring.npz`` and ``apertures_wedge_newtr.npz`` files, the binary aperture masks used by the Psychopy script to create apertures within which patterns of visual stimuli become visible during the task. [1 = pixel where visual patterns are displayed at time t, 0 = voxel where no pattern is visible]
 
 **Output**:
-- ``{bars, rings, wedges}_per_TR.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in a pixel (value range = [0, 1])., and resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped (for signal equilibrium) to match the duration of the BOLD data.
+- ``{bars, rings, wedges}_per_TR.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
 
 ------------
 # Step 2. Pre-process and chunk the BOLD data for the analyzepRF toolbox**
+
+Prepare the BOLD data to process with the analyzepRF toolbox: vectorize, denoise,
+standardize, average across runs of the same task, and chunk into smaller segments.
+
+Launch the following script for each subject:
+```bash
+DATADIR="path/to/cneuromod-things"
+
+python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
+```
+
 
 TODO: merge steps 2 and 3 into one script
 

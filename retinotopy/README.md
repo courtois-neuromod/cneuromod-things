@@ -9,14 +9,14 @@ Each session included three 5-minutes functional runs, each of which used a diff
 
 The stimulated visual field was a circular area with a diameter corresponding to 10 degrees of visual angle. `ring` runs featured a thick circle aperture that expanded from and contracted toward the screen center. `wedge` runs featured a wedge aperture rotating clockwise and counter-clockwise. `bar` runs featured a wide bar aperture sweeping across the screen in 8 different directions. Participants fixated their gaze on a central dot and pressed a button whenever the dot changed color.
 
-## retinotopy.fmriprep
+## retinotopy/fmriprep
 
-``retinotopy.fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/retinotopy`` submodule includes raw fMRI files, and ``*events.tsv`` files with bloc and imagewise metrics.
+``retinotopy/fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``retinotopy/fmriprep/sourcedata/retinotopy`` submodule includes raw fMRI files, and ``*events.tsv`` files with bloc and imagewise metrics.
 
-``sourcedata/retinotopy`` also contains the ``stimuli`` submodule, which includes the apertures and image stimuli.
+``retinotopy/fmriprep/sourcedata/retinotopy`` also contains the ``stimuli`` submodule, which includes the apertures and image stimuli.
 
-## retinotopy.prf
+## retinotopy/prf
 
-``retinotopy.prf`` includes fMRI analyses and derivatives, including scripts to derive population receptive fields with the [analyzePRF toolbox](https://github.com/cvnlab/analyzePRF), pRF results (e.g., voxelwise receptive field size and eccentricity), and binary masks of early visual cortex ROIs estimated with [the Neuropythy toolbox](https://github.com/noahbenson/neuropythy).
+``retinotopy/prf`` includes fMRI analyses and derivatives, including scripts to derive population receptive fields with the [analyzePRF toolbox](https://github.com/cvnlab/analyzePRF), pRF results (e.g., voxelwise receptive field size and eccentricity), and binary masks of early visual cortex ROIs estimated with [the Neuropythy toolbox](https://github.com/noahbenson/neuropythy).
 
 ROIs include: ``V1``, ``V2``, ``V3``, ``hV4``, ``V01``, ``V02``, ``L01``, ``L02``, ``T01``, ``T02``, ``V3a`` and  ``V3b.``  

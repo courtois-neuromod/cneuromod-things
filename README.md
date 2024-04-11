@@ -24,11 +24,20 @@ Project Organization
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     ├── anatomical         <- Anatomical datasets and scripts
     │    ├── README.md          <- Anatomical dataset overview, including links to instructions for flat maps
-    │    ├── anat.smriprep         <- smriprep anatomical output
-    │    ├── anat.freesurfer       <- freesurfer output, patches to generate flat maps
-    │    │      └── doc         
-    │    │           └── flatmaps.md   <- Instructions to generate flat maps in pycortex
-    │    └── anat.pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
+    │    ├── smriprep           <- smriprep anatomical output
+    │    │      ├── sub-0*         
+    │    │      │    └── anat   
+    │    │      │         └── sub-0*_label-GM_probseg.nii.gz   <- fmriprep grey matter mask  
+    │    │      └── sourcedata         
+    │    │            └── freesurfer       <- freesurfer output
+    │    │                   ├── doc         
+    │    │                   │    └── flatmaps.md   <- Instructions to generate flat maps in pycortex
+    │    │                   └── sub-0*    
+    │    │                        └── surf   
+    │    │                              ├── {lh, rh}.full.patch.3d        <- patches to create flat maps       
+    │    │                              ├── {lh, rh}.full.flat.patch.3d      
+    │    │                              └── {lh, rh}.full.flat.patch.3d.out       
+    │    └── pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
     ├── floc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
@@ -96,7 +105,7 @@ Project Organization
     │
     ├── retinotopy              <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
-    │    ├── retinotopy.fmriprep         <- fmriprep output
+    │    ├── fmriprep           <- retinotopy fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in T1w space
@@ -113,24 +122,25 @@ Project Organization
     │    │                     ├── {grid, images, scenes}.npz
     │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
-    │    └── retinotopy.prf              <- prf and visual ROIs scripts and dataset
-    │            ├── code            <- scripts to run glm single and process output
-    │            │     ├── README.md    
-    │            │     ├── requirements.txt          
-    │            │     ├── make_apertureMasks.py
-    │            │     └── ...
-    │            │
-    │            ├── apertures       <- aperture masks
-    │            │     ├── task-retinotopy_condition-{bars, rings, wedges}_desc-perFrame_apertures.mat
-    │            │     └── task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat
-    │            │
-    │            └── sub-0*
-    │                  ├── temp_files   <- intermediate steps
-    │                  │    └── ...
-    │                  ├── rois
-    │                  │    └── ...
-    │                  └── prf
-    │                       └── ...
+    │    └── prf                     <- prf and visual ROIs scripts and dataset
+    │         ├── code            <- scripts to run glm single and process output
+    │         │     ├── README.md    
+    │         │     ├── requirements.txt          
+    │         │     ├── make_apertureMasks.py
+    │         │     └── ...
+    │         │
+    │         ├── apertures       <- aperture masks
+    │         │     ├── task-retinotopy_condition-bars_desc-perTR_apertures.mat
+    │         │     ├── task-retinotopy_condition-rings_desc-perTR_apertures.mat
+    │         │     └── task-retinotopy_condition-wedges_desc-perTR_apertures.mat
+    │         │
+    │         └── sub-0*
+    │               ├── prf   
+    │               │    └── input
+    │               ├── rois
+    │               │    └── ...
+    │               └── prf
+    │                    └── ...
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts
