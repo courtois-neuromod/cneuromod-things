@@ -34,7 +34,7 @@ python make_apertureMasks.py --data_dir="${DATADIR}"
 # Step 2. Pre-process and chunk the BOLD data for the analyzepRF toolbox**
 
 Prepare the BOLD data to process with the analyzepRF toolbox: vectorize, denoise,
-standardize, average across runs of the same task, and chunk into smaller segments.
+standardize, average across runs of the same task, and chunk into small brain segments.
 
 Launch the following script for each subject:
 ```bash
@@ -43,48 +43,18 @@ DATADIR="path/to/cneuromod-things"
 python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 ```
 
+**Input**:
+- All of a subject's ``*_bold.nii.gz`` and ``*mask.nii.gz`` files, for all sessions (~6) and runs (3 per session)
+(e.g., ``sub-03_ses-003_task-rings_space-T1w_desc-preproc_part-mag_bold.nii.gz``).
+- All of a subject's confound ``*sub-01_ses-002_task-bars_desc-confounds_part-mag_timeseries.tsv`` files, for all sessions (~6) and runs (2 per session) (e.g., ``sub-01_ses-002_task-bars_desc-confounds_part-mag_timeseries.tsv``)
+- ``anatomical/smriprep/sub-{sub_num}/anat/sub-{sub_num}_label-GM_probseg.nii.gz``, a subject's grey matter mask outputed by fmriprep .
 
-TODO: merge steps 2 and 3 into one script
-
-Note: processes data from multiple participants.
-
-Script: src/data/average_bold.py
-
-To average bold data across sessions, per task, for each participant (one file per task =  3 bold files)
-```bash
-python -m src.data.average_bold --makemasks --makestim
-```
-
-To save bold data separately for each session (one file per task per session = 3 x 6 bold files)
-```bash
-python -m src.data.average_bold --makemasks --makestim --per_session
-```
-
-**Input**: bold nii.gz files processed with fmriprep in T1w space, and stimuli (aperture frames per TR) \
 **Output**:
-- Whole-brain subject masks made from subject's epi masks (one per session for each task) and from a grey matter anatomical mask outputted by freesurfer
-- Detrended and normalized bold runs averaged per task across 5/6 sessions; saved as a 1D flattened masked array inside a .mat file
+- Two brain mask files generated from the union of the run ``*_mask.nii.gz`` files and ``*_label-GM_probseg.nii.gz``: ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
+- ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, chunks of vectorized, detrended bold signal averaged across sessions for runs of the same task to load in matlab (~850 .mat files of >200k voxels each), dim = (voxels, TR)
 
 ------------
-**Step 3. Chunk flattened and detrended brain voxels into segments that load easily into matlab**
 
-Note: processes data from multiple participants.
-
-AnalyzePRF processes each voxel individually, which is maddeningly slow. Chunks allow to run the pipeline in parallel from different machines (e.g., elm and ginkgo) to speed up the process.
-
-Script: src/data/chunk_bold.py
-
-Ideally, set chunk_size argument (which sets the number of voxels per chunk) to be a multiple of the number of matlab workers available on elm/ginkgo
-```bash
-python -m src.data.chunk_bold --chunk_size=240
-```
-Note to self: Make sure to generate separate individual subject directories in which to save the 800+ chunks (s01, s02...)
-
-
-**Input**: Detrended and masked voxels processed with average_bold.py \
-**Output**: Chunks of detrended and flattened voxels to load in matlab (~850 .mat files for >200k voxels), dim = (voxels, TR)
-
-------------
 **Step 4. AnalyzePRF toolbox**
 
 Note: processes a single participant at a time, very slowly.

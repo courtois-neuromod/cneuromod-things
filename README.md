@@ -140,7 +140,9 @@ Project Organization
     │               │          ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii    
     │               │          ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii    
     │               │          └── chunks    
-    │               │                 └── sub-0*_task-retinotopy_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │                 ├── sub-0*_task-retinotopy_condition-bars_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │                 ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
+    │               │                 └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
     │               └── rois
     │                   └── ...
     │
