@@ -50,8 +50,8 @@ python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 - ``anatomical/smriprep/sub-{sub_num}/anat/sub-{sub_num}_label-GM_probseg.nii.gz``, a subject's grey matter mask outputed by fmriprep .
 
 **Output**:
-- Two brain mask files generated from the union of the run ``*_mask.nii.gz`` files and ``*_label-GM_probseg.nii.gz``: ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
-- ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, chunks of vectorized, detrended bold signal averaged across sessions for runs of the same task to load in matlab (~850 .mat files of >200k voxels each), dim = (voxels, TR)
+- Two brain masks generated from the union of the run ``*_mask.nii.gz`` files and ``*_label-GM_probseg.nii.gz``: ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
+- ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, chunks of vectorized, detrended bold signal averaged across sessions for runs of the same task, to load in matlab (~850 .mat files of >200k voxels each), dim = (voxels, TR)
 
 ------------
 

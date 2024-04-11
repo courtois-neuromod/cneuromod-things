@@ -10,6 +10,7 @@ from nilearn.image.image import smooth_img
 import numpy as np
 from scipy.io import savemat
 from scipy.stats import zscore
+from tqdm import tqdm
 
 
 def get_arguments():
