@@ -196,10 +196,10 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
         For K.Kay's toolbox, it can also be X x Y x Z x time
 
         Number of voxels within "clean" brain mask, per participant
-        sub-01: 205455 voxels (w inclusive full brain mask, no NaN)
-        sub-02: 221489 voxels (w inclusive full brain mask, no NaN)
-        sub-03: 197945 voxels (w inclusive full brain mask, no NaN)
-        sub-05: ? voxels (w inclusive full brain mask, no NaN)
+        sub-01: 204387 voxels (w inclusive full brain mask, no NaN)
+        sub-02: 219784 voxels (w inclusive full brain mask, no NaN)
+        sub-03: 197155 voxels (w inclusive full brain mask, no NaN)
+        sub-05: 188731 voxels (w inclusive full brain mask, no NaN)
         '''
 
         mean_bold = np.mean(np.array(flatbold_list), axis=0)  # dim= (vox, time)

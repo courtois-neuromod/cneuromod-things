@@ -55,11 +55,34 @@ python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 
 ------------
 
-**Step 4. AnalyzePRF toolbox**
+## Step 3. AnalyzePRF toolbox
 
-Note: processes a single participant at a time, very slowly.
+Process chunks of data with the [analyzepRF](https://github.com/cvnlab/analyzePRF) retinotopy toolbox (in matlab).
+Note that the code requires the MATLAB Optimization Toolbox and Matlab Parallel Computing Toolbox (``parfor``) to run.
 
-Transfer data (chunks and resized stimuli) from Compute Canada to elm/ginkgo, and process it through Kendrick Kay’s AnalyzePRF retinotopy toolbox (in matlab). Toolbox repo [here](https://github.com/cvnlab/analyzePRF); Toolbox documentation/examples [here](http://kendrickkay.net/analyzePRF/).
+See [here](http://kendrickkay.net/analyzePRF/) for documentation and examples. \
+Note: the script processes a single participant at a time, VERY slowly.
+
+```bash
+module load StdEnv/2020
+module load matlab/2021a.5
+
+SUB_NUM="01" # 01, 02, 03, 05
+STARTCHUNK="0"
+ENDCHUNK="10"
+NWORKERS="36"
+
+DATADIR="path/to/cneuromod-things/retinotopy/prf"
+CODEDIR="${DATADIR}/code"
+cd ${CODEDIR}
+
+matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('run_analyzePRF.m'); exit;"
+```
+
+Note: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
+Alliance Canada (??h job per subject, 32 CPUs per task, 5000M memory/CPU)
+
+it will take > 24h for an entire brain with 50 workers...
 
 Notes:
 - Matlab version: R2021a Update 5 (9.10.0.1739362) 64-bit (glnxa64) is installed on elm/ginkgo with UdeM license
