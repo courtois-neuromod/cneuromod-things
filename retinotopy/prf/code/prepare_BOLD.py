@@ -157,7 +157,7 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
 
             # extract epi's confounds
             temp_bold = f"{out_dir}/{os.path.basename(scan).replace('_part-mag', '')}"
-            conf_path = bold_path.replace(
+            conf_path = scan.replace(
                 "_space-T1w_desc-preproc_part-mag_bold.nii.gz",
                 "_desc-confounds_part-mag_timeseries.tsv",
             )
