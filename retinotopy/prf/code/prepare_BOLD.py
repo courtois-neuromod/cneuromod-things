@@ -187,19 +187,4 @@ if __name__ == '__main__':
     args = get_arguments()
 
     epi_mask = make_mask(args.dir_path, f"sub-{args.sub}")
-
     flatten_epi(args.dir_path, f"sub-{args.sub}", epi_mask)
-
-    dir_path = '/home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis' if args.dir_path is None else args.dir_path
-
-    sub_list = ['sub-01', 'sub-02', 'sub-03']
-    task_list = ['wedges', 'rings', 'bars']
-
-    for sub in sub_list:
-
-        if args.makemasks:
-            sub_mask = make_sub_mask(dir_path, sub)
-        else:
-            sub_mask = nib.load(os.path.join(dir_path, 'output', 'masks', sub + '_WholeBrain.nii.gz'))
-
-        flatten_epi(dir_path, sub, task_list, args.per_session)

@@ -47,9 +47,9 @@ def make_apertures(
     fps = 15.0
 
     stim_path = Path(
-        f"{data_dir}/retinotopy.fmriprep/sourcedata/retinotopy/stimuli/"
+        f"{data_dir}/fmriprep/sourcedata/retinotopy/stimuli/"
     )
-    out_path = Path(f"{data_dir}/retinotopy.prf/apertures")
+    out_path = Path(f"{data_dir}/prf/apertures")
 
     for task in tasks:
         # frames per task

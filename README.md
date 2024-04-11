@@ -137,10 +137,8 @@ Project Organization
     │         └── sub-0*
     │               ├── prf   
     │               │    └── input
-    │               ├── rois
-    │               │    └── ...
-    │               └── prf
-    │                    └── ...
+    │               └── rois
+    │                   └── ...
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts
