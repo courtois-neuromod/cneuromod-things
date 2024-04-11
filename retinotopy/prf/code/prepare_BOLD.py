@@ -1,17 +1,15 @@
 import os, glob, json
-import numpy as np
+import argparse
+
+from load_confounds import Minimal
 import nibabel as nib
-import nilearn
 from nilearn.signal import clean
 from nilearn.masking import apply_mask, intersect_masks, unmask
 from nilearn.image import resample_to_img
-from nilearn.image.image import mean_img, smooth_img
-from nilearn.plotting import view_img
-from load_confounds import Minimal
-from skimage.transform import resize
-
-from scipy.io import loadmat, savemat
-import argparse
+from nilearn.image.image import smooth_img
+import numpy as np
+from scipy.io import savemat
+from scipy.stats import zscore
 
 
 def get_arguments():
@@ -24,6 +22,12 @@ def get_arguments():
         required=True,
         type=str,
         help='absolute path to cneuromod-things repo)'
+    )
+    parser.add_argument(
+        '--chunk_size',
+        default=240,
+        type=int,
+        help='number of voxels per chunk',
     )
     parser.add_argument(
         '--sub',
@@ -123,68 +127,91 @@ def make_mask(dir_path, sub):
     return clean_mask
 
 
-def flatten_epi(dir_path, sub, epi_mask):
+def flatten_epi(dir_path, sub, chunk_size, sub_mask):
 
     task_list = ['wedges', 'rings', 'bars']
 
-    epilist_per_task = []
-    confounds_per_task = []
     sub_affine = None
-
     for task in task_list:
-        scan_list = sorted(glob.glob(os.path.join(dir_path, 'data', 'temp_bold', sub + '*' + task + '_space-T1w_desc-preproc_part-mag_bold.nii.gz')))
+        scan_list = sorted(
+            glob.glob(
+                f"{dir_path}/retinotopy/fmriprep/{sub}/ses-0*/func/"
+                f"{sub}_ses-0*_task-{task}_space-T1w_desc-preproc_part-mag_bold.nii.gz",
+            )
+        )
+
         flatbold_list = []
-
-        sess_num = 1
-
         for scan in scan_list:
 
-            if sub_affine is None:
-                sub_affine = nib.load(scan).affine
-
             epi = nib.load(scan)
-            assert np.sum(epi.affine == sub_affine) == 16
-            print(epi.shape) # (76, 90, 71, 202) = x, y, z, time (TR)
             assert epi.shape[-1] == 202
+            if sub_affine is None:
+                sub_affine = epi.affine
+            else:
+                assert np.sum(epi.affine == sub_affine) == 16
 
-            flat_bold = apply_mask(imgs=epi, mask_img=sub_mask) # shape: (time, vox)
+            # dim = (time, vox)
+            flat_bold = apply_mask(imgs=epi, mask_img=sub_mask)
 
             # extract epi's confounds
-            confounds = Minimal(global_signal='basic').load(scan[:-20] + 'bold.nii.gz')
+            confounds = Minimal(
+                global_signal='basic').load(scan.replace("_part-mag", "")
+            )
 
-            # Detrend and normalize flattened data
-            # note: signal.clean takes (time, vox) shaped input
-            flat_bold_dt = clean(flat_bold, detrend=True, standardize='zscore',
-                                 standardize_confounds=True, t_r=None, confounds=confounds, ensure_finite=True).T # shape: vox per time
+            """
+            Detrend and normalize flattened data
+            Note: signal.clean takes (time, vox) shaped input
+            """
+            flat_bold_dt = clean(
+                flat_bold,
+                detrend=True,
+                standardize='zscore',
+                standardize_confounds=True,
+                t_r=None,
+                confounds=confounds,
+                ensure_finite=True,
+            ).T # dim = (vox, time)
 
             # Remove first 3 volumes of each run
-            flat_bold_dt = flat_bold_dt[:, 3:]
+            flatbold_list.append(flat_bold_dt[:, 3:])
 
-            if per_session:
-                savemat(os.path.join(dir_path, 'output', 'detrend', sub + '_epi_FULLbrain_' + task + '_sess' + str(sess_num) +'.mat'), {sub + '_' + task : flat_bold_dt})
-            else:
-                flatbold_list.append(flat_bold_dt)
+        '''
+        Save the data as a cell vector of voxels x time.
+        For K.Kay's toolbox, it can also be X x Y x Z x time
 
-            sess_num += 1
+        Number of voxels within "clean" brain mask, per participant
+        sub-01: 205455 voxels (w inclusive full brain mask, no NaN)
+        sub-02: 221489 voxels (w inclusive full brain mask, no NaN)
+        sub-03: 197945 voxels (w inclusive full brain mask, no NaN)
+        sub-05: ? voxels (w inclusive full brain mask, no NaN)
+        '''
 
-        if not per_session:
-            mean_bold = np.mean(np.array(flatbold_list), axis=0) # shape: voxel per time
+        mean_bold = np.mean(np.array(flatbold_list), axis=0)  # dim= (vox, time)
+        #savemat(
+        #    f"{dir_path}/retinotopy/prf/{sub}/prf/input/"
+        #    f"{sub}_task-retinotopy_condition-{task}_space-T1w_label-brain_bold.mat",
+        #    {f"{sub}_"task" : mean_bold},
+        #)
 
-            # provides the data as a cell vector of voxels x time. For K.Kay's toolbox, it can also be X x Y x Z x time
-            print(mean_bold.shape)
-            savemat(os.path.join(dir_path, 'output', 'detrend', sub + '_epi_FULLbrain_' + task + '.mat'), {sub + '_' + task : mean_bold})
+        num_vox = mean_bold.shape[0]
+        chunk_path = f"{dir_path}/retinotopy/prf/{sub}/prf/input/chunks"
+        Path(chunk_path).mkdir(parents=True, exist_ok=True)
+        file_path = f"{chunk_path}/{sub}_task-retinotopy_condition-{task}_space-T1w_desc-chunk%04d_bold.mat"
+
+        for i in range(int(np.ceil(num_vox/chunk_size))):
+            savemat(
+                file_path % i,
+                {f"sub{sub[-2:]}_{task}": mean_bold[i*chunk_size:(i+1)*chunk_size, :]}
+            )
 
 
 if __name__ == '__main__':
     '''
-    Script takes runs of bold.nii.gz files, detrends them,
-    averages them per task across session, masks and flattens them and exports
-    them into .mat files
-
-    It also resizes visual stimuli (apertures) to reduce processing time with analyzePRF
-    (by reducing the number of pixels to explore)
+    Script takes runs of bold.nii.gz files, flattens them, detrends them,
+    averages them per task across sessions, chunks them into vectorized segments
+    of lenght = chunk_size, and exports them into .mat files
     '''
     args = get_arguments()
 
     epi_mask = make_mask(args.dir_path, f"sub-{args.sub}")
-    flatten_epi(args.dir_path, f"sub-{args.sub}", epi_mask)
+    flatten_epi(args.dir_path, f"sub-{args.sub}", args.chunk_size, epi_mask)
