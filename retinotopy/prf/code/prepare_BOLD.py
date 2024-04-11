@@ -1,5 +1,6 @@
 import os, glob, json
-import argparse
+import argparse, subprocess
+from pathlib import Path
 
 from load_confounds import Minimal
 import nibabel as nib
