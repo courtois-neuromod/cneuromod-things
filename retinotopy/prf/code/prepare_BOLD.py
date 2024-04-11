@@ -144,7 +144,7 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
         )
 
         flatbold_list = []
-        for scan in scan_list:
+        for scan in tqdm(scan_list, , desc='flattening bold files'):
 
             epi = nib.load(scan)
             assert epi.shape[-1] == 202
@@ -204,17 +204,16 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
 
         mean_bold = np.mean(np.array(flatbold_list), axis=0)  # dim= (vox, time)
         #savemat(
-        #    f"{dir_path}/retinotopy/prf/{sub}/prf/input/"
-        #    f"{sub}_task-retinotopy_condition-{task}_space-T1w_label-brain_bold.mat",
+        #    f"{out_dir}/{sub}_task-retinotopy_condition-{task}_"
+        #    "space-T1w_label-brain_bold.mat",
         #    {f"{sub}_"task" : mean_bold},
         #)
 
         num_vox = mean_bold.shape[0]
-        chunk_path = f"{dir_path}/retinotopy/prf/{sub}/prf/input/chunks"
-        Path(chunk_path).mkdir(parents=True, exist_ok=True)
-        file_path = f"{chunk_path}/{sub}_task-retinotopy_condition-{task}_space-T1w_desc-chunk%04d_bold.mat"
+        Path(f"{out_dir}/chunks").mkdir(parents=True, exist_ok=True)
+        file_path = f"{out_dir}/chunks/{sub}_task-retinotopy_condition-{task}_space-T1w_desc-chunk%04d_bold.mat"
 
-        for i in range(int(np.ceil(num_vox/chunk_size))):
+        for i in tqdm(range(int(np.ceil(num_vox/chunk_size))), desc='chunking'):
             savemat(
                 file_path % i,
                 {f"sub{sub[-2:]}_{task}": mean_bold[i*chunk_size:(i+1)*chunk_size, :]}
