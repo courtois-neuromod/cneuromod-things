@@ -144,7 +144,7 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
         )
 
         flatbold_list = []
-        for scan in tqdm(scan_list, , desc='flattening bold files'):
+        for scan in tqdm(scan_list, desc='flattening bold files'):
 
             epi = nib.load(scan)
             assert epi.shape[-1] == 202
