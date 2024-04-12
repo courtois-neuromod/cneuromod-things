@@ -28,7 +28,7 @@ addpath(genpath(strcat(data_dir,"/sub-",sub_num,"/prf/input/chunks")));
 % Start the parallel pool
 % parpool(local_cluster);
 % parpool(32)
-parpool(nwork)
+parpool(str2num(nwork))
 
 % load apertures
 load('task-retinotopy_condition-wedges_desc-perTR_apertures.mat');

@@ -78,9 +78,9 @@ cd ${CODEDIR}
 
 matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('run_analyzePRF.m'); exit;"
 ```
-
+Note: NWORKERS, the number of parpool workers, should be set to the number of available CPUs (matlab default is up to 12, but can be overriden in the code.)
 Note: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
-Alliance Canada (??h job per subject, 32 CPUs per task, 5000M memory/CPU)
+Alliance Canada (??h job per subject, 32 CPUs per task, 5000M memory/CPU). Both the Optimization and the Parallel Computing toolboxes are available on the Beluga cluster.
 
 it will take > 24h for an entire brain with 50 workers...
 
