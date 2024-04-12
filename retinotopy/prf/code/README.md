@@ -28,7 +28,7 @@ python make_apertureMasks.py --data_dir="${DATADIR}"
 - ``retinotopy/stimuli``'s  ``apertures_bars.npz``, ``apertures_ring.npz`` and ``apertures_wedge_newtr.npz`` files, the binary aperture masks used by the Psychopy script to create apertures within which patterns of visual stimuli become visible during the task. [1 = pixel where visual patterns are displayed at time t, 0 = voxel where no pattern is visible]
 
 **Output**:
-- ``{bars, rings, wedges}_per_TR.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
+- ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
 
 ------------
 # Step 2. Pre-process and chunk the BOLD data for the analyzepRF toolbox**
@@ -79,34 +79,12 @@ Note: NWORKERS, the number of parpool workers, should be set to the number of av
 Note: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
 Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both the Optimization and the Parallel Computing toolboxes are available on the Beluga cluster.
 
+**Input**:
+- ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, the apertures per TR for each run type generated in Step 1.
+- ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, the chunks of normalized bold data averaged across runs generated in Step 2.
 
-it will take > 24h for an entire brain with 50 workers...
-
-Notes:
-- Matlab version: R2021a Update 5 (9.10.0.1739362) 64-bit (glnxa64) is installed on elm/ginkgo with UdeM license
-- On elm/ginkgo, I have a downloaded a copy of the analyze_pFR toolbox code locally from the repo (it's not a repo though) in /home/mariestl/cneuromod/retinotopy/analyzePRF
-
-Do:
-- Copy the stimuli (e.g., rings_per_TR199_192x192.mat) in /home/mariestl/cneuromod/retinotopy/analyzePRF/data
-- Copy chunks files from beluga home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis/output/detrend/chunks_fullbrain/s0* into elm/ginkgo /home/mariestl/cneuromod/retinotopy/analyzePRF/data/chunks/sub-0*/fullbrain
-- Modify scripts **run_analyzePRF_elm.m** and **run_analyzePRF_ginkgo.m** to determine which subject to run, and which series of chunks to process on which server; the chunk numbers called by the script are determined by the for loop (line 42). (Note: this is not a local repo, those scripts are copied and modified locally & manually)
-- AnalyzePRF results (sets of metrics for each chunk) are saved in /home/mariestl/cneuromod/retinotopy/analyzePRF/results/sub-0*/fullbrain
-
-Generic copy of the script that calls analyzePRF: src/features/run_analyzePRF.m \
-Example bash script to call run_analyzePRF.m from the console: src/features/call_analyze_script.sh
-
-- Run the script inside a detachable tmux session (it will take > 24h for an entire brain with 50 workers)
-E.g.,
-```bash
-tmux
-module load matlab
-matlab -nodisplay -nosplash -nodesktop -r "run('run_analyzePRF_elm.m'); exit;"
-```
-
-Note to self: The number of workers used by parpool for parallel processing is determined by availability, up to the default set in the "local" profile. Launching the matlab interface and changing that default (bottom left green flashing button) allows to modify it. The parallel workers are called in the toolbox code by default.
-
-**Input**: Chunks of detrended voxels  \
-**Output**: Population receptive field metrics estimated for each voxel, saved per chunk
+**Output**:
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_*.mat``, population receptive field metrics (``ang``, ``ecc``, ``expt``, ``rfsize``, ``R2`` and ``gain``) estimated for each voxel, saved per chunk.
 
 ------------
 **Step 5. Reconstruct chunked output files into brain volumes and pre-process metrics for Neuropythy toolbox**
