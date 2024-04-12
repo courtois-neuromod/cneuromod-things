@@ -37,7 +37,12 @@ def get_arguments():
 def reassamble(dir_path, sub, mask, num_vox, chunk_size, out):
 
     flat_output = np.zeros((num_vox,))
-    file_path = sorted(glob.glob(os.path.join(dir_path, 'results/analyzePRF/chunked/s' + sub[-2:], 'sub' + sub[-2:] + '_fullbrain_analyzePRF_' + out + '_*.mat')))
+    file_path = sorted(
+        glob.glob(
+            f"{dir_path}/sub-{sub}/output/chunks/sub-{sub}_task-retinotopy_"
+            f"space-T1w_model-analyzepRF_label-brain_stats-{out}_desc-chunk*_statseries.mat",
+        )
+    )
 
     for i in range(int(np.ceil(num_vox/chunk_size))):
         #print(out, i)
@@ -210,7 +215,7 @@ def process_output(
     # re-concatenate chunked voxels and unmask into brain volume (subject's T1w)
     # all files are exported by the function
     for out in out_list:
-        flat_out = reassamble(data_dir, sub, mask, num_vox, chunk_size, out)
+        reassamble(data_dir, sub, mask, num_vox, chunk_size, out)
 
     # load, process and save volume of R^2 Values
     r2 = get_r2(dir_path, sub, mask)

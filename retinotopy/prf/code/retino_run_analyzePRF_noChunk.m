@@ -52,12 +52,12 @@ gain = results.gain;
 out_path = strcat(data_dir,'/sub-',sub_num,'/prf/output');
 out_file = strcat(out_path,'/sub-',sub_num,'_task-retinotopy_space-T1w_model-analyzepRF_label-brain');
 save(strcat(out_file,'_statseries.mat'), 'results')
-save(strcat(out_file,'_ang.mat'), 'ang')
-save(strcat(out_file,'_ecc.mat'), 'ecc')
-save(strcat(out_file,'_expt.mat'), 'expt')
-save(strcat(out_file,'_rfsize.mat'), 'rfsize')
-save(strcat(out_file,'_R2.mat'), 'R2')
-save(strcat(out_file,'_gain.mat'), 'gain')
+save(strcat(out_file,'_stats-ang_statseries.mat'), 'ang')
+save(strcat(out_file,'_stats-ecc_statseries.mat'), 'ecc')
+save(strcat(out_file,'_stats-expt_statseries.mat'), 'expt')
+save(strcat(out_file,'_stats-rfsize_statseries.mat'), 'rfsize')
+save(strcat(out_file,'_stats-R2_statseries.mat'), 'R2')
+save(strcat(out_file,'_stats-gain_statseries.mat'), 'gain')
 
 clear results, clear data
 clear ang, clear ecc, clear expt, clear rfsize, clear R2, clear gain
