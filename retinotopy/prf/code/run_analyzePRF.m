@@ -35,7 +35,7 @@ load('task-retinotopy_condition-wedges_desc-perTR_apertures.mat');
 load('task-retinotopy_condition-rings_desc-perTR_apertures.mat');
 load('task-retinotopy_condition-bars_desc-perTR_apertures.mat');
 
-stimuli = {single(wedges), single(rings), single(bars)};
+stimuli = {double(wedges), double(rings), double(bars)};
 clear wedges, clear rings, clear bars;
 
 % number of voxels (as a reference)
@@ -58,20 +58,20 @@ for i = str2num(first_chunk):str2num(last_chunk)
     sub_bars = load(strcat('sub-',sub_num,'_task-retinotopy_condition-bars',extension), strcat('sub',sub_num,'_bars'));
     sub_bars = sub_bars.(strcat('sub',sub_num,'_bars'))
 
-    data = {single(sub_wedges), single(sub_rings), single(sub_bars)};
+    data = {double(sub_wedges), double(sub_rings), double(sub_bars)};
     clear sub_wedges, clear sub_rings, clear sub_bars;
 
     results = analyzePRF(stimuli,data,1.49,struct('seedmode',[0 1 2],'display','off'));
 
-    ang = results.ang
-    ecc = results.ecc
-    expt = results.expt
-    rfsize = results.rfsize
-    R2 = results.R2
-    gain = results.gain
+    ang = results.ang;
+    ecc = results.ecc;
+    expt = results.expt;
+    rfsize = results.rfsize;
+    R2 = results.R2;
+    gain = results.gain;
 
-    out_path = strcat(data_dir,'/sub-',sub_num,'/prf/output/chunks')
-    out_file = strcat(out_path,'/sub-',sub_num,'_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk',num2str(i,'%04d'))
+    out_path = strcat(data_dir,'/sub-',sub_num,'/prf/output/chunks');
+    out_file = strcat(out_path,'/sub-',sub_num,'_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk',num2str(i,'%04d'));
     save(strcat(out_file,'_statseries.mat'), 'results')
     save(strcat(out_file,'_ang.mat'), 'ang')
     save(strcat(out_file,'_ecc.mat'), 'ecc')
@@ -80,7 +80,6 @@ for i = str2num(first_chunk):str2num(last_chunk)
     save(strcat(out_file,'_R2.mat'), 'R2')
     save(strcat(out_file,'_gain.mat'), 'gain')
 
-    clear sub*
     clear results, clear stimuli, clear data
     clear ang, clear ecc, clear expt, clear rfsize, clear R2, clear gain
 end
