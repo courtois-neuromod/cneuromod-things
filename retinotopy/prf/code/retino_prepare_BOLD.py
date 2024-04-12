@@ -206,7 +206,7 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
         savemat(
             f"{out_dir}/{sub}_task-retinotopy_condition-{task}_"
             "space-T1w_label-brain_bold.mat",
-            {f"{sub}_"task" : mean_bold},
+            {f"sub{sub[-2:]}_{task}" : mean_bold},
         )
 
         #num_vox = mean_bold.shape[0]
