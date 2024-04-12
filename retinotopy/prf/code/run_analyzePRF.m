@@ -80,7 +80,7 @@ for i = str2num(first_chunk):str2num(last_chunk)
     save(strcat(out_file,'_R2.mat'), 'R2')
     save(strcat(out_file,'_gain.mat'), 'gain')
 
-    clear results, clear stimuli, clear data
+    clear results, clear data
     clear ang, clear ecc, clear expt, clear rfsize, clear R2, clear gain
 end
 

@@ -64,9 +64,6 @@ See [here](http://kendrickkay.net/analyzePRF/) for documentation and examples. \
 Note: the script processes a single participant at a time, VERY slowly.
 
 ```bash
-module load StdEnv/2020
-module load matlab/2021a.5
-
 SUB_NUM="01" # 01, 02, 03, 05
 STARTCHUNK="0"
 ENDCHUNK="10"
@@ -78,9 +75,10 @@ cd ${CODEDIR}
 
 matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('run_analyzePRF.m'); exit;"
 ```
-Note: NWORKERS, the number of parpool workers, should be set to the number of available CPUs (matlab default is up to 12, but can be overriden in the code.)
+Note: NWORKERS, the number of parpool workers, should be set to the number of available CPUs (matlab default is up to 12, but can be overriden in the script).
 Note: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
-Alliance Canada (??h job per subject, 32 CPUs per task, 5000M memory/CPU). Both the Optimization and the Parallel Computing toolboxes are available on the Beluga cluster.
+Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both the Optimization and the Parallel Computing toolboxes are available on the Beluga cluster.
+
 
 it will take > 24h for an entire brain with 50 workers...
 
