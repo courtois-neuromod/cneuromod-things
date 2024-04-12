@@ -21,7 +21,7 @@ Launch the following script:
 ```bash
 DATADIR="path/to/cneuromod-things/retinotopy"
 
-python make_apertureMasks.py --data_dir="${DATADIR}"
+python retino_make_apertureMasks.py --data_dir="${DATADIR}"
 ```
 
 **Input**:
@@ -40,7 +40,7 @@ Launch the following script for each subject:
 ```bash
 DATADIR="path/to/cneuromod-things"
 
-python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
+python retino_prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 ```
 
 **Input**:
@@ -78,7 +78,7 @@ DATADIR="path/to/cneuromod-things/retinotopy/prf"
 CODEDIR="${DATADIR}/code"
 cd ${CODEDIR}
 
-matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('run_analyzePRF.m'); exit;"
+matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('retino_run_analyzePRF.m'); exit;"
 ```
 Note 1: NWORKERS, the number of parpool workers, should be set to match the number of available CPUs (matlab default is set to max 12, but can be overriden in the script). \
 Note2: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
@@ -92,22 +92,27 @@ Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both 
 - ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_*.mat``, population receptive field metrics (``ang``, ``ecc``, ``expt``, ``rfsize``, ``R2`` and ``gain``) estimated for each voxel, saved per chunk.
 
 ------------
-**Step 5. Reconstruct chunked output files into brain volumes and pre-process metrics for Neuropythy toolbox**
 
-Copy the chunked results files from elm/ginkgo:/ /home/mariestl/cneuromod/retinotopy/analyzePRF/results/sub-0*/fullbrain
-into beluga:/home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis/results/analyzePRF/chunked/s0*
+## Step 4. Reconstruct analyzePRF chunked output into brain volumes and adapt metrics for Neuropythy
 
-Then, reassemble the chunked output files into brain volumes and adapt them for Neuropythy. \
-Neuropythy repo [here](https://github.com/noahbenson/neuropythy); Neuropythy user manual [here](https://osf.io/knb5g/wiki/Usage/).\
-Note: processes a single participant's data at a time.
+Reassemble the chunked files outputed by analyzePRF into brain volumes, and convert their metrics to be compatible with the Neuropythy toolbox.
 
-Script: src/features/reassamble_voxels.py
+**Links and documentation**
+- Neuropythy [repo](https://github.com/noahbenson/neuropythy)
+- Neuropythy [user manual](https://osf.io/knb5g/wiki/Usage/)
+
+Run this script for each subject
 ```bash
-python -m src.features.reassamble_voxels.py --sub_num=”sub-03”
+DATADIR="path/to/cneuromod-things/retinotopy/prf"
+
+python retino_reassamble_voxels.py --data_path="${DATADIR}" --sub="01"
 ```
 
-**Input**: Chunks of retinotopy metrics saved as 1D arrays in .mat file \
-**Output**: Brain volumes of retinotopy metrics in T1w space
+**Input**:
+- Chunks of retinotopy metrics saved as 1D arrays in .mat file
+- masks
+**Output**:
+- Brain volumes of retinotopy metrics in T1w space
 
 ------------
 **Step 6. Convert retinotopy output maps from T1w volumes into surfaces with freesurfer**

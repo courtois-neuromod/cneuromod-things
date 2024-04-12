@@ -203,21 +203,21 @@ def flatten_epi(dir_path, sub, chunk_size, sub_mask):
         '''
 
         mean_bold = np.mean(np.array(flatbold_list), axis=0)  # dim= (vox, time)
-        #savemat(
-        #    f"{out_dir}/{sub}_task-retinotopy_condition-{task}_"
-        #    "space-T1w_label-brain_bold.mat",
-        #    {f"{sub}_"task" : mean_bold},
-        #)
+        savemat(
+            f"{out_dir}/{sub}_task-retinotopy_condition-{task}_"
+            "space-T1w_label-brain_bold.mat",
+            {f"{sub}_"task" : mean_bold},
+        )
 
-        num_vox = mean_bold.shape[0]
-        Path(f"{out_dir}/chunks").mkdir(parents=True, exist_ok=True)
-        file_path = f"{out_dir}/chunks/{sub}_task-retinotopy_condition-{task}_space-T1w_desc-chunk%04d_bold.mat"
+        #num_vox = mean_bold.shape[0]
+        #Path(f"{out_dir}/chunks").mkdir(parents=True, exist_ok=True)
+        #file_path = f"{out_dir}/chunks/{sub}_task-retinotopy_condition-{task}_space-T1w_desc-chunk%04d_bold.mat"
 
-        for i in tqdm(range(int(np.ceil(num_vox/chunk_size))), desc='chunking'):
-            savemat(
-                file_path % i,
-                {f"sub{sub[-2:]}_{task}": mean_bold[i*chunk_size:(i+1)*chunk_size, :]}
-            )
+        #for i in tqdm(range(int(np.ceil(num_vox/chunk_size))), desc='chunking'):
+        #    savemat(
+        #        file_path % i,
+        #        {f"sub{sub[-2:]}_{task}": mean_bold[i*chunk_size:(i+1)*chunk_size, :]}
+        #    )
 
 
 if __name__ == '__main__':

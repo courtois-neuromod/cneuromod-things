@@ -127,9 +127,10 @@ Project Organization
     │         │     ├── README.md    
     │         │     ├── requirements.txt          
     │         │     ├── analyzePRF   <- analyzePRF repo submodule (a3ac908)  
-    │         │     ├── make_apertureMasks.py
-    │         │     ├── prepare_BOLD.py
-    │         │     └── run_analyzePRF.m
+    │         │     ├── retino_make_apertureMasks.py
+    │         │     ├── retino_prepare_BOLD.py
+    │         │     ├── retino_run_analyzePRF.m
+    │         │     └── retino_reassamble_voxels.py
     │         │
     │         ├── apertures       <- aperture masks
     │         │     ├── task-retinotopy_condition-bars_desc-perTR_apertures.mat
