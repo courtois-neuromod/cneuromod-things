@@ -46,7 +46,7 @@ clear wedges, clear rings, clear bars;
 
 % LOOPS ARE INCLUSIVE IN MATLAB!!! includes last number
 
-for i = first_chunk:last_chunk
+for i = str2num(first_chunk):str2num(last_chunk)
     extension = ['_space-T1w_desc-chunk' num2str(i,'%04d') '_bold.mat'];
 
     sub_wedges = load(strcat('sub-',sub_num,'_task-retinotopy_condition-wedges',extension), strcat('sub',sub_num,'_wedges'));
