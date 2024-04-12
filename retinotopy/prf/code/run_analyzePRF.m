@@ -1,5 +1,5 @@
 
-% <subject> = subject number, e.g. '01', '02', '03'
+% <sub_num> = subject number, e.g. '01', '02', '03'
 % <data_dir> = /path/to/cneuromod-things/retinotopy/prf
 % <code_dir> = /path/to/cneuromod-things/retinotopy/prf/code
 % <first_chunk> = start up chunk number (int), e.g. 0
@@ -11,23 +11,9 @@ addpath(genpath(strcat(code_dir,"/analyzePRF")));
 addpath(genpath(strcat(data_dir,"/apertures")));
 addpath(genpath(strcat(data_dir,"/sub-",sub_num,"/prf/input/chunks")));
 
-
+% set parallel computing
 % https://www.mathworks.com/matlabcentral/answers/454021-how-to-replace-matlabpool-to-parpool
 % https://www.mathworks.com/help/parallel-computing/parpool.html;jsessionid=4f2aaebed69057d75b8436992ba1
-% TODO: set number of parallel workers
-%(ginkgo : 30) et (elm : 40)
-% p = gcp;
-% p.NumWorkers
-
-% set parallel computing
-% Alliance Canada: https://docs.alliancecan.ca/wiki/MATLAB
-% Create a "local" cluster object
-% local_cluster = parcluster('local')
-% Modify the JobStorageLocation to $SLURM_TMPDIR
-% local_cluster.JobStorageLocation = getenv('SLURM_TMPDIR')
-% Start the parallel pool
-% parpool(local_cluster);
-% parpool(32)
 parpool(str2num(nwork))
 
 % load apertures

@@ -31,7 +31,7 @@ python make_apertureMasks.py --data_dir="${DATADIR}"
 - ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
 
 ------------
-# Step 2. Pre-process and chunk the BOLD data for the analyzepRF toolbox**
+# Step 2. Pre-process and chunk the BOLD data for analyzePRF
 
 Prepare the BOLD data to process with the analyzepRF toolbox: vectorize, denoise,
 standardize, average across runs of the same task, and chunk into small brain segments.
@@ -55,14 +55,19 @@ python prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 
 ------------
 
-## Step 3. AnalyzePRF toolbox
+## Step 3. Estimage population receptive fields with AnalyzePRF toolbox
 
-Process chunks of data with the [analyzepRF](https://github.com/cvnlab/analyzePRF) retinotopy toolbox (in matlab).
+Process chunks of data with the [analyzePRF](https://github.com/cvnlab/analyzePRF) retinotopy toolbox (in matlab).
 Note that the code requires the MATLAB Optimization Toolbox and Matlab Parallel Computing Toolbox (``parfor``) to run.
+
+For the script to run, the [analyzePRF repository](https://github.com/cvnlab/analyzePRF)
+needs to be installed as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+under ``cneuromod-things/retinotopy/prf/code`` (commit ``a3ac908``).
 
 See [here](http://kendrickkay.net/analyzePRF/) for documentation and examples. \
 Note: the script processes a single participant at a time, VERY slowly.
 
+E.g., to process sub-01's chunks 0 to 10 (inclusively)
 ```bash
 SUB_NUM="01" # 01, 02, 03, 05
 STARTCHUNK="0"
@@ -75,8 +80,8 @@ cd ${CODEDIR}
 
 matlab -nodisplay -nosplash -nodesktop -r "sub_num='${SUB_NUM}';code_dir='${CODEDIR}';data_dir='${DATADIR}';first_chunk='${STARTCHUNK}';last_chunk='${ENDCHUNK}';nwork='${NWORKERS}';run('run_analyzePRF.m'); exit;"
 ```
-Note: NWORKERS, the number of parpool workers, should be set to the number of available CPUs (matlab default is up to 12, but can be overriden in the script).
-Note: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
+Note 1: NWORKERS, the number of parpool workers, should be set to match the number of available CPUs (matlab default is set to max 12, but can be overriden in the script). \
+Note2: load ``StdEnv/2020`` and ``matlab/2021a.5`` modules to run on
 Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both the Optimization and the Parallel Computing toolboxes are available on the Beluga cluster.
 
 **Input**:

@@ -126,8 +126,10 @@ Project Organization
     │         ├── code            <- scripts to run glm single and process output
     │         │     ├── README.md    
     │         │     ├── requirements.txt          
+    │         │     ├── analyzePRF   <- analyzePRF repo submodule (a3ac908)  
     │         │     ├── make_apertureMasks.py
-    │         │     └── ...
+    │         │     ├── prepare_BOLD.py
+    │         │     └── run_analyzePRF.m
     │         │
     │         ├── apertures       <- aperture masks
     │         │     ├── task-retinotopy_condition-bars_desc-perTR_apertures.mat
@@ -136,13 +138,21 @@ Project Organization
     │         │
     │         └── sub-0*
     │               ├── prf   
-    │               │    └── input
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii    
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii    
+    │               │    ├── input
+    │               │    │     ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii    
+    │               │    │     ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii    
+    │               │    │     └── chunks    
+    │               │    │            ├── sub-0*_task-retinotopy_condition-bars_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │    │            ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
+    │               │    │            └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │    └── output
+    │               │          ├── ...    
+    │               │          ├── ...    
     │               │          └── chunks    
-    │               │                 ├── sub-0*_task-retinotopy_condition-bars_space-T1w_desc-chunk{chunk_num}_bold.mat
-    │               │                 ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
-    │               │                 └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_ang.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_ecc.mat   
+    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_rfsize.mat
+    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_R2.mat
     │               └── rois
     │                   └── ...
     │
