@@ -44,7 +44,8 @@ def reassamble(dir_path, sub, mask, num_vox, chunk_size, out):
         )
     )
 
-    for i in range(int(np.ceil(num_vox/chunk_size))):
+    #for i in range(int(np.ceil(num_vox/chunk_size))):
+    for i in range(len(file_path)):
         flat_output[i*chunk_size:np.min(num_vox, (i+1)*chunk_size)] = loadmat(file_path[i])[out].reshape(-1,)
 
     savemat(
