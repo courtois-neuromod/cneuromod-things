@@ -57,7 +57,7 @@ for i = str2num(first_chunk):str2num(last_chunk)
     gain = results.gain;
 
     out_path = strcat(data_dir,'/sub-',sub_num,'/prf/output/chunks');
-    out_file = strcat(out_path,'/sub-',sub_num,'_task-retinotopy_space-T1w_model-analyzepRF');
+    out_file = strcat(out_path,'/sub-',sub_num,'_task-retinotopy_space-T1w_model-analyzePRF');
     save(strcat(out_file,'_desc-chunk',num2str(i,'%04d'),'_statseries.mat'), 'results')
     save(strcat(out_file,'_stats-ang_desc-chunk',num2str(i,'%04d'),'_statseries.mat'), 'ang')
     save(strcat(out_file,'_stats-ecc_desc-chunk',num2str(i,'%04d'),'_statseries.mat'), 'ecc')

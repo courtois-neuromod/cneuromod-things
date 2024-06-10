@@ -89,13 +89,13 @@ Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both 
 - ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, the chunks of normalized bold data averaged across runs generated in Step 2.
 
 **Output**:
-- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_*.mat``, population receptive field metrics (``ang``, ``ecc``, ``expt``, ``rfsize``, ``R2`` and ``gain``) estimated for each voxel, saved per chunk.
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_stats-{stat}_desc-chunk{chunk_num}_statseries.mat``, population receptive field metrics (``ang``, ``ecc``, ``expt``, ``rfsize``, ``R2`` and ``gain``) estimated for each voxel, saved per chunk.
 
 ------------
 
 ## Step 4. Reconstruct analyzePRF chunked output into brain volumes and adapt metrics for Neuropythy
 
-Reassemble the chunked files outputed by analyzePRF into brain volumes, and convert their metrics to be compatible with the Neuropythy toolbox.
+Re-assemble the chunked files outputed by analyzePRF into brain volumes, and convert their metrics to be compatible with the Neuropythy toolbox.
 
 **Links and documentation**
 - Neuropythy [repo](https://github.com/noahbenson/neuropythy)
@@ -109,27 +109,49 @@ python retino_reassamble_voxels.py --data_path="${DATADIR}" --sub="01"
 ```
 
 **Input**:
-- Chunks of retinotopy metrics saved as 1D arrays in .mat file
-- masks
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_stats-{stat}_desc-chunk{chunk_num}_statseries.mat``, chunks of retinotopy metrics generated in Step 3 (saved as 1D arrays in .mat file)
+- ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii``, the functional brain mask generated in Step 2.
 **Output**:
-- Brain volumes of retinotopy metrics in T1w space
+- ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz``, analyzePRF metrics reassambled into brain volumes (T1w space)
+- ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-neuropythy_statseries.nii.gz``, analyzePRF metrics processed to be compatible with the Neuropythy toolbox and exported as brain volumes (T1w space)
 
 ------------
-**Step 6. Convert retinotopy output maps from T1w volumes into surfaces with freesurfer**
 
-Notes:
-- this step requires access to fmriprep freesurfer output
-- I installed freesurfer locally in my home directory, following Compute Canada [guidelines](https://docs.computecanada.ca/wiki/FreeSurfer)
-- The $SUBJECTS_DIR variable must be set to the path to the directory where cneuromod subjects' freesurfer output is saved
+## Step 5. Convert retinotopy outputs from brain volumes to surfaces
 
-Script: src/features/run_FS.sh
-To run (where "01" is the subject number):
+Use Freesurfer to convert retinotopy output metrics from brain volumes (T1w space) to surfaces to be analyzed with the Neuropythy toolbox.
+
+Note:
+- The Freesurfer ``SUBJECTS_DIR`` variable must be overwritten to match the ``cneuromod-things/anatomical/smriprep/sourcedata/freesurfer`` directory, which contains the CNeuroMod subjects' Freesurfer data
+
+Run the following command lines
 ```bash
-./src/features/run_FS.sh 01  
-```
+DATADIR="/path/to/cneuromod-thing"
 
-**Input**: Brain volumes of retinotopy metrics in T1w space \
-**Output**: freesurfer surface maps (one per hemisphere per metric). e.g., lh.s01_prf_ang.mgz & rh.s01_prf_ang.mgz
+# overwrite Freesurfer SUBJECTS_DIR
+SUBJECTS_DIR="${DATADIR}/anatomical/smriprep/sourcedata/freesurfer"
+
+SUB_NUM="01" # 01, 02, 03
+VOLDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/prf/output"
+SURFDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/input"
+
+for RES_TYPE in ang ecc x y R2 rfsize
+do
+  VOLFILE="${VOLDIR}/sub-${SUB_NUM}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-${RES_TYPE}_desc-neuropythy_statseries.nii.gz"
+  L_OUTFILE="${SURFDIR}/lh.s${SUB_NUM}_prf_${RES_TYPE}.mgz"
+  R_OUTFILE="${SURFDIR}/rh.s${SUB_NUM}_prf_${RES_TYPE}.mgz"
+
+  mri_vol2surf --src ${VOLFILE} --out ${L_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi lh
+  mri_vol2surf --src ${VOLFILE} --out ${R_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi rh
+done
+```
+*Note: load the ``freesurfer/7.1.1`` module to run the following commands on Alliance Canada.*
+
+
+**Input**:
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-neuropythy_statseries.nii.gz``, brain volumes in T1w space of analyzePRF metrics processed for Neuropythy generated in Step 4.
+**Output**:
+- ``s{sub_num}_prf_{ang, ecc, x, y, R2, rfsize}.mgz``, retinotopy output metrics in surface maps (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
 
 
 ------------
