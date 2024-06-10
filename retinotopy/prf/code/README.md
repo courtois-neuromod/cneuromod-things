@@ -105,7 +105,7 @@ Run this script for each subject
 ```bash
 DATADIR="path/to/cneuromod-things/retinotopy/prf"
 
-python retino_reassamble_voxels.py --data_path="${DATADIR}" --sub="01"
+python retino_reassamble_voxels.py --data_dir="${DATADIR}" --sub="01"
 ```
 
 **Input**:

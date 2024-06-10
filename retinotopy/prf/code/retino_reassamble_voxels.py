@@ -225,8 +225,8 @@ def process_output(
     sub-05: 188731 voxels, 0-786 chunks
     """
     mask = nib.load(
-        f"{data_dir}/sub-{sub_num}/prf/input/"
-        f"sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii",
+        f"{data_dir}/sub-{sub}/prf/input/"
+        f"sub-{sub}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii",
     )
     mask_dim = mask.get_fdata().shape
     num_vox = int(np.sum(mask.get_fdata()))
