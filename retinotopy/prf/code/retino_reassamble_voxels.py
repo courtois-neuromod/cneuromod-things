@@ -48,7 +48,7 @@ def reassamble(dir_path, sub, mask, num_vox, chunk_size, out):
         flat_output[i*chunk_size:min(num_vox, (i+1)*chunk_size)] = loadmat(file_path[i])[out].reshape(-1,)
 
     savemat(
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-{out}_statseries.mat",
         {f"sub{sub}_{out}": flat_output}
     )
@@ -56,7 +56,7 @@ def reassamble(dir_path, sub, mask, num_vox, chunk_size, out):
     unflat = unmask(flat_output, mask)
     nib.save(
         unflat,
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-{out}_statseries.nii.gz",
     )
 
@@ -73,7 +73,7 @@ def get_r2(dir_path, sub, mask):
     Neuropythy : variance explained must be a fraction between v such that 0 ≤ v ≤ 1
     '''
     r2 = loadmat(
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-R2_statseries.mat",
     )[f"sub{sub}_R2"].reshape(-1,)
 
@@ -85,7 +85,7 @@ def get_r2(dir_path, sub, mask):
     unflat_r2 = unmask(r2, mask)
     nib.save(
         unflat_r2,
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-R2_desc-npythy_statseries.nii.gz",
     )
 
@@ -117,7 +117,7 @@ def get_rfsize(dir_path, sub, conv_factor, mask):
     Neuropythy: Sigma/pRF size must be in degrees of the visual field
     '''
     rfsize = loadmat(
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-rfsize_statseries.mat",
     )[f"sub{sub}_rfsize"].reshape(-1,)
     # remove np.inf values and replace w max finite value
@@ -130,7 +130,7 @@ def get_rfsize(dir_path, sub, conv_factor, mask):
     unflat_rfsize = unmask(rfsize, mask)
     nib.save(
         unflat_rfsize,
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-rfsize_desc-npythy_statseries.nii.gz",
     )
 
@@ -143,11 +143,11 @@ def get_angles_and_ecc(dir_path, sub, conv_factor, mask):
     Neuropythy: values must be in degrees of visual angle from the fovea.
     '''
     ecc = loadmat(
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-ecc_statseries.mat",
     )[f"sub{sub}_ecc"].reshape(-1,)
     ang = loadmat(
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-ang_statseries.mat",
     )[f"sub{sub}_ang"].reshape(-1,)
 
@@ -189,22 +189,22 @@ def get_angles_and_ecc(dir_path, sub, conv_factor, mask):
 
     nib.save(
         unmask(ecc, mask),
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-ecc_desc-npythy_statseries.nii.gz",
     )
     nib.save(
         unmask(ang, mask),
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-ang_desc-npythy_statseries.nii.gz",
     )
     nib.save(
         unmask(x, mask),
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-x_desc-npythy_statseries.nii.gz",
     )
     nib.save(
         unmask(y, mask),
-        f"{dir_path}/sub-{sub}/output/sub-{sub}_task-retinotopy_space-T1w_"
+        f"{dir_path}/sub-{sub}/prf/output/sub-{sub}_task-retinotopy_space-T1w_"
         f"model-analyzePRF_label-brain_stats-y_desc-npythy_statseries.nii.gz",
     )
 
