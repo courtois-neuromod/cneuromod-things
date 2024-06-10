@@ -122,7 +122,7 @@ Project Organization
     │    │                     ├── {grid, images, scenes}.npz
     │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
-    │    └── prf                     <- prf and visual ROIs scripts and dataset
+    │    └── prf                  <- prf and visual ROIs scripts and dataset
     │         ├── code            <- scripts to run glm single and process output
     │         │     ├── README.md    
     │         │     ├── requirements.txt          
@@ -147,15 +147,20 @@ Project Organization
     │               │    │            ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
     │               │    │            └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
     │               │    └── output
-    │               │          ├── ...    
-    │               │          ├── ...    
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz
     │               │          └── chunks    
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_ang.mat
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_ecc.mat   
-    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_rfsize.mat
-    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_desc-chunk{chunk_num}_R2.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ang_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ecc_desc-chunk{chunk_num}_statseries.mat   
+    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-rfsize_desc-chunk{chunk_num}_statseries.mat
+    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-R2_desc-chunk{chunk_num}_statseries.mat
     │               └── rois
-    │                   └── ...
+    │                    ├── input
+    │                    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
+    │                    │     └── rh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz
+    │                    └── output
+    │                          ├── ...
+    │                          └── ...
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts

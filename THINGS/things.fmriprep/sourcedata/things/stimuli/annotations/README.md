@@ -47,9 +47,3 @@ An image of an object taken from closer than a scene, but that still includes it
 The featured object is shown centrally with no additional objects visible in the periphery or background. Not only is the object shown by itself, but the empty background is uniform and minimally textured (no carpet, dinner mat or wooden fence behind) or blurred so that only the lone object is in focus. Note that objects can either be shown with zero background (the “lone objects” flag), with minimal background (e.g., an apple in a basket on a table), with noticeable background (the “rich background” flag) or within a scene (with background and perspective).
 
 *Although they are obviously mammals, sea mammal’s features are very different from humans, hence this categorical choice.
-
-
-
-
-#TODO: I also made a json w annotations whose key is the image name, I use it for tsne analyses...
-refactor it and save it here?

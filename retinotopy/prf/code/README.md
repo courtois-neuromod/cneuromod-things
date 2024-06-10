@@ -31,7 +31,7 @@ python retino_make_apertureMasks.py --data_dir="${DATADIR}"
 - ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
 
 ------------
-# Step 2. Pre-process and chunk the BOLD data for analyzePRF
+## Step 2. Pre-process and chunk the BOLD data for analyzePRF
 
 Prepare the BOLD data to process with the analyzepRF toolbox: vectorize, denoise,
 standardize, average across runs of the same task, and chunk into small brain segments.
@@ -145,7 +145,7 @@ do
   mri_vol2surf --src ${VOLFILE} --out ${R_OUTFILE} --regheader "sub-${SUB_NUM}" --hemi rh
 done
 ```
-*Note: load the ``freesurfer/7.1.1`` module to run the following commands on Alliance Canada.*
+*Note: load the ``StdEnv/2020`` and ``freesurfer/7.1.1`` modules to run the commands above on Alliance Canada.*
 
 
 **Input**:
@@ -155,23 +155,59 @@ done
 
 
 ------------
-**Step 7. Process surface maps with neuropythy toolbox**
 
-The Neuropythy toolbox estimates regions of interest based on a single subject's retinotopy results, plus a prior of ROIs estimated from the HCP project.
-Neuropythy [repo](https://github.com/noahbenson/neuropythy) and [command line arguments](https://github.com/noahbenson/neuropythy/blob/master/neuropythy/commands/register_retinotopy.py); Neuropythy [user manual](https://osf.io/knb5g/wiki/Usage/).
+## Step 6. Process surface maps with Neuropythy
+
+The Neuropythy toolbox estimates regions of interest based on a single subject's
+retinotopy results, plus a prior of ROIs estimated from the HCP project.
+
+**Links and documentation**
+- Neuropythy [repo](https://github.com/noahbenson/neuropythy)
+- Neuropythy [user manual](https://osf.io/knb5g/wiki/Usage/).
+- [command line arguments](https://github.com/noahbenson/neuropythy/blob/master/neuropythy/commands/register_retinotopy.py)
 
 Notes:
-- this step requires to load java and freesurfer modules; $SUBJECTS_DIR needs to be specified just like in step 6.
-- There is a Visible Deprecation Warning that appears with newer versions of numpy that do not affect the output. [Filed repo issue here.](https://github.com/noahbenson/neuropythy/issues/24)
+- The Freesurfer ``SUBJECTS_DIR`` variable must be overwritten to match the ``cneuromod-things/anatomical/smriprep/sourcedata/freesurfer`` directory, which contains the CNeuroMod subjects' Freesurfer data
+- A Visible Deprecation Warning appears with newer versions of numpy that do not affect the output. [Filed repo issue here.](https://github.com/noahbenson/neuropythy/issues/24)
+- the ``scale`` argument specifies the strength of the functional forces (subject's retinotopy) relative to anatomical forces (atlas prior) during the registration. Higher scale values will generally result in more warping while lower values will result in less warping. The default value is ``20``.
 
-Script: src/features/run_neuropythy.sh
-To run (where "01" is the subject number):
+
+Run the following command lines
 ```bash
-./src/features/run_neuropythy.sh 01
-```
+DATADIR="/path/to/cneuromod-thing"
 
-**Input**: freesurfer surface maps of retinotopy metrics \
-**Output**: Inferred retinotopy surface maps (based on atlas prior and subject's own retinotopy data) and region of interest labels (e.g., lh.inferred_varea.mgz)
+# overwrite Freesurfer SUBJECTS_DIR
+SUBJECTS_DIR="${DATADIR}/anatomical/smriprep/sourcedata/freesurfer"
+
+SUB_NUM="01" # 01, 02, 03
+INDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/input"
+OUTDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/output"
+
+python -m neuropythy \
+      register_retinotopy "sub-${SUB_NUM}" \
+      --verbose \
+      --surf-outdir="${OUTDIR}" \
+      --surf-format="mgz" \
+      --vol-outdir="${OUTDIR}" \
+      --vol-format="mgz" \
+      --lh-angle="${INDIR}/lh.s${SUB_NUM}_prf_ang.mgz" \
+      --lh-eccen="${INDIR}/lh.s${SUB_NUM}_prf_ecc.mgz" \
+      --lh-radius="${INDIR}/lh.s${SUB_NUM}_prf_rfsize.mgz" \
+      --lh-weight="${INDIR}/lh.s${SUB_NUM}_prf_R2.mgz" \
+      --rh-angle="${INDIR}/rh.s${SUB_NUM}_prf_ang.mgz" \
+      --rh-eccen="${INDIR}/rh.s${SUB_NUM}_prf_ecc.mgz" \
+      --rh-radius="${INDIR}/rh.s${SUB_NUM}_prf_rfsize.mgz" \
+      --rh-weight="${INDIR}/rh.s${SUB_NUM}_prf_R2.mgz" \
+      --scale=20.0
+
+echo "Job finished"
+```
+*Note: load the ``StdEnv/2020``, ``java/11.0.2`` and ``freesurfer/7.1.1`` modules to run the commands above on Alliance Canada.*
+
+**Input**:
+- Retinotopy output metrics in surface maps (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
+**Output**:
+- Inferred retinotopy surface maps (based on atlas prior and subject's own retinotopy data) and region of interest labels (e.g., lh.inferred_varea.mgz)
 
 ------------
 **Step 8. Reorient and resample neuropythy output maps and project the results back into T1w volume space**
