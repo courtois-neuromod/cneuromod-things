@@ -241,7 +241,7 @@ def process_output(
         reassamble(data_dir, sub, mask, num_vox, chunk_size, out)
 
     # load, process and save volume of R^2 Values
-    get_r2(dir_path, sub, mask)
+    get_r2(data_dir, sub, mask)
 
     '''
     Convert rfsize, x and y from pixel to degrees of visual angle.
@@ -252,8 +252,8 @@ def process_output(
 
     # load, process and save volumes of population receptive field size,
     # angle, eccentricity, and x and y coordinate values
-    get_rfsize(dir_path, sub, conv_factor, mask)
-    get_angles_and_ecc(dir_path, sub, conv_factor, mask)
+    get_rfsize(data_dir, sub, conv_factor, mask)
+    get_angles_and_ecc(data_dir, sub, conv_factor, mask)
 
 
 if __name__ == '__main__':

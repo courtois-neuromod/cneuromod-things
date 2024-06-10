@@ -113,7 +113,7 @@ python retino_reassamble_voxels.py --data_dir="${DATADIR}" --sub="01"
 - ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii``, the functional brain mask generated in Step 2.
 **Output**:
 - ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz``, analyzePRF metrics reassambled into brain volumes (T1w space)
-- ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-neuropythy_statseries.nii.gz``, analyzePRF metrics processed to be compatible with the Neuropythy toolbox and exported as brain volumes (T1w space)
+- ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz``, analyzePRF metrics processed to be compatible with the Neuropythy toolbox and exported as brain volumes (T1w space)
 
 ------------
 
@@ -137,7 +137,7 @@ SURFDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/input"
 
 for RES_TYPE in ang ecc x y R2 rfsize
 do
-  VOLFILE="${VOLDIR}/sub-${SUB_NUM}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-${RES_TYPE}_desc-neuropythy_statseries.nii.gz"
+  VOLFILE="${VOLDIR}/sub-${SUB_NUM}_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-${RES_TYPE}_desc-npythy_statseries.nii.gz"
   L_OUTFILE="${SURFDIR}/lh.s${SUB_NUM}_prf_${RES_TYPE}.mgz"
   R_OUTFILE="${SURFDIR}/rh.s${SUB_NUM}_prf_${RES_TYPE}.mgz"
 
@@ -149,7 +149,7 @@ done
 
 
 **Input**:
-- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-neuropythy_statseries.nii.gz``, brain volumes in T1w space of analyzePRF metrics processed for Neuropythy generated in Step 4.
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz``, brain volumes in T1w space of analyzePRF metrics processed for Neuropythy generated in Step 4.
 **Output**:
 - ``s{sub_num}_prf_{ang, ecc, x, y, R2, rfsize}.mgz``, retinotopy output metrics in surface maps (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
 
