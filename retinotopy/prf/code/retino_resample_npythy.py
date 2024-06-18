@@ -74,8 +74,8 @@ def resample_npythy(
 ) -> None:
 
     ref_img = index_img(
-        f"{data_dir}/fmriprep/sub-{sub}/ses-001/func/sub-{sub}_"
-        "ses-001_task-bars_space-T1w_desc-preproc_part-mag_bold.nii.gz",
+        f"{data_dir}/fmriprep/sub-{sub}/ses-005/func/sub-{sub}_"
+        "ses-005_task-bars_space-T1w_desc-preproc_part-mag_bold.nii.gz",
         0,
     )
 
