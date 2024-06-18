@@ -122,9 +122,10 @@ fLoc/floc.rois/sub-*/rois/task-derived/sub-0*
 
 # retino files
 retinotopy/prf/apertures/*
-retinotopy/prf/sub-0*/prf/*put/sub*
-retinotopy/prf/sub-0*/prf/*put/chunks/*
-retinotopy/prf/code/launch_analyzepRF.sh
+retinotopy/prf/sub-0*/prf/*put/*
+retinotopy/prf/sub-0*/npythy/*put/*
+retinotopy/prf/sub-0*/rois/*nii.gz
+retinotopy/prf/code/*.sh
 
 # output figures
 datapaper/figures/*.png
