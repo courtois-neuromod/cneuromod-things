@@ -154,13 +154,21 @@ Project Organization
     │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ecc_desc-chunk{chunk_num}_statseries.mat   
     │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-rfsize_desc-chunk{chunk_num}_statseries.mat
     │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-R2_desc-chunk{chunk_num}_statseries.mat
-    │               └── rois
-    │                    ├── input
-    │                    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
-    │                    │     └── rh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz
-    │                    └── output
-    │                          ├── ...
-    │                          └── ...
+    │               ├── npythy
+    │               │    ├── input
+    │               │    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
+    │               │    │     └── rh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz
+    │               │    └── output
+    │               │          ├── inferred_{angle, eccen, sigma, varea}.mgz
+    │               │          ├── {lh, rh}.inferred_{angle, eccen, sigma, varea}.mgz
+    │               │          ├── {lh, rh}.retinotopy.sphere.reg
+    │               │          ├── inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz
+    │               │          ├── inferred_{angle, eccen, sigma, varea}.nii.gz           
+    │               │          ├── sub-*_task-retinotopy_space-T1w_model-npythy_stats-varea_dseg.nii.gz    
+    │               │          └── sub-*_task-retinotopy_space-T1w_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
+    │               └── rois    
+    │                    ├── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz
+    │                    └── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-linear_mask.nii.gz
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts

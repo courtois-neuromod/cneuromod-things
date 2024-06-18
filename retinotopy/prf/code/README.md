@@ -28,7 +28,7 @@ python retino_make_apertureMasks.py --data_dir="${DATADIR}"
 - ``retinotopy/stimuli``'s  ``apertures_bars.npz``, ``apertures_ring.npz`` and ``apertures_wedge_newtr.npz`` files, the binary aperture masks used by the Psychopy script to create apertures within which patterns of visual stimuli become visible during the task. [1 = pixel where visual patterns are displayed at time t, 0 = voxel where no pattern is visible]
 
 **Output**:
-- ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, a sequence of aperture frames aranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
+- ``task-retinotopy_condition-{bars, rings, wedges}_desc-perTR_apertures.mat``, a sequence of aperture frames arranged in the order in which they appeared in a run of a given task, at a temporal frequency downsampled  (from task's 15 fps) to match the temporal frequency of the BOLD signal acquisition (fMRI TR = 1.49s). Note that the aperture sequence was the same for every run of the same task (e.g., all ``task-rings`` runs used the same aperture sequence). Frames were averaged within a TR so that mask values (floats) reflect the proportion of a TR during which patterns were visible in each pixel (value range = [0, 1]). Frames were resized from 768x768 to 192x192 pixels to speed up pRF processing time. The first three TRs were dropped to match the duration of the BOLD data (3 TRs dropped for signal equilibrium).
 
 ------------
 ## Step 2. Pre-process and chunk the BOLD data for analyzePRF
@@ -54,7 +54,6 @@ python retino_prepare_BOLD.py --dir_path="${DATADIR}" --sub="01"
 - ``sub-{sub_num}_task-retinotopy_condition-{task}_space-T1w_desc-chunk{chunk_num}_bold.mat``, chunks of vectorized, detrended bold signal averaged across sessions for runs of the same task, to load in matlab (~850 .mat files of >200k voxels each), dim = (voxels, TR)
 
 ------------
-
 ## Step 3. Estimage population receptive fields with AnalyzePRF toolbox
 
 Process chunks of data with the [analyzePRF](https://github.com/cvnlab/analyzePRF) retinotopy toolbox (in matlab).
@@ -92,7 +91,6 @@ Alliance Canada (36h job per subject, 36 CPUs per task, 5000M memory/CPU). Both 
 - ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_stats-{stat}_desc-chunk{chunk_num}_statseries.mat``, population receptive field metrics (``ang``, ``ecc``, ``expt``, ``rfsize``, ``R2`` and ``gain``) estimated for each voxel, saved per chunk.
 
 ------------
-
 ## Step 4. Reconstruct analyzePRF chunked output into brain volumes and adapt metrics for Neuropythy
 
 Re-assemble the chunked files outputed by analyzePRF into brain volumes, and convert their metrics to be compatible with the Neuropythy toolbox.
@@ -109,14 +107,13 @@ python retino_reassamble_voxels.py --data_dir="${DATADIR}" --sub="01"
 ```
 
 **Input**:
-- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_stats-{stat}_desc-chunk{chunk_num}_statseries.mat``, chunks of retinotopy metrics generated in Step 3 (saved as 1D arrays in .mat file)
+- ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_stats-{stat}_desc-chunk{chunk_num}_statseries.mat``, chunks of retinotopy (population receptive fields) metrics generated in Step 3 (saved as 1D arrays in .mat file)
 - ``sub-{sub_num}_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii``, the functional brain mask generated in Step 2.
 **Output**:
 - ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz``, analyzePRF metrics reassambled into brain volumes (T1w space)
 - ``sub-{sub}_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz``, analyzePRF metrics processed to be compatible with the Neuropythy toolbox and exported as brain volumes (T1w space)
 
 ------------
-
 ## Step 5. Convert retinotopy outputs from brain volumes to surfaces
 
 Use Freesurfer to convert retinotopy output metrics from brain volumes (T1w space) to surfaces to be analyzed with the Neuropythy toolbox.
@@ -133,7 +130,7 @@ SUBJECTS_DIR="${DATADIR}/anatomical/smriprep/sourcedata/freesurfer"
 
 SUB_NUM="01" # 01, 02, 03
 VOLDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/prf/output"
-SURFDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/input"
+SURFDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/npythy/input"
 
 for RES_TYPE in ang ecc x y R2 rfsize
 do
@@ -151,11 +148,10 @@ done
 **Input**:
 - ``sub-{sub_num}_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz``, brain volumes in T1w space of analyzePRF metrics processed for Neuropythy generated in Step 4.
 **Output**:
-- ``s{sub_num}_prf_{ang, ecc, x, y, R2, rfsize}.mgz``, retinotopy output metrics in surface maps (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
+- ``s{sub_num}_prf_{ang, ecc, x, y, R2, rfsize}.mgz``, surface maps of retinotopy (pRF) output metrics (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
 
 
 ------------
-
 ## Step 6. Process surface maps with Neuropythy
 
 The Neuropythy toolbox estimates regions of interest based on a single subject's
@@ -180,8 +176,8 @@ DATADIR="/path/to/cneuromod-thing"
 SUBJECTS_DIR="${DATADIR}/anatomical/smriprep/sourcedata/freesurfer"
 
 SUB_NUM="01" # 01, 02, 03
-INDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/input"
-OUTDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/rois/output"
+INDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/npythy/input"
+OUTDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/npythy/output"
 
 python -m neuropythy \
       register_retinotopy "sub-${SUB_NUM}" \
@@ -205,81 +201,62 @@ echo "Job finished"
 *Note: load the ``StdEnv/2020``, ``java/11.0.2`` and ``freesurfer/7.1.1`` modules to run the commands above on Alliance Canada.*
 
 **Input**:
-- Retinotopy output metrics in surface maps (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
+- Surface maps of retinotopy (pRF) metrics (one per hemisphere per metric). e.g., ``lh.s01_prf_ang.mgz``, ``rh.s01_prf_ang.mgz``, etc.
 **Output**:
-- Inferred retinotopy surface maps (based on atlas prior and subject's own retinotopy data) and region of interest labels (e.g., lh.inferred_varea.mgz)
+- ``inferred_{angle, eccen, sigma, varea}.mgz``, ``{lh, rh}.inferred_{angle, eccen, sigma, varea}.mgz`` and ``{lh, rh}.retinotopy.sphere.reg``; surface maps of retinotopy metrics from the subject's own pRF data adjusted with a group atlas prior, and region of interest labels (varea) inferred by NeuroPythy.
 
 ------------
-**Step 8. Reorient and resample neuropythy output maps and project the results back into T1w volume space**
+## Step 7. Reorient Neuropythy output maps**
 
-**First**: re-orient the neuropythy output with mri_convert and fsl
-Script: src/features/reorient_npythy.sh
-```bash
-./src/features/reorient_npythy.sh 01
-```
+Re-orient the neuropythy output with mri_convert and fsl
+
 Notes:
-- this script needs to run from within the subject’s freesurfer "MRI" directory (hence the "cd") so it knows where to find freesurfer files.
-- on Compute Canada, the script prompts to specify which module versions to use; chose option 2 : fsl/6.0.3 StdEnv/2020 gcc/9.3.0
+- these commands need to run from within the subject’s freesurfer "MRI" directory so they know where to find freesurfer files.
+- https://github.com/noahbenson/neuropythy/blob/master/neuropythy/commands/register_retinotopy.py
 
-**Second**: Resample binary visual ROIs to T1w functional space
-Script: src/features/resample_npythy_ROIs.py
-Before running, load project's virtual env with **workon retino_analysis** (on beluga)
+Run the following command lines
 ```bash
-python -m src.features.resample_npythy_ROIs --sub_num=”sub-01”
+DATADIR="/path/to/cneuromod-thing"
+
+# overwrite Freesurfer SUBJECTS_DIR
+SUBJECTS_DIR="${DATADIR}/anatomical/smriprep/sourcedata/freesurfer"
+
+SUB_NUM="01" # 01, 02, 03
+cd ${SUBJECTS_DIR}/sub-${SUB_NUM}/mri
+
+INDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/npythy/output"
+
+for PARAM in angle eccen sigma varea
+do
+  mri_convert "${INDIR}/inferred_${PARAM}.mgz" "${INDIR}/inferred_${PARAM}_fsorient.nii.gz"
+  fslreorient2std "${INDIR}/inferred_${PARAM}_fsorient.nii.gz" "${INDIR}/inferred_${PARAM}.nii.gz"
+done
+
+echo "Job finished"
 ```
+*Note: load the ``StdEnv/2020``, ``gcc/9.3.0``, ``fsl/6.0.3``  and ``freesurfer/7.1.1`` modules to run the commands above on Alliance Canada.*
 
-**Input**: Inferred retinotopy surface maps \
-**Output**: NIfTI volumes of retinotopy results adjusted from atlas prior, and inferred regions of interest (binary mask for V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a) in T1w space
+**Input**:
+- ``inferred_{angle, eccen, sigma, varea}.mgz``, surface maps of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred from those metrics using Neuropythy.
+**Output**:
+- ``inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz`` and ``inferred_{angle, eccen, sigma, varea}.nii.gz``, retinotopy results adjusted from a group atlas prior with Neuropythy, and reconverted to brain volumes.
 
---------
+------------
+## Step 8. Resample visual ROIs to T1w functional space**
 
-**Step 8. Clean up operation**
+# TODO: check against previous output (visualize), and add list of varea labels as reference
 
-When z-scoring (per run) the BOLD data given to the AnalyzePRF toolbox, some voxels within
-the WholeBrain functional mask (used to mask data across all runs) have nan scores (due to low/no signal on some runs).
+Resample visual ROIs to T1w functional space, and export binary masks of each ROI.
 
-Step 1: identify voxels to exclude from final volumes
-
-This script identifies voxels with nan scores, and creates masks to exclude them from final result volumes.
-
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis/data/temp_bold \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis \
-Script: quick_mask_QC_retino.py
-
-Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
+Run this script for each subject
 ```bash
-workon retino_analysis
-python -m quick_mask_QC_retino
+DATADIR="path/to/cneuromod-things/retinotopy"
+
+python retino_resample_npythy.py --data_dir="${DATADIR}" --sub="01"
 ```
 
 **Input**:
-- All subject's *bold.nii.gz files, for all sessions (~6) and runs (3 per session) \
-(e.g., sub-03_ses-10_task-things_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz)
-- The functional mask used to mask all run data (e.g., sub-02_WholeBrain.nii.gz)
-
+- ``inferred_{angle, eccen, sigma, varea}.nii.gz``, volumes of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred using Neuropythy.
 **Output**:
-- One mask that includes all voxels with at least one normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_nanmask_T1w_retino.nii)
-- One mask that includes all voxels with no normalized BOLD value equal to nan within the broader functional brain mask (e.g., 01_goodvoxmask_T1w_retino.nii)
-
-
-Step 2: This script uses the good voxel mask created in step one to clean up output volumes of AnalyzePRF and Neuropythy analyses
-
-Server: beluga \
-Path to data: /home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis/results \
-Path to code dir: /home/mstlaure/projects/rrg-pbellec/mstlaure/retino_analysis \
-Script: clean_volumes.py
-
-Call script in interactive session on beluga (small dumb script, input and output paths hard-coded)
-```bash
-workon retino_analysis
-python -m clean_volumes --sub_num=sub-01
-```
-
-**Input**:
-- The functional mask used to mask all run data (e.g., sub-02_WholeBrain.nii.gz) and the clean mask created in step 1 (e.g., 01_goodvoxmask_T1w_retino.nii)
-- The .mat files of AnalyzePRF results per masked voxels outputed at step 5
-- The resampled volumes of Neuropythy data (sub-01/resampled*.nii.gz) outputed at step 7
-
-**Output**:
-- Clean volumes of Neuropythy and AnalyzePRF results in functional T1w space. All files are relabelled *goodvox.nii.gz
+- ``sub-*_task-retinotopy_space-T1w_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz``, volumes of Neuropythy output resampled to T1w functional (EPI_ resolution.
+- ``sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz``, binary region-of-interest masks resampled to T1w functional (EPI) resolution for the following ROIs: V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a.

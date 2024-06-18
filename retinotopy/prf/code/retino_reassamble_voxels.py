@@ -214,7 +214,6 @@ def process_output(
     sub: str,
     chunk_size: int,
 ) -> None:
-
     """
     Load mask used to vectorize the detrended bold data
 
