@@ -12,7 +12,7 @@ Each session included two functional runs of 3.85 minutes with randomly ordered 
 
 ``floc.fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/floc`` submodule includes raw fMRI files, and ``*events.tsv`` files with bloc and imagewise metrics.
 
-``sourcedata/floc`` also contains the ``floc.stimuli`` submodule, which includes the image stimuli.
+``sourcedata/floc`` also contains the ``stimuli`` submodule, which includes the image stimuli.
 
 ## floc.rois
 

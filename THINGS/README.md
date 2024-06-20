@@ -13,7 +13,7 @@ Note: A few sessions were accidentally administered out of the planed order, int
 
 ``things.fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/things`` submodule includes raw fMRI files, ``*eyetrack.tsv.gz`` files (timestamped gaze positions derived from eye-tracking), ``*events.tsv`` files with trialwise metrics (as described in ``things.fmriprep/sourcedata/things/task-things_events.json``), and scripts to process ``events.tsv`` and eyetracking files.
 
-``sourcedata/things`` also contains the ``things.stimuli`` submodule, which includes image stimuli and image content annotations. Due to permission issues, images and some annotations must be downloaded directly through the [THINGS initiative database](https://osf.io/jum2f/).
+``sourcedata/things`` also contains the ``stimuli`` submodule, which includes image stimuli and image content annotations. Due to permission issues, images and some annotations must be downloaded directly through the [THINGS initiative database](https://osf.io/jum2f/).
 
 ## things.behaviour
 

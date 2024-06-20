@@ -44,12 +44,12 @@ python fLoc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" 
 
 **Input**:
 - A subject's ``sub-{sub_num}_task-floc_model-GLM_design.h5`` file created in Step 1.
-- All of a subject's ``*bold.nii.gz`` files, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``)
-- All of a subject's confound ``*desc-confounds_timeseries.tsv files``, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``) \
+- All of a subject's ``*bold.nii.gz`` and ``*mask.nii.gz`` files, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``)
+- All of a subject's confound ``*desc-confounds_timeseries.tsv`` files, for all sessions (~6) and runs (2 per session) (e.g., ``sub-02_ses-005_task-fLoc_run-1_space-T1w_desc-preproc_part-mag_bold.nii.gz``) \
 Note that the script can process scans in MNI or subject (T1w) space (default is T1w)
 
 **Output**:
-- Two mask files generated from the union of the run ``_mask.nii.gz`` files save with the _bold.nii.gz files. ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
+- Two mask files generated from the union of the run ``_mask.nii.gz`` files saved with the _bold.nii.gz files. ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` includes the voxels with signal across all functional runs, and ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii`` includes voxels that lack signal in at least one run (to be excluded).  
 - One volume of t-scores and one of beta values (``sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-{tscores, betas}_contrast-{contrast}_desc-{smooth, unsmooth}_statseries.nii.gz``) for each of the 9 GLM contrasts listed below.
 - The following four contrasts are as specified in the work of the Kanwisher group:
 > * ``faceMinObject``: face > object

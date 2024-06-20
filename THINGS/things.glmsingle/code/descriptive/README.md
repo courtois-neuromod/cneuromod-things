@@ -52,4 +52,4 @@ python rank_img_perVox.py --data_dir="${DATADIR}" --sub="01"
 
 ------------------
 
-# Step 3. Ccompute metrics to generate t-SNE plots
+# Step 3. Compute metrics to generate t-SNE plots

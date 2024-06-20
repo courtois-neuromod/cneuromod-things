@@ -4,9 +4,9 @@ cneuromod-things
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
-- ``things.fmriprep`` includes raw and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
-- ``things.behaviour`` includes analyses of the subjects' performance on the continuous recognition task.
-- ``things.glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
+- ``THINGS/fmriprep`` includes raw and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
+- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous recognition task.
+- ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
 ``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
@@ -24,13 +24,22 @@ Project Organization
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     ├── anatomical         <- Anatomical datasets and scripts
     │    ├── README.md          <- Anatomical dataset overview, including links to instructions for flat maps
-    │    ├── anat.smriprep         <- smriprep anatomical output
-    │    ├── anat.freesurfer       <- freesurfer output, patches to generate flat maps
-    │    │      └── doc         
-    │    │           └── flatmaps.md   <- Instructions to generate flat maps in pycortex
-    │    └── anat.pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
+    │    ├── smriprep           <- smriprep anatomical output
+    │    │      ├── sub-0*         
+    │    │      │    └── anat   
+    │    │      │         └── sub-0*_label-GM_probseg.nii.gz   <- fmriprep grey matter mask  
+    │    │      └── sourcedata         
+    │    │            └── freesurfer       <- freesurfer output
+    │    │                   ├── doc         
+    │    │                   │    └── flatmaps.md   <- Instructions to generate flat maps in pycortex
+    │    │                   └── sub-0*    
+    │    │                        └── surf   
+    │    │                              ├── {lh, rh}.full.patch.3d        <- patches to create flat maps       
+    │    │                              ├── {lh, rh}.full.flat.patch.3d      
+    │    │                              └── {lh, rh}.full.flat.patch.3d.out       
+    │    └── pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
-    ├── floc                    <- fLoc visual localizer datasets and scripts
+    ├── floc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
     │    ├── floc.fmriprep         <- fmriprep output
     │    │    ├── sub-0*
@@ -45,7 +54,7 @@ Project Organization
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-00*_task-fLoc_run-0*_events.tsv  <- events.tsv files
-    │    │               └── floc.stimuli
+    │    │               └── stimuli
     │    │                     └── images   <- stimulus images per category
     │    │
     │    └── floc.rois               <- fLoc scripts and datasets
@@ -94,9 +103,9 @@ Project Organization
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
     │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
     │
-    ├── retino                  <- retinotopy (PRF) visual localizer datasets and scripts
+    ├── retinotopy              <- retinotopy (PRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
-    │    ├── retino.fmriprep         <- fmriprep output
+    │    ├── fmriprep           <- retinotopy fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in T1w space
@@ -104,33 +113,67 @@ Project Organization
     │    │    │               └── sub-0*_ses-0*_task-{bars, rings, wedges}_desc-confounds_timeseries.tsv  <- noise confounds
     │    │    │  
     │    │    └── sourcedata         <- raw files
-    │    │         └── retino    <- bidsified raw fMRI data & output   
+    │    │         └── retinotopy    <- bidsified raw fMRI data & output   
     │    │               ├── sub-0*
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-*_task-{bars, rings, wedges}_events.tsv  <- events.tsv files
-    │    │               └── retino.stimuli
-    │    │                     ├── images
-    │    │                     └── apertures
+    │    │               └── stimuli
+    │    │                     ├── {grid, images, scenes}.npz
+    │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
     │    │
-    │    └── retino.prf        <- prf and visual ROIs scripts and datasets
-    │            ├── code            <- scripts to run glm single and process output
-    │            │     ├── README.md    
-    │            │     ├── requirements.txt          
-    │            │     ├── run_prf    
-    │            │     └── make_rois    
-    │            │
-    │            └── sub-0*
-    │                  ├── temp_files   <- intermediate steps
-    │                  │    └── ...
-    │                  ├── rois
-    │                  │    └── ...
-    │                  └── prf
-    │                       └── ...
+    │    └── prf                  <- prf and visual ROIs scripts and dataset
+    │         ├── code            <- scripts to run glm single and process output
+    │         │     ├── README.md    
+    │         │     ├── requirements.txt          
+    │         │     ├── analyzePRF   <- analyzePRF repo submodule (a3ac908)  
+    │         │     ├── retino_make_apertureMasks.py
+    │         │     ├── retino_prepare_BOLD.py
+    │         │     ├── retino_run_analyzePRF.m
+    │         │     └── retino_reassamble_voxels.py
+    │         │
+    │         ├── apertures       <- aperture masks
+    │         │     ├── task-retinotopy_condition-bars_desc-perTR_apertures.mat
+    │         │     ├── task-retinotopy_condition-rings_desc-perTR_apertures.mat
+    │         │     └── task-retinotopy_condition-wedges_desc-perTR_apertures.mat
+    │         │
+    │         └── sub-0*
+    │               ├── prf   
+    │               │    ├── input
+    │               │    │     ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNaN_mask.nii    
+    │               │    │     ├── sub-0*_task-retinotopy_space-T1w_label-brain_desc-unionNonNaN_mask.nii    
+    │               │    │     └── chunks    
+    │               │    │            ├── sub-0*_task-retinotopy_condition-bars_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │    │            ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
+    │               │    │            └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
+    │               │    └── output
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz
+    │               │          └── chunks    
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ang_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ecc_desc-chunk{chunk_num}_statseries.mat   
+    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-rfsize_desc-chunk{chunk_num}_statseries.mat
+    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-R2_desc-chunk{chunk_num}_statseries.mat
+    │               ├── npythy
+    │               │    ├── input
+    │               │    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
+    │               │    │     └── rh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz
+    │               │    └── output
+    │               │          ├── inferred_{angle, eccen, sigma, varea}.mgz
+    │               │          ├── {lh, rh}.inferred_{angle, eccen, sigma, varea}.mgz
+    │               │          ├── {lh, rh}.retinotopy.sphere.reg
+    │               │          ├── inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz   
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz           
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz    
+    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
+    │               └── rois    
+    │                    ├── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz
+    │                    └── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-linear_mask.nii.gz
     │
-    ├── THINGS                  <- THINGS datasets, scripts and derivatives
-    │    ├── README.md          <- Overview of THINGS datasets and scripts
-    │    ├── things.fmriprep         <- fmriprep output
+    ├── THINGS                    <- THINGS datasets, scripts and derivatives
+    │    ├── README.md            <- Overview of THINGS datasets and scripts
+    │    ├── things.fmriprep      <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
@@ -140,17 +183,18 @@ Project Organization
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-brain_part-mag_mask.nii.gz    
     │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv    <- noise confounds
     │    │    │  
-    │    │    └── sourcedata         <- raw files
-    │    │         └── things    <- bidsified raw fMRI data & output   
+    │    │    └── sourcedata      <- raw files
+    │    │         └── things     <- bidsified raw fMRI data & output   
     │    │               ├── sub-0*
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
     │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
-    │    │               ├── things.stimuli
-    │    │               │     └── annotations <- image content annotations
-    │    │               │            ├── README.md    <- manual annotation doc, links to download THINGS+ ratings
-    │    │               │            ├── THINGS+  * download dset directly from THINGS+ database
+    │    │               ├── stimuli
+    │    │               │     ├── images_fmri <- stimulus images per category
+    │    │               │     └── annotations <- image annotations
+    │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
+    │    │               │            ├── THINGS+      <- download dset directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
     │    │               │            │     ├── category53_wideFormat.tsv
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
@@ -163,9 +207,9 @@ Project Organization
     │    │               ├── code
     │    │               │     ├── README.md
     │    │               │     ├── requirements.txt    
-    │    │               │     ├── eyetracking            <- scripts to process eyetracking data    
-    │    │               │     ├── qc_notes.md       <- notes on QCing runs & sessions        
-    │    │               │     └── clean_events.py        <- script to relabel/clean *events.tsv files
+    │    │               │     ├── eyetracking          <- TODO: add scripts to process eyetracking data    
+    │    │               │     ├── qc_notes.md          <- notes on QCing runs & sessions        
+    │    │               │     └── clean_events.py      <- script to relabel/clean *events.tsv files
     │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
     │    │               └── task-things_events.json
     │    │
@@ -210,7 +254,7 @@ Project Organization
     │            │          ├── rank_img_perVox.py  
     │            │          └── ...        
     │            │
-    │            ├── task-things_runlist.h5    <- list of valid runs per subject
+    │            ├── task-things_runlist.h5             <- list of valid runs per subject
     │            ├── task-things_imgAnnotations.json    <- dictionary of compiled image annotations
     │            │
     │            └── sub-0*
@@ -235,7 +279,7 @@ Project Organization
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5        
     │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
     │                  │
-    │                  ├── qc   <- quality checks
+    │                  ├── qc     <- quality checks
     │                  │    └── sub-0*_task-things_headmotion.tsv
     │                  └── descriptive
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy

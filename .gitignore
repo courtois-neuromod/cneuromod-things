@@ -86,7 +86,7 @@ target/
 .mypy_cache/
 
 # THINGS+ annotations
-THINGS/things.fmriprep/sourcedata/things/things.stimuli/annotations/THINGS+/*sv
+THINGS/things.fmriprep/sourcedata/things/stimuli/annotations/THINGS+/*sv
 
 # THINGS behav data
 THINGS/things.behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
@@ -107,7 +107,7 @@ THINGS/things.glmsingle/sub-0*/descriptive/sub-0*
 THINGS/things.fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
 
 # THINGS stimuli
-THINGS/things.fmriprep/sourcedata/things/things.stimuli/images_fmri/*
+THINGS/things.fmriprep/sourcedata/things/stimuli/images_fmri/*
 
 # raw QC notes w identifiers
 THINGS/things.fmriprep/sourcedata/things/code/raw_qc_notes.md
@@ -119,6 +119,13 @@ fLoc/floc.rois/standard_masks/standard_rois/*nii
 fLoc/floc.rois/standard_masks/kanwisher_parcels/*
 fLoc/floc.rois/sub-*/rois/from_atlas/sub-0*
 fLoc/floc.rois/sub-*/rois/task-derived/sub-0*
+
+# retino files
+retinotopy/prf/apertures/*
+retinotopy/prf/sub-0*/prf/*put/*
+retinotopy/prf/sub-0*/npythy/*put/*
+retinotopy/prf/sub-0*/rois/*nii.gz
+retinotopy/prf/code/*.sh
 
 # output figures
 datapaper/figures/*.png
