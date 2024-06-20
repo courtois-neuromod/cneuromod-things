@@ -206,9 +206,9 @@ echo "Job finished"
 - ``inferred_{angle, eccen, sigma, varea}.mgz``, ``{lh, rh}.inferred_{angle, eccen, sigma, varea}.mgz`` and ``{lh, rh}.retinotopy.sphere.reg``; surface maps of retinotopy metrics from the subject's own pRF data adjusted with a group atlas prior, and region of interest labels (varea) inferred by NeuroPythy.
 
 ------------
-## Step 7. Reorient Neuropythy output maps**
+## Step 7. Convert Neuropythy output maps to Tw1 volumes**
 
-Re-orient the neuropythy output with mri_convert and fsl
+Convert NeuroPythy output from surface maps to volumes and re-orient to T1w space (anatomical resolution) with mri_convert and fsl.
 
 Notes:
 - these commands need to run from within the subject’s freesurfer "MRI" directory so they know where to find freesurfer files.
@@ -226,27 +226,28 @@ cd ${SUBJECTS_DIR}/sub-${SUB_NUM}/mri
 
 INDIR="${DATADIR}/retinotopy/prf/sub-${SUB_NUM}/npythy/output"
 
-for PARAM in angle eccen sigma varea
+for PARAM in angle eccen sigma
 do
   mri_convert "${INDIR}/inferred_${PARAM}.mgz" "${INDIR}/inferred_${PARAM}_fsorient.nii.gz"
-  fslreorient2std "${INDIR}/inferred_${PARAM}_fsorient.nii.gz" "${INDIR}/inferred_${PARAM}.nii.gz"
+  fslreorient2std "${INDIR}/inferred_${PARAM}_fsorient.nii.gz" "${INDIR}/sub-${SUB_NUM}_task-retinotopy_space-T1w_res-anat_model-npythy_stats-${PARAM}_statseries.nii.gz"
 done
+
+mri_convert "${INDIR}/inferred_varea.mgz" "${INDIR}/inferred_varea_fsorient.nii.gz"
+fslreorient2std "${INDIR}/inferred_varea_fsorient.nii.gz" "${INDIR}/sub-${SUB_NUM}_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz"
 
 echo "Job finished"
 ```
 *Note: load the ``StdEnv/2020``, ``gcc/9.3.0``, ``fsl/6.0.3``  and ``freesurfer/7.1.1`` modules to run the commands above on Alliance Canada.*
 
 **Input**:
-- ``inferred_{angle, eccen, sigma, varea}.mgz``, surface maps of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred from those metrics using Neuropythy.
+- ``inferred_{angle, eccen, sigma, varea}.mgz``, surface maps of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred from those metrics with Neuropythy.
 **Output**:
-- ``inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz`` and ``inferred_{angle, eccen, sigma, varea}.nii.gz``, retinotopy results adjusted from a group atlas prior with Neuropythy, and reconverted to brain volumes.
+- ``inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz``, ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz`` and ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz``, retinotopy results adjusted from a group atlas prior with Neuropythy, and reconverted to brain volumes in T1w space (anatomical resolution).
 
 ------------
-## Step 8. Resample visual ROIs to T1w functional space**
+## Step 8. Downsample visual ROIs to T1w functional resolution**
 
-# TODO: check against previous output (visualize), and add list of varea labels as reference
-
-Resample visual ROIs to T1w functional space, and export binary masks of each ROI.
+Resample visual ROIs to T1w functional (EPI) resolution, and export binary masks of each ROI.
 
 Run this script for each subject
 ```bash
@@ -256,7 +257,7 @@ python retino_resample_npythy.py --data_dir="${DATADIR}" --sub="01"
 ```
 
 **Input**:
-- ``inferred_{angle, eccen, sigma, varea}.nii.gz``, volumes of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred using Neuropythy.
+- ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz`` and ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz``, T1w volumes (anatomical resolution) of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred using Neuropythy.
 **Output**:
-- ``sub-*_task-retinotopy_space-T1w_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz``, volumes of Neuropythy output resampled to T1w functional (EPI_ resolution.
+- ``sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz``and ``sub-{sub_num}_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz``, volumes of Neuropythy output resampled to T1w functional (EPI) resolution.
 - ``sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz``, binary region-of-interest masks resampled to T1w functional (EPI) resolution for the following ROIs: V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a.

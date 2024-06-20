@@ -83,18 +83,24 @@ def resample_npythy(
     # resample neuropythy output to T1w
     for param in ['angle', 'eccen', 'sigma']:
         res_img = resample_to_img(
-            f"{out_path}/inferred_{param}.nii.gz", ref_img, interpolation='linear',
+            f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_res-anat"
+            f"_model-npythy_stats-{param}_statseries.nii.gz",
+            ref_img,
+            interpolation='linear',
         )
         res_img.to_filename(
-            f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_model-npythy"
-            f"_stats-{param}_statseries.nii.gz",
+            f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_res-func"
+            f"_model-npythy_stats-{param}_statseries.nii.gz",
         )
     res_img = resample_to_img(
-        f"{out_path}/inferred_varea.nii.gz", ref_img, interpolation='nearest',
+        f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_res-anat_model-npythy"
+        "_atlas-varea_dseg.nii.gz",
+        ref_img,
+        interpolation='nearest',
     )
     res_img.to_filename(
-        f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_model-npythy"
-        "_stats-varea_dseg.nii.gz",
+        f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_res-func_model-npythy"
+        "_atlas-varea_dseg.nii.gz",
     )
 
     va_img = load_img(f"{out_path}/inferred_varea.nii.gz")

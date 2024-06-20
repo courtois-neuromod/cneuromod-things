@@ -163,9 +163,10 @@ Project Organization
     │               │          ├── {lh, rh}.inferred_{angle, eccen, sigma, varea}.mgz
     │               │          ├── {lh, rh}.retinotopy.sphere.reg
     │               │          ├── inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz
-    │               │          ├── inferred_{angle, eccen, sigma, varea}.nii.gz           
-    │               │          ├── sub-*_task-retinotopy_space-T1w_model-npythy_stats-varea_dseg.nii.gz    
-    │               │          └── sub-*_task-retinotopy_space-T1w_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz   
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz           
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz    
+    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
     │               └── rois    
     │                    ├── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz
     │                    └── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-linear_mask.nii.gz
