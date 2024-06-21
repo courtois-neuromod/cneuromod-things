@@ -33,7 +33,7 @@ def get_sess_vector(things_dir, sub_num):
     '''
     Create vector that labels each trial by its session
     '''
-    session_file_path = f"{things_dir}/things.glmsingle/task-things_runlist.h5"
+    session_file_path = f"{things_dir}/glmsingle/task-things_runlist.h5"
     sess_file = h5py.File(session_file_path, 'r')
     sessions = [f'{x}' for x in list(sess_file[sub_num]['sessions'])]
 
@@ -68,14 +68,14 @@ def get_img_vector(things_dir, sub_num, sess_file, sessions, n=3, rm_blanks=Fals
     '''
     img_vector = []
     des_path = Path(
-        f"{things_dir}/things.glmsingle/sub-{sub_num}/glmsingle/"
+        f"{things_dir}/glmsingle/sub-{sub_num}/glmsingle/"
         f"input/sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5"
     )
     des_file = h5py.File(des_path, 'r')
 
     if rm_blanks:
         df_path = Path(
-            f"{things_dir}/things.behaviour/sub-{sub_num}/beh/"
+            f"{things_dir}/behaviour/sub-{sub_num}/beh/"
             f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv"
         )
         sub_df = pd.read_csv(df_path, sep = '\t')
@@ -244,7 +244,7 @@ if __name__ == '__main__':
     things_dir = args.things_dir
     sub_num = args.sub_num
 
-    data_path = f"{things_dir}/things.glmsingle/sub-{sub_num}/glmsingle"
+    data_path = f"{things_dir}/glmsingle/sub-{sub_num}/glmsingle"
     in_file = f"{data_path}/output/T1w/TYPED_FITHRF_GLMDENOISE_RR.mat"
 
     nc_arr = compute_noise_ceiling(

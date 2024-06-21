@@ -12,7 +12,7 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
 that include flat maps to visualize voxelwise statistics on the cortex are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data files saved in the current repository.
+``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data and results files saved in the current repository.
 
 TODO: add refs to manuscript
 
@@ -21,7 +21,6 @@ Project Organization
 
     ├── LICENSE
     ├── README.md          <- The top-level README for this repository.
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     ├── anatomical         <- Anatomical datasets and scripts
     │    ├── README.md          <- Anatomical dataset overview, including links to instructions for flat maps
     │    ├── smriprep           <- smriprep anatomical output
@@ -39,9 +38,9 @@ Project Organization
     │    │                              └── {lh, rh}.full.flat.patch.3d.out       
     │    └── pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
-    ├── floc                    <- fLoc visual localizer dataset and scripts
+    ├── fLoc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
-    │    ├── floc.fmriprep         <- fmriprep output
+    │    ├── fmriprep         <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in T1w space
@@ -57,7 +56,7 @@ Project Organization
     │    │               └── stimuli
     │    │                     └── images   <- stimulus images per category
     │    │
-    │    └── floc.rois               <- fLoc scripts and datasets
+    │    └── rois               <- fLoc scripts and datasets
     │            ├── code            <- scripts to run glm and generate ROIs
     │            │     ├── README.md    
     │            │     ├── requirements.txt          
@@ -173,7 +172,7 @@ Project Organization
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts
-    │    ├── things.fmriprep      <- fmriprep output
+    │    ├── fmriprep      <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
@@ -213,7 +212,7 @@ Project Organization
     │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
     │    │               └── task-things_events.json
     │    │
-    │    ├── things.behaviour        <- performance on the image recognition task
+    │    ├── behaviour        <- performance on the image recognition task
     │    │       ├── README.md
     │    │       ├── code
     │    │       │     ├── requirements.txt
@@ -231,7 +230,7 @@ Project Organization
     │    │       ├── task-things_desc-perTrial_annotation.json
     │    │       └── task-things_beh.json
     │    │
-    │    └── things.glmsingle        <- glm single derivatives
+    │    └── glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── requirements.txt      
     │            │     ├── qc

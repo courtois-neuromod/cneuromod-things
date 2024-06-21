@@ -31,8 +31,8 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    in_path = f"{args.things_dir}/things.fmriprep"
-    out_path = f"{args.things_dir}/things.glmsingle"
+    in_path = f"{args.things_dir}/fmriprep"
+    out_path = f"{args.things_dir}/glmsingle"
 
     sub_list = ['01', '02', '03', '06']
     suffix = '_space-T1w_desc-preproc_part-mag_bold.nii.gz'

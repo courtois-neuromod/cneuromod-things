@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     annot_list = sorted(
         glob.glob(
-            f"{args.things_dir}/things.behaviour/sub-0*/beh/"
+            f"{args.things_dir}/behaviour/sub-0*/beh/"
             "sub-0*_task-things_desc-perTrial_annotation.tsv"
         )
     )
@@ -81,5 +81,5 @@ if __name__ == '__main__':
             for col_val in COL_NAMES:
                 img_annot[img][col_val] = convert(col_val, df[col_val].iloc[i])
 
-    with open(f"{args.things_dir}/things.glmsingle/task-things_imgAnnotations.json", 'w') as outfile:
+    with open(f"{args.things_dir}/glmsingle/task-things_imgAnnotations.json", 'w') as outfile:
         json.dump(img_annot, outfile)

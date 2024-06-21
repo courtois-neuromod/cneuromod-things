@@ -56,14 +56,14 @@ def rank_roi_betas(
     """
     # load things functional mask (no NaN)
     things_mask = nib.load(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/input/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/glmsingle/input/"
         f"sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_"
         "mask.nii",
     )
 
     # load and mask noise ceiling map to be in same space as betas
     flat_noiseceil = apply_mask(nib.load(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/glmsingle/output/"
         f"sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_"
         "stats-noiseCeilings_statmap.nii.gz",
     ), things_mask)
@@ -71,7 +71,7 @@ def rank_roi_betas(
     # list ROI masks from fLoc
     roi_mask_list = sorted(
         glob.glob(
-            f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/task-derived/"
+            f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/task-derived/"
             f"sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_"
             "cutoff-*_nvox-*_fwhm-5_ratio-0.3_desc-unsmooth_mask.nii.gz",
         )
@@ -80,7 +80,7 @@ def rank_roi_betas(
         # sub-06 did not complete fLoc task: use noise-ceiling derived masks
         roi_mask_list = sorted(
             glob.glob(
-                f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/task-derived/"
+                f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/task-derived/"
                 f"sub-{sub_num}_task-floc_space-T1w_stats-noiseCeil_contrast-*"
                 f"_roi-*_cutoff-*_nvox-100_fwhm-3_mask.nii.gz",
             )
@@ -108,19 +108,19 @@ def rank_roi_betas(
         desc = "desc-perTrial" if per_trial else "desc-perImage"
         tval = ("%.2f" % nc_thresh)
         np.save(
-            f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+            f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
             f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-ranks_{desc}_statseries.npy",
             roi_idx,
         )
         np.save(
-            f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+            f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
             f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-betas_{desc}_statseries.npy",
             roi_bloc,
         )
         np.save(
-            f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+            f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
             f"sub-{sub_num}_task-things_space-T1w_{roi_name}_cutoff-{tval}_"
             f"nvox-{roi_cutoff}_stats-noiseCeilings_{desc}_statseries.npy",
             roi_NCs,
@@ -141,7 +141,7 @@ def rank_imgs_per_vox(
     button press was recorded (no blank trials)
     '''
     subj_h5file = h5py.File(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/glmsingle/output/"
         f"sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_"
         "stats-imageBetas_desc-zscore_statseries.h5",
         "r",
@@ -168,12 +168,12 @@ def rank_imgs_per_vox(
     img_indices = np.array(img_indices)
     beta_block = np.nan_to_num(beta_block)
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_desc-perImage_labels.npy",
         img_indices,
     )
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_space-T1w_stats-betas_desc-perImage_"
         "statseries.npy",
         beta_block,
@@ -198,7 +198,7 @@ def rank_imgs_per_vox(
     beta_idx = np.argsort(beta_block, axis=0)
 
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_space-T1w_stats-ranks_desc-perImage_"
         "statseries.npy",
         beta_idx,
@@ -218,7 +218,7 @@ def get_sess_vector(data_dir, sub_num):
     Create vector that labels each trial by its session
     '''
     sess_file = h5py.File(
-        f"{data_dir}/THINGS/things.glmsingle/task-things_runlist.h5",
+        f"{data_dir}/THINGS/glmsingle/task-things_runlist.h5",
         "r",
     )
     sessions = [f'{x}' for x in list(sess_file[sub_num]['sessions'])]
@@ -238,7 +238,7 @@ def build_matrices(data_dir, sub_num, s_h5file, sess_file, sessions, rm_blanks=T
     img_vector = []
     betas_per_trial = []
     sub_df = pd.read_csv(
-        f"{data_dir}/THINGS/things.behaviour/sub-{sub_num}/beh/"
+        f"{data_dir}/THINGS/behaviour/sub-{sub_num}/beh/"
         f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv",
         sep = '\t',
     )
@@ -282,7 +282,7 @@ def rank_imgs_per_vox_perTrial(
     and image indices [dim = (trials,)]
     '''
     subj_h5file = h5py.File(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/glmsingle/output/"
         f"sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_"
         "stats-trialBetas_desc-zscore_statseries.h5",
         "r",
@@ -296,12 +296,12 @@ def rank_imgs_per_vox_perTrial(
     subj_h5file.close()
 
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_desc-perTrial_labels.npy",
         img_indices,
     )
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_space-T1w_stats-betas_desc-perTrial_"
         "statseries.npy",
         beta_block,
@@ -315,7 +315,7 @@ def rank_imgs_per_vox_perTrial(
     beta_idx = np.argsort(beta_block, axis=0)
 
     np.save(
-        f"{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/descriptive/"
+        f"{data_dir}/THINGS/glmsingle/sub-{sub_num}/descriptive/"
         f"sub-{sub_num}_task-things_space-T1w_stats-ranks_desc-perTrial_"
         "statseries.npy",
         beta_idx,

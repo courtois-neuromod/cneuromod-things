@@ -21,8 +21,8 @@ shown per trial (as task condition) from a subject's ``*events.tsv`` files.
 
 Launch the following script, specifying the subject number. E.g.,
 ```bash
-DATADIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
-OUTDIR="cneuromod-things/THINGS/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/fmriprep/sourcedata/things"
+OUTDIR="cneuromod-things/THINGS/glmsingle"
 
 python GLMsingle_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
@@ -47,8 +47,8 @@ with GLMsingle.
 
 Launch the following script for each subject
 ```bash
-DATADIR="cneuromod-things/THINGS/things.fmriprep"
-OUTDIR="cneuromod-things/THINGS/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/fmriprep"
+OUTDIR="cneuromod-things/THINGS/glmsingle"
 
 python GLMsingle_preprocBOLD.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
@@ -78,7 +78,7 @@ in matlab and loop over while running GLMsingle.
 
 Run script for all subjects
 ```bash
-DATADIR="cneuromod-things/THINGS/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/glmsingle"
 python GLMsingle_makerunlist.py --data_dir="${DATADIR}"
 ```
 
@@ -98,7 +98,7 @@ functional brain mask.
 
 For the script to run, the [GLMsingle repository](https://github.com/courtois-neuromod/GLMsingle)
 needs to be installed as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
-under ``cneuromod-things/THINGS/things.glmsingle/code/glmsingle`` (commit ``c4e298e``).
+under ``cneuromod-things/THINGS/glmsingle/code/glmsingle`` (commit ``c4e298e``).
 
 Launch the following script for each subject, specifying the subject number,
 bold volume space (``T1w``) & number of voxels per chunk as arguments
@@ -107,7 +107,7 @@ SUB_NUM="01" # 01, 02, 03, 06
 BD_TYPE="T1w" # MNI, T1w
 CHUNK_SZ="35000" # 35000 recommended to avoid OOM; 50000 is default
 
-DATADIR="cneuromod-things/THINGS/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/glmsingle"
 CODEDIR="${DATADIR}/code/glmsingle"
 cd ${CODEDIR}
 
@@ -124,7 +124,7 @@ for all subjects created in Step 3. \
 Note: the script can process scans in MNI or T1w space, to specify as an argument
 
 **Output**:
-- All the GLMsingle output files (``*.mat``) saved under ``cneuromod-things/THINGS/things.glmsingle/sub_{sub_num}/glmsingle/output/{T1w, MNI}``
+- All the GLMsingle output files (``*.mat``) saved under ``cneuromod-things/THINGS/glmsingle/sub_{sub_num}/glmsingle/output/{T1w, MNI}``
 
 ------------
 
@@ -172,7 +172,7 @@ The noise ceiling estimation is adapted from the [Natural Scene Dataset's datapa
 To leave out "blank" trials (trials with no recorded subject
 response) from noise ceiling computations, trialwise performance needs to be
 extracted. Run the ``behav_data_annotate.py`` script, as described under
-**Trial-Wise Image Ratings and Annotations** in the ``cneuromod-things/THINGS/things.behaviour`` README. Output is saved as ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``.
+**Trial-Wise Image Ratings and Annotations** in the ``cneuromod-things/THINGS/behaviour`` README. Output is saved as ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``.
 
 To compute noise ceilings, launch the following script for each subject:
 ```bash
@@ -186,7 +186,7 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 - A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1.
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
-- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
+- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, a brain volume
@@ -222,7 +222,7 @@ flattened voxel scores masked with the ``sub-{sub_num}_task-things_space-T1w_lab
 
 Run the following script for each subject:
 ```bash
-DATADIR="cneuromod-things/THINGS/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/glmsingle"
 python GLMsingle_betasPerTrial.py --data_dir="${DATADIR}" --zbetas --sub_num="01"
 ```
 Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas (not z-scored)
@@ -272,7 +272,7 @@ python GLMsingle_betasPerImg.py --things_dir="${DATADIR}" --zbetas --sub_num="01
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - ``sub-{sub_num}_task-things_imgDesignNumbers.json``, a file created in Step 1 that assigns a unique number to each stimulus image seen by the participant (>4000)
 - A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1
-- A subject's ``cneuromod-things/THINGS/things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/things.behaviour/code/behav_data_annotate.py`` (see Step 6).
+- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` (see Step 6).
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
 

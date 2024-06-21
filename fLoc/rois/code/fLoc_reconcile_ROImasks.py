@@ -97,7 +97,7 @@ def create_subject_rois(
         # load subject contrast from fLoc task
         sm = "smooth" if use_smooth_bold else "unsmooth"
         dmap = nib.load(
-            f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/glm/"
+            f"{data_dir}/fLoc/rois/sub-{sub_num}/glm/"
             f"sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-tscores_"
             f"contrast-{c}_desc-{sm}_statseries.nii.gz"
         )
@@ -125,7 +125,7 @@ def create_subject_rois(
             vcount = 0
             for i, h in enumerate(hemi):
                 parcel = nib.load(
-                    f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/from_atlas/"
+                    f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/from_atlas/"
                     f"sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-"
                     f"{roi}_desc-{h}_mask.nii",
                 )
@@ -231,7 +231,7 @@ def create_subject_rois(
 
                 nib.save(
                     final_mask,
-                    f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/task-derived"
+                    f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/task-derived"
                     f"/sub-{sub_num}_task-floc_space-T1w_stats-tscores_"
                     f"contrast-{roi}_cutoff-{tvalue}_nvox-{vcount}_fwhm-{fwhm}_ratio-{percent_cluster}_"
                     f"desc-{sm}_mask.nii.gz",
@@ -250,7 +250,7 @@ def create_subject_rois_noData(
     """
     # load noise ceiling data
     noiseceil = nib.load(
-        f"/{data_dir}/THINGS/things.glmsingle/sub-{sub_num}/glmsingle/output/"
+        f"/{data_dir}/THINGS/glmsingle/sub-{sub_num}/glmsingle/output/"
         f"sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-"
         "noiseCeilings_statmap.nii.gz",
     )
@@ -279,7 +279,7 @@ def create_subject_rois_noData(
             vcount = 0
             for i, h in enumerate(hemi):
                 parcel = nib.load(
-                    f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/from_atlas/"
+                    f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/from_atlas/"
                     f"sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-"
                     f"{roi}_desc-{h}_mask.nii",
                 )
@@ -352,7 +352,7 @@ def create_subject_rois_noData(
                 tvalue = str(min(tvals))  # lowest threshold between the 2 hemi
                 nib.save(
                     final_mask,
-                    f"{data_dir}/fLoc/floc.rois/sub-{sub_num}/rois/task-derived"
+                    f"{data_dir}/fLoc/rois/sub-{sub_num}/rois/task-derived"
                     f"/sub-{sub_num}_task-floc_space-T1w_stats-noiseCeil_"
                     f"contrast-{roi}_cutoff-{tvalue}_nvox-{vcount}_fwhm-{fwhm}"
                     f"_mask.nii.gz",

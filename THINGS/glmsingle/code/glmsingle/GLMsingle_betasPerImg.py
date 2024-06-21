@@ -62,7 +62,7 @@ def get_sess_vector(data_dir, sub_num):
     Create vector that labels each trial by its session number
     '''
     session_file_path = Path(
-        f"{data_dir}/things.glmsingle/task-things_runlist.h5"
+        f"{data_dir}/glmsingle/task-things_runlist.h5"
     )
     sess_file = h5py.File(session_file_path, 'r')
     sessions = [f'{x}' for x in list(sess_file[sub_num]['sessions'])]
@@ -151,7 +151,7 @@ def get_img_vector(data_dir, sub_num, sess_file, sessions, rm_blanks=False):
     img_vector = []
 
     des_path = Path(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/input/"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/input/"
         f"sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5"
     )
     des_file = h5py.File(des_path, 'r')
@@ -161,7 +161,7 @@ def get_img_vector(data_dir, sub_num, sess_file, sessions, rm_blanks=False):
     labelling of the GLMsingle analysis.
     """
     json_path = Path(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/input/"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/input/"
         f"sub-{sub_num}_task-things_imgDesignNumbers.json"
     )
     with open(json_path, 'r') as f:
@@ -169,7 +169,7 @@ def get_img_vector(data_dir, sub_num, sess_file, sessions, rm_blanks=False):
 
     checked_imgs = {}
     df_path = Path(
-        f"{data_dir}/things.behaviour/sub-{sub_num}/beh/"
+        f"{data_dir}/behaviour/sub-{sub_num}/beh/"
         f"sub-{sub_num}_task-things_desc-perTrial_annotation.tsv"
     )
     sub_df = pd.read_csv(df_path, sep = '\t')
@@ -230,7 +230,7 @@ def average_betas_perImg(data_dir, sub_num, rm_blanks=False, zbetas=False):
     Step 2: load betas from GLMsingle output file (model D)
     '''
     matfile = h5py.File(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/output/T1w/"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/output/T1w/"
         "TYPED_FITHRF_GLMDENOISE_RR.mat", 'r',
     )
     betas = np.squeeze(np.array(matfile['modelmd']))
@@ -243,16 +243,16 @@ def average_betas_perImg(data_dir, sub_num, rm_blanks=False, zbetas=False):
     Step 3: average betas and save arrays in hdf5 file
     '''
     union_mask = nib.load(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/input/"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/input/"
         f"sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii"
     )
     clean_mask = nib.load(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/input/"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/input/"
         f"sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii"
     )
     zname = 'desc-zscore_' if zbetas else ''
     subj_h5file = h5py.File(
-        f"{data_dir}/things.glmsingle/sub-{sub_num}/glmsingle/output/sub-{sub_num}_"
+        f"{data_dir}/glmsingle/sub-{sub_num}/glmsingle/output/sub-{sub_num}_"
         f"task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_{zname}statseries.h5",
         'w',
     )

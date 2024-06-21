@@ -5,8 +5,8 @@ THINGS fMRI data QCing
 
 Launch the following script to process a subject's sessions
 ```bash
-DATADIR="cneuromod-things/THINGS/data/things.fmriprep"
-OUTDIR="cneuromod-things/THINGS/data/things.glmsingle"
+DATADIR="cneuromod-things/THINGS/data/fmriprep"
+OUTDIR="cneuromod-things/THINGS/data/glmsingle"
 
 python compile_headmotion.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
