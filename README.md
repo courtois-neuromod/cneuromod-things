@@ -12,7 +12,7 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
 that include flat maps to visualize voxelwise statistics on the cortex are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data files saved in the current repository.
+``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data and results files saved in the current repository.
 
 TODO: add refs to manuscript
 
@@ -21,7 +21,6 @@ Project Organization
 
     ├── LICENSE
     ├── README.md          <- The top-level README for this repository.
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     ├── anatomical         <- Anatomical datasets and scripts
     │    ├── README.md          <- Anatomical dataset overview, including links to instructions for flat maps
     │    ├── smriprep           <- smriprep anatomical output
