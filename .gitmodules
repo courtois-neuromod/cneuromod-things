@@ -1,6 +1,3 @@
-[submodule "THINGS/things.glmsingle/code/glmsingle/GLMsingle"]
-	path = THINGS/things.glmsingle/code/glmsingle/GLMsingle
-	url = git@github.com:courtois-neuromod/GLMsingle.git
 [submodule "retinotopy/fmriprep"]
 	path = retinotopy/fmriprep
 	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.retinotopy.fmriprep
