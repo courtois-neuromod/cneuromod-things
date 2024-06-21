@@ -38,9 +38,9 @@ Project Organization
     │    │                              └── {lh, rh}.full.flat.patch.3d.out       
     │    └── pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
     │
-    ├── floc                    <- fLoc visual localizer dataset and scripts
+    ├── fLoc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
-    │    ├── floc.fmriprep         <- fmriprep output
+    │    ├── fmriprep         <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in T1w space
@@ -56,7 +56,7 @@ Project Organization
     │    │               └── stimuli
     │    │                     └── images   <- stimulus images per category
     │    │
-    │    └── floc.rois               <- fLoc scripts and datasets
+    │    └── rois               <- fLoc scripts and datasets
     │            ├── code            <- scripts to run glm and generate ROIs
     │            │     ├── README.md    
     │            │     ├── requirements.txt          

@@ -15,8 +15,8 @@ Build design matrices from a subject's ``*events.tsv`` files in preparation for 
 
 Launch the following script, specifying the subject number.
 ```bash
-DATADIR="cneuromod-things/fLoc/floc.fmriprep/sourcedata/floc"
-OUTDIR="cneuromod-things/fLoc/floc.rois"
+DATADIR="cneuromod-things/fLoc/fmriprep/sourcedata/floc"
+OUTDIR="cneuromod-things/fLoc/rois"
 
 python fLoc_makedesign.py --data_dir="${DATADIR}" --out_dir="${OUTDIR}" --sub="01"
 ```
@@ -35,8 +35,8 @@ Derive GLM contrasts from multiple sessions and runs of fLoc task with a first-l
 
 Launch the following script, specifying the subject number.
 ```bash
-BOLDDIR="cneuromod-things/fLoc/floc.fmriprep"
-OUTDIR="cneuromod-things/fLoc/floc.rois"
+BOLDDIR="cneuromod-things/fLoc/fmriprep"
+OUTDIR="cneuromod-things/fLoc/rois"
 
 python fLoc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --smooth --sub="01"
 python fLoc_firstLevel_nilearn.py --fLoc_dir="${BOLDDIR}" --out_dir="${OUTDIR}" --sub="01"
@@ -73,7 +73,7 @@ The following command lines derive ROI masks from those group parcels, and warp 
 
 ### 3.0 Download the Kanwisher parcels
 
-Download CVS parcels (``cvs_avg35`` template) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download). Save parcel files under ``floc/floc.rois/standard_masks/kanwisher_parcels/cvs``
+Download CVS parcels (``cvs_avg35`` template) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download). Save parcel files under ``fLoc/rois/standard_masks/kanwisher_parcels/cvs``
 
 ### 3.1 Extract normalized (CVS) ROI masks from group parcels (e.g., FFA, PPA)
 
@@ -88,7 +88,7 @@ The CVS parcels each contain many ROIs per contrast. Create a separate mask (in 
 
 Launch the following script
 ```bash
-DATADIR="cneuromod-things/fLoc/floc.rois"
+DATADIR="cneuromod-things/fLoc/rois"
 
 python fLoc_split_CVSparcels_perROI.py --data_dir="${DATADIR}"
 ```
@@ -116,7 +116,7 @@ mni152reg --s cvs_avg35
 
 Third, warp the Kanwisher parcels from CVS to MNI152 space for each contrast (face, scene, body, scene).
 ```bash
-PARCELDIR="cneuromod-things/fLoc/floc.rois/standard_masks/kanwisher_parcels"
+PARCELDIR="cneuromod-things/fLoc/rois/standard_masks/kanwisher_parcels"
 
 for PARAM in body face object scene
 do
@@ -129,7 +129,7 @@ done
 
 Fourth, warp the Kanwisher ROI masks from CVS to MNI152 space for each ROI
 ```bash
-ROIDIR="cneuromod-things/fLoc/floc.rois/standard_masks/standard_rois"
+ROIDIR="cneuromod-things/fLoc/rois/standard_masks/standard_rois"
 
 for PARAM in body_roi-EBA face_roi-FFA face_roi-OFA face_roi-pSTS scene_roi-MPA scene_roi-OPA scene_roi-PPA
 do
@@ -159,9 +159,9 @@ You will need a reference anatomical image and transformation matrices outputted
 
 First, warp the Kanwisher parcels from MNI152 to T1w.
 ```bash
-PARCELDIR="cneuromod-things/fLoc/floc.rois/standard_masks/kanwisher_parcels/mni"
-OUTDIR="cneuromod-things/fLoc/floc.rois"
-SPREPDIR="cneuromod-things/anatomical/anat.smriprep"
+PARCELDIR="cneuromod-things/fLoc/rois/standard_masks/kanwisher_parcels/mni"
+OUTDIR="cneuromod-things/fLoc/rois"
+SPREPDIR="cneuromod-things/anatomical/smriprep"
 
 for PARAM in body face object scene
 do
@@ -181,9 +181,9 @@ done
 
 Second, warp the Kanwisher ROI masks from MNI152 to T1w.
 ```bash
-ROIDIR="cneuromod-things/fLoc/floc.rois/standard_masks/standard_rois"
-OUTDIR="cneuromod-things/fLoc/floc.rois"
-SPREPDIR="cneuromod-things/anatomical/anat.smriprep"
+ROIDIR="cneuromod-things/fLoc/rois/standard_masks/standard_rois"
+OUTDIR="cneuromod-things/fLoc/rois"
+SPREPDIR="cneuromod-things/anatomical/smriprep"
 
 for PARAM in body_roi-EBA face_roi-FFA face_roi-OFA face_roi-pSTS scene_roi-MPA scene_roi-OPA scene_roi-PPA
 do
@@ -215,7 +215,7 @@ do
 done
 ```
 
-All parcels and ROI masks in subject space are saved under ``fLoc/floc.rois/sub-{sub_num}/rois/from_atlas``. There are three masks per ROI (left hemisphere, right hemisphere, and bilateral).
+All parcels and ROI masks in subject space are saved under ``fLoc/rois/sub-{sub_num}/rois/from_atlas``. There are three masks per ROI (left hemisphere, right hemisphere, and bilateral).
 
 ------------
 
@@ -225,7 +225,7 @@ This step is to identify category-sensitive voxels in a data-driven manner (usin
 
 Launch the following script, specifying the subject number.
 ```bash
-DATADIR="path/to/cneuromod-things/fLoc/floc.rois"
+DATADIR="path/to/cneuromod-things/fLoc/rois"
 
 python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --use_smooth --sub="01"
 python fLoc_reconcile_parcelMasks.py --data_dir="${DATADIR}" --alpha=0.0001 --sub="01"
@@ -297,4 +297,4 @@ python fLoc_reconcile_ROImasks.py \
 ------------
 ## TODO: Step 6. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**
 
-Point to manual under anat; update once the anat.pycortex submodule has been generated
+Point to manual under anat; update once the anatomical/pycortex submodule has been generated
