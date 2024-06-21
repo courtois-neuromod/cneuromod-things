@@ -9,16 +9,16 @@ Each image was shown three times throughout the duration of the experiment (it w
 
 Note: A few sessions were accidentally administered out of the planed order, introducing atypical patterns of repetition for images shown during/after those sessions. Users may want to exclude these sessions from analyses that depend on repetition patterns or memory performance. These include `ses-024`, `ses-025` and `ses-026` for `sub-03`, and `ses-019` to `ses-026` (inclusively) for `sub-06`. fMRI data from `run 6` of `sub-06`'s `ses-008` are excluded from the dataset due to poor brain alignment.
 
-## things.fmriprep
+## THINGS/fmriprep
 
-``things.fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/things`` submodule includes raw fMRI files, ``*eyetrack.tsv.gz`` files (timestamped gaze positions derived from eye-tracking), ``*events.tsv`` files with trialwise metrics (as described in ``things.fmriprep/sourcedata/things/task-things_events.json``), and scripts to process ``events.tsv`` and eyetracking files.
+``fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/things`` submodule includes raw fMRI files, ``*eyetrack.tsv.gz`` files (timestamped gaze positions derived from eye-tracking), ``*events.tsv`` files with trialwise metrics (as described in ``THINGS/fmriprep/sourcedata/things/task-things_events.json``), and scripts to process ``events.tsv`` and eyetracking files.
 
 ``sourcedata/things`` also contains the ``stimuli`` submodule, which includes image stimuli and image content annotations. Due to permission issues, images and some annotations must be downloaded directly through the [THINGS initiative database](https://osf.io/jum2f/).
 
-## things.behaviour
+## THINGS/behaviour
 
-``things.behaviour`` includes analyses (scripts and output files) of the subjects' performance on the continuous recognition task. Code that associates image ratings and annotations to each fMRI trial is also included.
+``behaviour`` includes analyses (scripts and output files) of the subjects' performance on the continuous recognition task. Code that associates image ratings and annotations to each fMRI trial is also included.
 
-## things.glmsingle
+## THINGS/glmsingle
 
-``things.glmsingle`` includes fMRI analyses and derivatives, including scripts, intermediate steps (e.g., design matrices), and the following output files : trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
+``glmsingle`` includes fMRI analyses and derivatives, including scripts, intermediate steps (e.g., design matrices), and the following output files : trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  

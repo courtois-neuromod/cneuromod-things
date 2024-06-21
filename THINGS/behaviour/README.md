@@ -5,12 +5,12 @@ THINGS behavioural data analyses
 
 Metrics of behavioural performance on the continuous image recognition task (hits, false alarm, d', reaction times) are computed per run, per session (6 runs except for session 1) and per subject (across all sessions) from run-specific ``*events.tsv`` files.
 
-Scores are outputed as ``.tsv`` files in the ``things.behaviour`` dataset. Output columns are described in ``task-things_beh.json``
+Scores are outputed as ``.tsv`` files in the ``THINGS/behaviour`` dataset. Output columns are described in ``task-things_beh.json``
 
 Launch the following script to process all subjects & sessions
 ```bash
-DATADIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
-OUTDIR="cneuromod-things/THINGS/things.behaviour"
+DATADIR="cneuromod-things/THINGS/fmriprep/sourcedata/things"
+OUTDIR="cneuromod-things/THINGS/behaviour"
 
 python code/behav_data_memoperformance.py --idir="${DATADIR}" --odir="${OUTDIR}" --clean
 ```
@@ -25,7 +25,7 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 *Output*:
 
 - ``na_report.txt``, a text file that lists every run for which at least one behavioural response is missing (no button press recorded for at least one trial)
-- ``sub-0*/beh/sub-0*_task-things_desc-perTrial_beh.tsv``, a concatenation of all events.tsv trials (excludes all trials with no button press). Columns and their values correspond to those of events.tsv files, as described in ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/task-things_events.json``
+- ``sub-0*/beh/sub-0*_task-things_desc-perTrial_beh.tsv``, a concatenation of all events.tsv trials (excludes all trials with no button press). Columns and their values correspond to those of events.tsv files, as described in ``cneuromod-things/THINGS/fmriprep/sourcedata/things/task-things_events.json``
 - ``sub-0*/beh/sub-0*_task-things_desc-perRun_beh.tsv``, performance metrics per run (excludes runs from session 1). Columns are described in ``task-things_beh.json``
 - ``sub-0*/beh/sub-0*_task-things_desc-perSession_beh.tsv``, performance metrics per session (includes session 1). Columns are described in ``task-things_beh.json``
 - ``sub-0*/beh/sub-0*_task-things_desc-global_beh.tsv``, subject's overall performance metrics on the entire task (excludes session 1 in the averaging). Columns are described in ``task-things_beh.json``
@@ -34,9 +34,9 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 
 ## Trial-Wise Image Ratings and Annotations
 
-Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``things.behaviour`` dataset.
+Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
 
-For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/things.fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
+For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
 * ``THINGS/things_concepts.tsv``
 * ``THINGSplus/Metadata/Concept-specific/arousal_meanRatings.tsv``
 * ``THINGSplus/Metadata/Concept-specific/category53_wideFormat.tsv``
@@ -47,9 +47,9 @@ For this script to run, the following annotation files must be downloaded from t
 
 Launch the following script to process a subject's sessions
 ```bash
-EVDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things"
-ANDIR="cneuromod-things/THINGS/things.fmriprep/sourcedata/things/stimuli/annotations"
-OUTDIR="cneuromod-things/THINGS/things.behaviour"
+EVDIR="cneuromod-things/THINGS/fmriprep/sourcedata/things"
+ANDIR="cneuromod-things/THINGS/fmriprep/sourcedata/things/stimuli/annotations"
+OUTDIR="cneuromod-things/THINGS/behaviour"
 
 python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}" --out_dir="${OUTDIR}" --sub="01"
 ```

@@ -19,7 +19,7 @@ def get_arguments():
         '--data_dir',
         required=True,
         type=str,
-        help='path to things.glmsingle data directory',
+        help='path to THINGS/glmsingle data directory',
     )
     parser.add_argument(
         '--zbetas',

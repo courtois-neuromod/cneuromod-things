@@ -14,7 +14,7 @@ if __name__ == '__main__':
         '--data_dir',
         required=True,
         type=str,
-        help='path to things.glmsingle data directory',
+        help='path to THINGS/glmsingle data directory',
     )
     args = parser.parse_args()
 

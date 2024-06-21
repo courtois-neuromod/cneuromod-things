@@ -16,11 +16,11 @@ python extract_annotations.py --things_dir="${DATADIR}"
 
 *Input*:
 
-- All subjects' ``things.behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv`` files.
+- All subjects' ``THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv`` files.
 
 *Output*:
 
-- ``things.glm/task-things_imgAnnotations.json``, a dictionary with THINGS, THINGSplus and manual annotations for each image in the dataset, with image names as key.
+- ``THINGS/glmsingle/task-things_imgAnnotations.json``, a dictionary with THINGS, THINGSplus and manual annotations for each image in the dataset, with image names as key.
 
 ------------------
 

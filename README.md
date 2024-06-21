@@ -172,7 +172,7 @@ Project Organization
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts
-    │    ├── things.fmriprep      <- fmriprep output
+    │    ├── fmriprep      <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
@@ -212,7 +212,7 @@ Project Organization
     │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
     │    │               └── task-things_events.json
     │    │
-    │    ├── things.behaviour        <- performance on the image recognition task
+    │    ├── behaviour        <- performance on the image recognition task
     │    │       ├── README.md
     │    │       ├── code
     │    │       │     ├── requirements.txt
@@ -230,7 +230,7 @@ Project Organization
     │    │       ├── task-things_desc-perTrial_annotation.json
     │    │       └── task-things_beh.json
     │    │
-    │    └── things.glmsingle        <- glm single derivatives
+    │    └── glmsingle        <- glm single derivatives
     │            ├── code            <- scripts to run glm single and process output
     │            │     ├── requirements.txt      
     │            │     ├── qc
