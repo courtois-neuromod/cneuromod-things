@@ -127,6 +127,9 @@ retinotopy/prf/sub-0*/npythy/*put/*
 retinotopy/prf/sub-0*/rois/*nii.gz
 retinotopy/prf/code/*.sh
 
+# pycortex files
+anatomical/pycortex/db/*
+
 # output figures
 datapaper/figures/*.png
 datapaper/figures/b_rankings/*.png

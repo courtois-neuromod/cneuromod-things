@@ -36,7 +36,17 @@ Project Organization
     │    │                              ├── {lh, rh}.full.patch.3d        <- patches to create flat maps       
     │    │                              ├── {lh, rh}.full.flat.patch.3d      
     │    │                              └── {lh, rh}.full.flat.patch.3d.out       
-    │    └── pycortex         <- pycortex database with annotated surfaces that delineate visual ROIs
+    │    └── pycortex
+    │          ├── README.md
+    │          ├── doc
+    │          │    ├── flatmap.md
+    │          │    └── requirements
+    │          └── db      <- pycortex database with annotated surfaces that delineate visual ROIs
+    │               └── sub-0*
+    │                     ├── anatomicals
+    │                     ├── surfaces
+    │                     ├── transforms    
+    │                     └── overlays.svg  <- annotated with manually traced ROIs for sub-01, 02 and 03
     │
     ├── fLoc                    <- fLoc visual localizer dataset and scripts
     │    ├── README.md          <- Overview of fLoc dataset and scripts
@@ -289,9 +299,10 @@ Project Organization
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
         ├── notebooks      <- Code to generate datapaper figures
-        │       ├── behav_analysis.ipynb      <- behav figures     
-        │       ├── beta_ranking.ipynb        <- beta ranking figures          
-        │       └── head_motion.ipynb         <- framewise displacement figs    
+        │       ├── behav_analysis.ipynb        <- behav figures     
+        │       ├── beta_ranking.ipynb          <- beta ranking figures          
+        │       ├── noiseCeil_flatmaps.ipynb    <- noise ceilings projected on cortical flat maps    
+        │       └── head_motion.ipynb           <- framewise displacement figs  
         └── report         <- Data paper manuscript
 
 --------
