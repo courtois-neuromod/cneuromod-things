@@ -1,0 +1,9 @@
+cython
+setuptools
+wheel
+nibabel==3.0
+numpy==1.23.4
+pycortex==1.2.5
+
+# Python 3.8.10
+# Freesurfer 7.3.2
