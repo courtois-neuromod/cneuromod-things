@@ -293,7 +293,8 @@ Project Organization
     │                  └── descriptive
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
     │                       ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
-    │                       └── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy
+    │                       ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
+    │                       └── sub-*_task-things_space-T1w_stats-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz    
     │            
     │
     └── datapaper          <- Report, figures, visualization notebooks
