@@ -1,10 +1,9 @@
-import os, glob, json, re
+import os, glob, re
 import argparse
-from pathlib import Path
 
 import h5py
 import nibabel as nib
-from nilearn.masking import unmask, apply_mask
+from nilearn.masking import apply_mask
 import numpy as np
 import pandas as pd
 import tqdm

@@ -295,6 +295,8 @@ python fLoc_reconcile_ROImasks.py \
 - For ``sub-06``, who did not complete the fLoc task, ROI masks ``sub-{sub_num}_task-floc_space-T1w_stats-noiseCeil_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_mask.nii.gz`` correspond to the union between the group-derived ROI mask and voxels with above-threshold noise ceilings derived from the main THINGS task.
 
 ------------
-## TODO: Step 6. Visualize ROIs in Pycortex, and draw on flat maps in inkscape...**
+## Step 6. Visualize manually drawn ROIs on cortical flat maps with Pycortex
 
-Point to manual under anat; update once the anatomical/pycortex submodule has been generated
+For ``sub-01``, ``sub-02`` and ``sub-03`` who completed the fLoc and retinotopy tasks, ROI boundaries were drawn manually on subject-specific cortical flat maps using Inkscape. The steps with which these ROIs were drawn are detailed in the ``flatmaps.md`` manual found under ``cneuromod-things/anatomical/pycortex/doc``.
+
+Drawn ROIs can be visualized over any CNeuroMod functional brain data using Pycortex (see ``cneuromod-things/anatomical/pycortex/README.md`` for instructions).
