@@ -340,7 +340,7 @@ def save_tsne(args, img_idx, mask_list, tsne_results, nvox_list):
     desc = "perImage" if args.perImg else "perTrial"
     out_path = Path(
         f"{args.data_dir}/THINGS/glmsingle/sub-{args.sub_num}/descriptive/"
-        f"sub-{args.sub_num}_task-things_stats-tSNE_label-visualROIs_"
+        f"sub-{args.sub_num}_task-things_space-T1w_stats-tSNE_label-visualROIs_"
         f"desc-{desc}_statseries.npz"
     )
 
