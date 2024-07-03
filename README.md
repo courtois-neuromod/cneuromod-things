@@ -302,6 +302,7 @@ Project Organization
         ├── notebooks      <- Code to generate datapaper figures
         │       ├── behav_analysis.ipynb        <- behav figures     
         │       ├── beta_ranking.ipynb          <- beta ranking figures          
+        │       ├── beta_dimReduction.ipynb     <- beta t-SNE plots    
         │       ├── noiseCeil_flatmaps.ipynb    <- noise ceilings projected on cortical flat maps    
         │       └── head_motion.ipynb           <- framewise displacement figs  
         └── report         <- Data paper manuscript
