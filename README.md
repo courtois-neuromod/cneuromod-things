@@ -293,7 +293,8 @@ Project Organization
     │                  └── descriptive
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
     │                       ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
-    │                       └── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy
+    │                       ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
+    │                       └── sub-*_task-things_space-T1w_stats-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz    
     │            
     │
     └── datapaper          <- Report, figures, visualization notebooks
@@ -301,6 +302,7 @@ Project Organization
         ├── notebooks      <- Code to generate datapaper figures
         │       ├── behav_analysis.ipynb        <- behav figures     
         │       ├── beta_ranking.ipynb          <- beta ranking figures          
+        │       ├── beta_dimReduction.ipynb     <- beta t-SNE plots    
         │       ├── noiseCeil_flatmaps.ipynb    <- noise ceilings projected on cortical flat maps    
         │       └── head_motion.ipynb           <- framewise displacement figs  
         └── report         <- Data paper manuscript
