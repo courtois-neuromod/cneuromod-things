@@ -5,7 +5,7 @@ Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CN
 
 Files related to the main task are found under ``THINGS``:
 - ``THINGS/fmriprep`` includes raw and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
-- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous recognition task.
+- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous recognition task and of fixation compliance.
 - ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
@@ -197,8 +197,8 @@ Project Organization
     │    │               ├── sub-0*
     │    │               │     └── ses-*
     │    │               │          └── func
-    │    │               │               ├── sub-0*_ses-*_task-thingsmemory_run-*_eyetrack.tsv.gz  <- eyetracking files
-    │    │               │               └── sub-0*_ses-*_task-thingsmemory_run-*_events.tsv  <- events.tsv files
+    │    │               │               ├── sub-0*_ses-*_task-things_run-*_eyetrack.tsv.gz  <- eyetracking files
+    │    │               │               └── sub-0*_ses-*_task-things_run-*_events.tsv  <- events.tsv files
     │    │               ├── stimuli
     │    │               │     ├── images_fmri <- stimulus images per category
     │    │               │     └── annotations <- image annotations
@@ -215,20 +215,30 @@ Project Organization
     │    │               │            └── task-things_desc-manual_annotation.tsv
     │    │               ├── code
     │    │               │     ├── README.md
-    │    │               │     ├── requirements.txt    
-    │    │               │     ├── eyetracking          <- TODO: add scripts to process eyetracking data    
-    │    │               │     ├── qc_notes.md          <- notes on QCing runs & sessions        
-    │    │               │     └── clean_events.py      <- script to relabel/clean *events.tsv files
-    │    │               ├── task-things_desc-wEyetrack_events.json  <- TODO: simplify
-    │    │               └── task-things_events.json
+    │    │               │     ├── cleanup             <- scripts to clean up events.tsv files    
+    │    │               │     │      ├── requirements.txt       
+    │    │               │     │      ├── qc_notes.md          <- notes on QCing runs & sessions        
+    │    │               │     │      └── clean_events.py      <- script to relabel/clean *events.tsv files
+    │    │               │     └── eyetracking                 <- scripts to process eyetracking data
+    │    │               │            ├── requirements.txt     <- notes on QCing runs & sessions     
+    │    │               │            ├── step1_eyetrack_prep.py      <- exports gaze to numpy, plots qc charts        
+    │    │               │            ├── step2_eyetrack_prep.py      <- drift corrects, exports gaze and fixation metrics
+    │    │               │            ├── step3_reconcile_events.py   <- add fixation metrics to events files
+    │    │               │            └── utils.py                    <- support functions
+    │    │               │    
+    │    │               └── task-things_events.json   <- TODO: simplify (too many eye-track metrics?)
     │    │
     │    ├── behaviour        <- performance on the image recognition task
     │    │       ├── README.md
     │    │       ├── code
     │    │       │     ├── requirements.txt
+    │    │       │     ├── analyze_fixations.py        <- processes trial-wise fixations
     │    │       │     ├── behav_data_annotate.py      <- builds trial-wise annotations   
     │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
     │    │       ├── sub-0*
+    │    │       │     ├── fix
+    │    │       │     │    ├── sub-0*_task-things_desc-perTrial_fixCompliance.tsv
+    │    │       │     │    └── sub-0*_task-things_desc-driftCor_gaze.tsv
     │    │       │     └── beh
     │    │       │          ├── sub-0*_task-things_desc-perTrial_annotation.tsv      
     │    │       │          ├── sub-0*_task-things_catNum.tsv  
@@ -238,6 +248,7 @@ Project Organization
     │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
     │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
     │    │       ├── task-things_desc-perTrial_annotation.json
+    │    │       ├── task-things_desc-perTrial_fixCompliance.json    
     │    │       └── task-things_beh.json
     │    │
     │    └── glmsingle        <- glm single derivatives

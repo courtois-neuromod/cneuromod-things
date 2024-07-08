@@ -31,7 +31,7 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 - ``sub-0*/beh/sub-0*_task-things_desc-global_beh.tsv``, subject's overall performance metrics on the entire task (excludes session 1 in the averaging). Columns are described in ``task-things_beh.json``
 
 
-
+---------------------------
 ## Trial-Wise Image Ratings and Annotations
 
 Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
@@ -64,3 +64,23 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 - ``sub-0*/beh/sub-0*_task-things_desc-perTrial_annotation.tsv``, trialwise annotations for a concatenation of all events.tsv files. Columns are described in ``task-things_desc-perTrial_annotation.json``
 - ``sub-0*/beh/sub-0*_task-things_catNum.tsv``, list of categories of images shown to the subject throughout the experiment
 - ``sub-0*/beh/sub-0*_task-things_imgNum.tsv``, list of image numbers for images shown to the subject throughout the experiment
+
+
+-----------------------------
+## Fixation Compliance Metrics
+
+The script ``code/analyze_fixations.py`` processes eye-tracking data and its derivatives. It concatenates trial-wise fixation compliance metrics across all runs. It also converts drift-corrected gaze to degrees of visual angles (relative distance in x and y from central fixation mark, and absolute distance from center) for trials with reccorded button presses (gaze points are filtered above threshold of pupil detection confidence and downsampled to 1 every 5 points).
+
+```bash
+DATADIR="path/to/cneuromod-things"
+
+python code/analyze_fixations.py --sub_num="01" --data_dir="${DATADIR}"
+```
+
+**Input**:
+- A subject's ``sub-*_ses-*_task-things_run-*_events.tsv`` files, across sessions (~36) and runs (6 per session)
+- ``sub-0*_ses-*_task-things_run-*_eyetrack.tsv.gz``, files of drift-corrected gaze per run
+
+**Output**:
+- ``sub-0*_task-things_desc-driftCor_gaze.tsv``
+- ``sub-0*_task-things_desc-perTrial_fixCompliance.tsv``, trial-wise metrics of fixation compliance concatenated across all events.tsv files. Columns are described in ``task-things_desc-perTrial_fixCompliance.json``

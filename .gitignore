@@ -90,6 +90,7 @@ THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+/*sv
 
 # THINGS behav data
 THINGS/behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
+THINGS/behaviour/sub-0*/fix/sub-0*_task-things_*.tsv
 
 # THINGS head motion data
 THINGS/glmsingle/sub-0*/qc/sub-0*_task-things_headmotion.tsv
@@ -105,12 +106,14 @@ THINGS/glmsingle/sub-0*/descriptive/sub-0*
 
 # THINGS events files data
 THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
+THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_eyetrack.tsv.gz
+THINGS/fmriprep/sourcedata/things/task-things_events_desc-OLD.json
 
 # THINGS stimuli
 THINGS/fmriprep/sourcedata/things/stimuli/images_fmri/*
 
 # raw QC notes w identifiers
-THINGS/fmriprep/sourcedata/things/code/raw_qc_notes.md
+THINGS/fmriprep/sourcedata/things/code/cleanup/raw_qc_notes.md
 
 # fLoc files
 fLoc/rois/sub-0*/glm/sub-*
