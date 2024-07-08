@@ -74,16 +74,17 @@ def main():
     '''
 
     args = get_arguments()
+    sub_num = args.sub_num
 
     in_path = Path(
         f"{args.data_dir}/THINGS/fmriprep/sourcedata/things"
     )
     out_path = Path(
-        f"{args.data_dir}/THINGS/behaviour/sub-{args.sub_num}/fix"
+        f"{args.data_dir}/THINGS/behaviour/sub-{sub_num}/fix"
     )
     out_path.mkdir(parents=True, exist_ok=True)
 
-    conf_thresh = 0.75 if args.sub_num == "01" else 0.9
+    conf_thresh = 0.75 if sub_num == "01" else 0.9
 
     cols2keep = [
                     'subject',
@@ -128,7 +129,7 @@ def main():
     ) # per gaze point
 
     et_file_list = sorted(glob.glob(
-        f'{in_path}/sub-{args.sub_num}/ses-0*/func/sub-{args.sub_num}*_eyetrack.tsv.gz'
+        f'{in_path}/sub-{sub_num}/ses-0*/func/sub-{sub_num}*_eyetrack.tsv.gz'
     ))
     for et_file in et_file_list:
         sub, ses, task, run, _ = os.path.basename(et_file).split('_')

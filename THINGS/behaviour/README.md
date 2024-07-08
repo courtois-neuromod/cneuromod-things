@@ -69,7 +69,7 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 -----------------------------
 ## Fixation Compliance Metrics
 
-The script ``code/analyze_fixations.py`` processes eye-tracking data and its derivatives. It concatenates trial-wise fixation compliance metrics across all runs. It also converts drift-corrected gaze to degrees of visual angles (relative distance in x and y from central fixation mark, and absolute distance from center) for trials with reccorded button presses (gaze points are filtered above threshold of pupil detection confidence and downsampled to 1 every 5 points).
+The script ``code/analyze_fixations.py`` processes eye-tracking data and its derivatives. It concatenates trial-wise fixation compliance metrics across all runs. It also converts drift-corrected gaze from normalized scores into degrees of visual angles (relative distance in x and y from central fixation mark, and absolute distance from central fixation) for trials with recorded button presses (gaze points are filtered above a set threshold of pupil detection confidence and then down-sampled to 1 every 5 points).
 
 ```bash
 DATADIR="path/to/cneuromod-things"
