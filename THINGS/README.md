@@ -11,13 +11,13 @@ Note: A few sessions were accidentally administered out of the planed order, int
 
 ## THINGS/fmriprep
 
-``fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/things`` submodule includes raw fMRI files, ``*eyetrack.tsv.gz`` files (timestamped gaze positions derived from eye-tracking), ``*events.tsv`` files with trialwise metrics (as described in ``THINGS/fmriprep/sourcedata/things/task-things_events.json``), and scripts to process ``events.tsv`` and eyetracking files.
+``fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/things`` submodule includes raw fMRI files, ``*eyetrack.tsv.gz`` files (timestamped gaze positions derived from eye-tracking), ``*events.tsv`` files with trialwise metrics (as described in ``THINGS/fmriprep/sourcedata/things/task-things_events.json``), and scripts to process ``*events.tsv`` and eyetracking files.
 
-``sourcedata/things`` also contains the ``stimuli`` submodule, which includes image stimuli and image content annotations. Due to permission issues, images and some annotations must be downloaded directly through the [THINGS initiative database](https://osf.io/jum2f/).
+``sourcedata/things`` also contains the ``stimuli`` submodule, which includes image stimuli and image content annotations. Due to permission issues, image files and some annotations must be downloaded directly through the [THINGS initiative database](https://osf.io/jum2f/).
 
 ## THINGS/behaviour
 
-``behaviour`` includes analyses (scripts and output files) of the subjects' performance on the continuous recognition task. Code that associates image ratings and annotations to each fMRI trial is also included.
+``behaviour`` includes analyses (scripts and output files) of the subjects' performance on the continuous recognition task, and of trial-wise fixation compliance metrics derived from eye-tracking data. Code that associates image ratings and annotations to each fMRI trial is also included.
 
 ## THINGS/glmsingle
 

@@ -36,7 +36,7 @@ def get_arguments():
         '--things_dir',
         required=True,
         type=str,
-        help='path to THINGS data directory',
+        help='path to cneuromod-things/THINGS data directory',
     )
 
     return parser.parse_args()
