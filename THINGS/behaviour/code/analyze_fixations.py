@@ -179,7 +179,7 @@ def main():
                 df_allgaze = pd.concat((df_allgaze, df_deg), ignore_index=True)
 
     df_alltrials.to_csv(
-        f"{out_path}/sub-{sub_num}_task-things_desc-perTrial_fixCompliance.tsv",
+        f"{out_path}/sub-{sub_num}_task-things_desc-fixCompliance_statseries.tsv",
         sep='\t', header=True, index=False,
     )
     df_allgaze.to_csv(

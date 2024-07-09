@@ -237,7 +237,7 @@ Project Organization
     │    │       │     └── behav_data_extract.py       <- computes behav scores from events.tsv files
     │    │       ├── sub-0*
     │    │       │     ├── fix
-    │    │       │     │    ├── sub-0*_task-things_desc-perTrial_fixCompliance.tsv
+    │    │       │     │    ├── sub-0*_task-things_desc-fixCompliance_statseries.tsv
     │    │       │     │    └── sub-0*_task-things_desc-driftCor_gaze.tsv
     │    │       │     └── beh
     │    │       │          ├── sub-0*_task-things_desc-perTrial_annotation.tsv      
@@ -248,7 +248,7 @@ Project Organization
     │    │       │          ├── sub-0*_task-things_desc-perSession_beh.tsv    
     │    │       │          └── sub-0*_task-things_desc-global_beh.tsv    
     │    │       ├── task-things_desc-perTrial_annotation.json
-    │    │       ├── task-things_desc-perTrial_fixCompliance.json    
+    │    │       ├── task-things_desc-fixCompliance_statseries.json    
     │    │       └── task-things_beh.json
     │    │
     │    └── glmsingle        <- glm single derivatives

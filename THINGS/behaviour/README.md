@@ -83,4 +83,4 @@ python code/analyze_fixations.py --sub_num="01" --data_dir="${DATADIR}"
 
 **Output**:
 - ``sub-0*_task-things_desc-driftCor_gaze.tsv``
-- ``sub-0*_task-things_desc-perTrial_fixCompliance.tsv``, trial-wise metrics of fixation compliance concatenated across all events.tsv files. Columns are described in ``task-things_desc-perTrial_fixCompliance.json``
+- ``sub-0*_task-things_desc-fixCompliance_statseries.tsv``, trial-wise metrics of fixation compliance concatenated across all events.tsv files. Columns are described in ``task-things_desc-fixCompliance_statseries.json``
