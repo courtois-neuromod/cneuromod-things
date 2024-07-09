@@ -43,7 +43,14 @@ def get_arguments():
 
 
 def get_single_distance(x1, y1, x2, y2, is_distance=False):
+    """
+    Function calculates the distance in degrees of visual angle between
+    a pair of points.
 
+    If is_distance is True, coordinates are relative distances from the center,
+    otherwise they are normalized coordinates as outputed by Pupil Labs
+    (as proportion of viewing screen dim = (1024, 1280)).
+    """
     norm_center = (0, 0) if is_distance else (0.5, 0.5)
 
     pre_x = (x1 - norm_center[0])*1280
@@ -51,7 +58,7 @@ def get_single_distance(x1, y1, x2, y2, is_distance=False):
     post_x = (x2 - norm_center[0])*1280
     post_y = (y2 - norm_center[1])*1024
 
-    dist_in_pix = 4164 # in pixels
+    dist_in_pix = 4164 # estimated distance to viewing screen in pixels
 
     vectors = np.array([[pre_x, pre_y, dist_in_pix], [post_x, post_y, dist_in_pix]])
     distance = np.rad2deg(np.arccos(1.0 - pdist(vectors, metric='cosine')))[0]
@@ -59,11 +66,72 @@ def get_single_distance(x1, y1, x2, y2, is_distance=False):
     return distance
 
 
-def get_fixation_gaze_things(df_ev, clean_dist_x, clean_dist_y, clean_times, fix_period="image"):
-    '''
-    Identify gaze that correspond to periods of fixation
-    Export median gaze position for each fixation, time stamp, and fixation QC metrics (for plotting)
-    '''
+def get_distances_from_center(x, y, is_distance=False):
+    """
+    Function calculates the distance to the center of the screen (central
+    fixation) in degrees of visual angle for a series of points.
+
+    if is_distance == True:
+        x and y are relative distances from the center, else they are
+        normalized coordinates as outputed by Pupil Labs (as proportion of
+        viewing screen dim = (1024, 1280))
+    """
+    assert len(x) == len(y)
+
+    dist_in_pix = 4164 # estimated distance to viewing screen in pixels
+    m_vecpos = np.array([0., 0., dist_in_pix])
+
+    all_pos = np.stack((x, y), axis=1)
+    if is_distance:
+        gaze = (all_pos - 0.0)*(1280, 1024)
+    else:
+        gaze = (all_pos - 0.5)*(1280, 1024)
+    gaze_vecpos = np.concatenate(
+        (gaze, np.repeat(dist_in_pix, len(gaze)).reshape((-1, 1))),
+        axis=1,
+    )
+
+    all_distances = []
+    for gz_vec in gaze_vecpos:
+        vectors = np.stack((m_vecpos, gz_vec), axis=0)
+        distance = np.rad2deg(
+            np.arccos(1.0 - pdist(vectors, metric='cosine'))
+        )[0]
+        all_distances.append(distance)
+
+    return all_distances
+
+
+def get_dist2prev(
+    metrics_dict, trial_num, num_back, conf_thresh, use_trial=False,
+):
+    """
+    Function calculates the distance in degrees of visual angle between
+    a pair of points:
+        - a trial's median gaze position
+        - the median gaze position of the preceeding trial (use_trial=True)
+        or fixation period (use_trial=False)
+    """
+    fix_name = 'trial' if use_trial else 'fix'
+
+    x1 = metrics_dict[trial_num-num_back][f'{fix_name}_median_x_{conf_thresh}']
+    y1 = metrics_dict[trial_num-num_back][f'{fix_name}_median_y_{conf_thresh}']
+    x2 = metrics_dict[trial_num][f'trial_median_x_{conf_thresh}']
+    y2 = metrics_dict[trial_num][f'trial_median_y_{conf_thresh}']
+
+    return get_single_distance(x1, y1, x2, y2, is_distance=False)
+
+
+def get_fixation_gaze_things(
+    df_ev, clean_dist_x, clean_dist_y, clean_times, fix_period="image+isi",
+):
+    """
+    Identify gaze points that correspond to reference periods of fixation,
+    to use as a reference to perform drift correction.
+
+    For each period of fixation, export the median gaze position,
+    its time stamp, and fixation QC metrics (for plotting)
+    """
     fix_dist_x = []
     fix_dist_y = []
     fix_times = []
@@ -79,28 +147,36 @@ def get_fixation_gaze_things(df_ev, clean_dist_x, clean_dist_y, clean_times, fix
     for i in range(df_ev.shape[0]):
 
         if fix_period == 'image':
+            """
+            Use image-viewing portion of a trial as reference for drift corr
+            """
             fixation_onset = df_ev['onset'][i]
             fixation_offset = fixation_onset + df_ev['duration'][i]
             onset_buffer = 0.0
 
         elif fix_period == 'isi':
+            """
+            Use ISI periods as reference for drift corr
+            """
             fixation_onset = df_ev['onset'][i] + df_ev['duration'][i]
             fixation_offset = fixation_onset + 1.49
             onset_buffer = 0.6
 
         elif fix_period == 'image+isi':
+            """
+            Use image-viewing + ISI as reference for drift corr
+            Default for THINGS dataset.
+            """
             fixation_onset = df_ev['onset'][i]
             fixation_offset = fixation_onset + df_ev['duration'][i] + 1.49
             onset_buffer = 0.0
 
 
-        # add gaze from trial fixation period
+        # append gaze from trial fixation period
         trial_fd_x = []
         trial_fd_y = []
         trial_ftimes = []
         while j < len(clean_times) and clean_times[j] < fixation_offset:
-            # + 0.8 = 800ms (0.8s) after trial offset to account for saccade
-            # if clean_times[j] > (fixation_onset + 0.8) and clean_times[j] < (fixation_offset - 0.1):
             if clean_times[j] > (fixation_onset + onset_buffer) and clean_times[j] < (fixation_offset - 0.1):
                 trial_fd_x.append(clean_dist_x[j])
                 trial_fd_y.append(clean_dist_y[j])
@@ -108,20 +184,33 @@ def get_fixation_gaze_things(df_ev, clean_dist_x, clean_dist_y, clean_times, fix
 
             j += 1
 
-        #if len(trial_fd_x) > 0:
+        """
+        Only includes periods of fixation that have >20 gaze points derived
+        from pupils detected above confidence threshold (used during gaze clean)
+        """
         if len(trial_fd_x) > 20:
             med_x = np.median(trial_fd_x)
             med_y = np.median(trial_fd_y)
 
+            """
+            Compute distance in degrees of visual angle between two
+            consecutive fixation points, as QC metric.
+
+            If this is the first fixation period, assume the previous point is
+            centered at (0, 0), meaning no drift.
+            """
             prev_x, prev_y = (0.0, 0.0) if len(fix_dist_x) < 1 else (fix_dist_x[-1], fix_dist_y[-1])
             fix_metrics['gz_dist_2_prev'].append(
                 get_single_distance(med_x, med_y, prev_x, prev_y, is_distance=True)
             )
 
+            # use its first gaze's timestamp to mark fixation period onset
             fix_dist_x.append(med_x)
             fix_dist_y.append(med_y)
             fix_times.append(trial_ftimes[0])
 
+            # QC metric: number of above-threshold gaze points sampled per fix period
+            # reflects accuracy of median position estimation
             fix_metrics['gz_count'].append(len(trial_fd_x))
             fix_metrics['gz_idx'].append(i)
 
@@ -139,6 +228,10 @@ def add_metrics_2events(df_ev,
                         strategy_name='previous_image+isi',
                         ):
 
+    """
+    Calculate distance to central fixation for ALL drift corrected and
+    uncorrected gaze points (no filtering based on confidence)
+    """
     all_distances = get_distances_from_center(all_x_aligned, all_y_aligned)
     all_distances_raw = get_distances_from_center(all_x, all_y)
 
@@ -147,6 +240,9 @@ def add_metrics_2events(df_ev,
 
     first_fix_trialnum = None
 
+    """
+    Compute trial-wise fixation compliance metrics one trial at at time
+    """
     for i in range(df_ev.shape[0]):
         trial_number = df_ev['TrialNumber'][i]
 
@@ -158,7 +254,11 @@ def add_metrics_2events(df_ev,
         isi_onset = trial_offset + isi_buffer
         isi_offset = trial_offset + 1.49
 
-
+        """
+        Gather trial's gaze, conf and distance; assign metrics to trial or isi
+            - trial = image-viewing period
+            - isi = subsequent inter-stimulus interval period
+        """
         trial_confs = []
         trial_x = []
         trial_y = []
@@ -184,6 +284,12 @@ def add_metrics_2events(df_ev,
 
             all_idx += 1
 
+        """
+        Define reference fixation period used for drift correction,
+        depending on strategy (image-viewing period, ISI period, or
+        both combined).
+        For THINGS, default is image+ISI
+        """
         if 'image+isi' in strategy_name:
             fix_confs = trial_confs + isi_confs
             fix_x = trial_x + isi_x
@@ -200,7 +306,13 @@ def add_metrics_2events(df_ev,
             fix_y = isi_y
             fix_distances = isi_distances
 
-
+        """
+        Process main trial gaze:
+            - Filter out gaze estimated from pupils detected w low confidence
+            - calculate median
+            - calculate distance to trial's own median for all gaze (estimate
+            within-trial variability in gaze position)
+        """
         t_conf_filter = np.array(trial_confs) > conf_thresh
         t_sum = np.sum(t_conf_filter)
         if t_sum:
@@ -213,6 +325,13 @@ def add_metrics_2events(df_ev,
                 trial_x_arr-t_med_x, trial_y_arr-t_med_y, is_distance=True
             ))
 
+        """
+        Process fixation period trial gaze:
+            - Filter out gaze estimated from pupils detected w low confidence
+            - calculate median
+            - calculate distance to fixation's own median for all gaze (estimate
+            within-fixation variability in gaze position)
+        """
         f_conf_filter = np.array(fix_confs) > conf_thresh
         f_sum = np.sum(f_conf_filter)
         if f_sum:
@@ -227,7 +346,22 @@ def add_metrics_2events(df_ev,
                 fix_x_arr-f_med_x, fix_y_arr-f_med_y, is_distance=True
             ))
 
-
+        """
+        Build a dictionary of metrics for each trial.
+        Metrics include:
+            - gaze counts
+            - proportion of gaze above confidence thresholds (trial and fixation)
+            - trial fixation compliance ratio: the proportion of trial gaze within a
+            certain distance (in deg of visual angle) from the fixation point.
+            Low scores could reflect a shift in head position, or high variability
+            in gaze position (low fixation compliance).
+            - trial dist2med ratio: the proportion of trial gaze within a certain
+            distance (in deg) from the trial's median position (reflects variability)
+            - fix dist2med ratio: the proportion of fixation gaze within a certain
+            distance (in deg) from the fixation period's median position (reflects variability).
+            Fixation positions estimated from periods with high variability may
+            lead to poor drift correction.
+        """
         metrics_per_trials[trial_number] = {
             'trial_gaze_count': len(trial_confs),
             'trial_gaze_conf_90': np.sum(np.array(trial_confs) > 0.9)/len(trial_confs) if len(trial_confs) > 0 else np.nan,
@@ -258,15 +392,22 @@ def add_metrics_2events(df_ev,
 
     metrics_per_trials[0] = metrics_per_trials[first_fix_trialnum]
 
-    '''
-    Insert drift correction strategy name
-    '''
+    """
+    Add trial-wise fixation compliance metrics into DataFrame (to be
+    exported as enhanced events.tsv file for each run).
+    """
+
+    """
+    Insert the drift correction strategy name and pupil detection confidence
+    threshold used to drift correct (as a reference)
+    """
     df_ev['drift_correction_strategy'] = df_ev.apply(lambda row: strategy_name, axis=1)
     df_ev['confidence_threshold'] = df_ev.apply(lambda row: conf_thresh, axis=1)
 
-    '''
-    Insert gaze count: fixation and image
-    '''
+    """
+    Insert detected gaze counts for the trial's fixation and image-viewing
+    periods
+    """
     if 'image+isi' in strategy_name:
         fix_dur = 1.49 + 2.98
     elif 'image' in strategy_name:
@@ -278,28 +419,51 @@ def add_metrics_2events(df_ev,
     df_ev['fix_gaze_count_ratio'] = df_ev.apply(lambda row: (metrics_per_trials[row['TrialNumber']-num_back]['fix_gaze_count'])/(250*fix_dur), axis=1)
     df_ev['trial_gaze_count_ratio'] = df_ev.apply(lambda row: (metrics_per_trials[row['TrialNumber']]['trial_gaze_count'])/(250*2.98), axis=1)
 
-    '''
-    Insert gaze confidence ratio, out of all collected gaze (0.9 and 0.75 thresholds): fixation and image
-    '''
+    """
+    Insert gaze confidence ratios for the image-viewing and fixation period.
+
+    This ratio is the proportion of gaze detected above a given threshold
+    (0.9 or 0.75), out of all collected gaze
+    """
     df_ev['fix_gaze_confidence_ratio_0.9'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']-num_back]['fix_gaze_conf_90'], axis=1)
     df_ev['fix_gaze_confidence_ratio_0.75'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']-num_back]['fix_gaze_conf_75'], axis=1)
     df_ev['trial_gaze_confidence_ratio_0.9'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_gaze_conf_90'], axis=1)
     df_ev['trial_gaze_confidence_ratio_0.75'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_gaze_conf_75'], axis=1)
 
-    '''
-    Insert distance between median positions, in deg of visual angle, between pre- and pos-isi /current and previous (excessive head motion)
-    '''
-    df_ev['median_dist_to_fixation_in_deg'] = df_ev.apply(lambda row: get_isi_distance(metrics_per_trials, row['TrialNumber'], num_back, conf_thresh), axis=1)
-    df_ev['median_dist_to_previous_trial_in_deg'] = df_ev.apply(lambda row: get_isi_distance(metrics_per_trials, row['TrialNumber'], 1, conf_thresh, use_trial=True), axis=1)
+    """
+    Insert distance (in deg of visual angle) between the median gaze position
+    for the trial's image-viewing period, and:
+        - the previous fixation period's median gaze (median_dist_to_fixation)
+        - the previous image-viewing period's median gaze (median_dist_to_previous_trial)
+    Large distances between median positions can indicate a shift in head position
+    or excessive head motion.
+    """
+    df_ev['median_dist_to_fixation_in_deg'] = df_ev.apply(lambda row: get_dist2prev(metrics_per_trials, row['TrialNumber'], num_back, conf_thresh), axis=1)
+    df_ev['median_dist_to_previous_trial_in_deg'] = df_ev.apply(lambda row: get_dist2prev(metrics_per_trials, row['TrialNumber'], 1, conf_thresh, use_trial=True), axis=1)
 
-    '''
-    Insert fixation compliance ratios
-    '''
+    """
+    Insert fixation compliance ratios: ratios indicate the proportion of
+    trial gaze within a certain distance (0.5, 1.0, 2.0 or 3.0 degrees of
+    visual angle) from the fixation point.
+
+    Low scores could reflect a shift in head position, and/or high variability
+    in gaze position during the trial (low fixation compliance).
+    """
     df_ev['trial_fixation_compliance_ratio_0.5'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_fix_compliance_ratio_deg0.5'], axis=1)
     df_ev['trial_fixation_compliance_ratio_1.0'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_fix_compliance_ratio_deg1'], axis=1)
     df_ev['trial_fixation_compliance_ratio_2.0'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_fix_compliance_ratio_deg2'], axis=1)
     df_ev['trial_fixation_compliance_ratio_3.0'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_fix_compliance_ratio_deg3'], axis=1)
 
+    """
+    Insert ratios of distance to median.
+    - trial_dist2med_ratio: the proportion of trial gaze within a certain
+    distance (0.5, 1.0, 2.0 or 3.0 degrees of visual angle) from the trial's
+    own median position. Low ratios may indicate poor fixation compliance.
+    - fix_dist2med_ratio: the proportion of fixation gaze within a certain
+    distance (0.5, 1.0, 2.0 or 3.0 degrees of visual angle) from the fixation
+    period's own median position. Fixation positions estimated from periods
+    of high variability in gaze position may lead to poor drift correction.
+    """
     df_ev['trial_dist2med_ratio_0.5'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_dist2med_ratio_deg0.5'], axis=1)
     df_ev['trial_dist2med_ratio_1.0'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_dist2med_ratio_deg1'], axis=1)
     df_ev['trial_dist2med_ratio_2.0'] = df_ev.apply(lambda row: metrics_per_trials[row['TrialNumber']]['trial_dist2med_ratio_deg2'], axis=1)
@@ -312,48 +476,6 @@ def add_metrics_2events(df_ev,
 
     return df_ev, all_distances_raw, all_distances
 
-
-def get_distances_from_center(x, y, is_distance=False):
-    '''
-    if is_distance == True:
-        x and y are relative distances from center, else they are normalized coordinates
-    '''
-    assert len(x) == len(y)
-
-    dist_in_pix = 4164 # in pixels
-    m_vecpos = np.array([0., 0., dist_in_pix])
-
-    all_pos = np.stack((x, y), axis=1)
-    if is_distance:
-        gaze = (all_pos - 0.0)*(1280, 1024)
-    else:
-        gaze = (all_pos - 0.5)*(1280, 1024)
-    gaze_vecpos = np.concatenate((gaze, np.repeat(dist_in_pix, len(gaze)).reshape((-1, 1))), axis=1)
-
-    all_distances = []
-    for gz_vec in gaze_vecpos:
-        vectors = np.stack((m_vecpos, gz_vec), axis=0)
-        distance = np.rad2deg(np.arccos(1.0 - pdist(vectors, metric='cosine')))[0]
-        all_distances.append(distance)
-
-    return all_distances
-
-
-def get_isi_distance(metrics_dict, trial_num, num_back, conf_thresh, use_trial=False):
-
-    fix_name = 'trial' if use_trial else 'fix'
-
-    pre_x = (metrics_dict[trial_num-num_back][f'{fix_name}_median_x_{conf_thresh}'] - 0.5)*1280
-    pre_y = (metrics_dict[trial_num-num_back][f'{fix_name}_median_y_{conf_thresh}'] - 0.5)*1024
-    post_x = (metrics_dict[trial_num][f'trial_median_x_{conf_thresh}'] - 0.5)*1280
-    post_y = (metrics_dict[trial_num][f'trial_median_y_{conf_thresh}'] - 0.5)*1024
-
-    dist_in_pix = 4164 # in pixels
-
-    vectors = np.array([[pre_x, pre_y, dist_in_pix], [post_x, post_y, dist_in_pix]])
-    distance = np.rad2deg(np.arccos(1.0 - pdist(vectors, metric='cosine')))[0]
-
-    return distance
 
 
 def make_THINGS_QC_figure(
@@ -511,10 +633,16 @@ def driftCorr_ETthings(
     print(sub, ses, fnum, task_type, run_num)
 
     if is_final:
+        """
+        Exports enhanced events files with fixation compliance metrics
+        """
         outpath_events = f'{out_path}/Events_files_enhanced'
         Path(outpath_events).mkdir(parents=True, exist_ok=True)
         out_file = f'{outpath_events}/{sub}_{ses}_{fnum}_{task_type}_{run_num}_events.tsv'
     else:
+        """
+        Exports graphs to manually QC drift correction per run
+        """
         outpath_fig = os.path.join(out_path, 'DC_gaze')
         Path(outpath_fig).mkdir(parents=True, exist_ok=True)
         out_file = f'{out_path}/DC_gaze/{sub}_{ses}_{run_num}_{fnum}_{task_type}_DCplot.png'
@@ -522,21 +650,33 @@ def driftCorr_ETthings(
     if not os.path.exists(out_file):
         #if True:
         try:
+            """
+            Load run's events.tsv file and raw gaze data (exported as numpy)
+            in Step 1
+            """
             run_event = pd.read_csv(row['events_path'], sep = '\t', header=0)
             run_gaze = np.load(row['gaze_path'], allow_pickle=True)['gaze2d']
 
-            '''
-            identifies logged run start time (mri TTL 0) on clock that matches
-            the gaze using info.player.json
-            '''
-            onset_time = get_onset_time(row['log_path'], row['run'], row['infoplayer_path'], run_gaze[10]['timestamp'])
+            """
+            Identify logged run start time (mri TTL 0) on clock that matches
+            the gaze timsestamps using the info.player.json file
+            """
+            onset_time = get_onset_time(
+                row['log_path'],
+                row['run'],
+                row['infoplayer_path'],
+                run_gaze[10]['timestamp'],
+            )
 
-            '''
+            """
             Realign gaze timestamps with run onset, and filter out
             below-threshold gaze ("clean")
-            '''
-            gaze_threshold = row['pupilConf_thresh'] if not pd.isna(row['pupilConf_thresh']) else 0.9
-            reset_gaze_list, all_vals, clean_vals  = reset_gaze_time(run_gaze, onset_time, gaze_threshold)
+            """
+            gaze_threshold = row['pupilConf_thresh'] if not pd.isna(
+                row['pupilConf_thresh']) else 0.9
+            reset_gaze_list, all_vals, clean_vals  = reset_gaze_time(
+                run_gaze, onset_time, gaze_threshold,
+            )
             # normalized position (x and y), time (s) from onset and confidence for all gaze
             all_x, all_y, all_times, all_conf = all_vals
             # distance from central fixation point for all gaze above confidence threshold
@@ -544,6 +684,18 @@ def driftCorr_ETthings(
 
             """
             Perform drift correction
+
+            Strategy defines the reference period of fixation used to realign
+            a trial's gaze.
+
+            The THINGS task required ongoing central fixation. Each trial's gaze
+            position is realigned (drift corrected) in relation to the median
+            gaze position during the trial (image-viewing period) and ISI that
+            precedes the target trial's onset.
+
+            The only exception is the first trial's gaze, which is realigned in
+            relation to the median of its own image-viewing and subsequent ISI
+            period, as there is no preceding trial.
             """
             strategies = {
                 'current_image': ('image', False),
@@ -552,7 +704,6 @@ def driftCorr_ETthings(
                 'current_image+isi': ('image+isi', False),
                 'previous_image+isi': ('image+isi', True),
                 }
-            #strategy_name = 'current_image+isi'
             strategy_name = 'previous_image+isi'
             strategy = strategies[strategy_name]
 
@@ -573,6 +724,9 @@ def driftCorr_ETthings(
                 previous_image=strategy[1],
             )
 
+            """
+            Add trial-wise fixation compliance metrics to run's events.tsv file
+            """
             (
                 run_event, all_distInDeg, all_distInDeg_aligned,
             ) = add_metrics_2events(
@@ -595,8 +749,8 @@ def driftCorr_ETthings(
                 run_event.to_csv(out_file, sep='\t', header=True, index=False)
 
                 """
-                Export drift-corrected gaze, realigned timestamps,
-                and all other metrics (pupils, etc) to bids-compliant .tsv file.
+                Export raw and drift-corrected gaze, realigned timestamps,
+                and other metrics (pupils, confidence, etc) as bids-compliant .tsv file.
                 Guidelines: https://bids-specification--1128.org.readthedocs.build/en/1128/modality-specific-files/eye-tracking.html#sidecar-json-document-_eyetrackjson
                 """
                 df_gaze = format_gaze(
@@ -608,16 +762,28 @@ def driftCorr_ETthings(
 
                 bids_out_path = f'{out_path}/final_bids_DriftCor/{sub}/{ses}'
                 Path(bids_out_path).mkdir(parents=True, exist_ok=True)
-                gfile_path = f'{bids_out_path}/{sub}_{ses}_{task_type}_{run_num}_eyetrack.tsv.gz'
+                gfile_path = Path(
+                    f'{bids_out_path}/{sub}_{ses}_{task_type}_{run_num}_'
+                    'eyetrack.tsv.gz',
+                )
                 if os.path.exists(gfile_path):
                     # just in case session's run is done twice... note: not bids...
-                    gfile_path = f'{bids_out_path}/{sub}_{ses}_{task_type}_{fnum}_{run_num}_eyetrack.tsv.gz'
-                df_gaze.to_csv(gfile_path, sep='\t', header=True, index=False, compression='gzip')
+                    gfile_path = Path(
+                        f'{bids_out_path}/{sub}_{ses}_{task_type}_{fnum}_'
+                        f'{run_num}_eyetrack.tsv.gz',
+                        )
+                df_gaze.to_csv(
+                    gfile_path,
+                    sep='\t',
+                    header=True,
+                    index=False,
+                    compression='gzip',
+                )
 
             else:
-                '''
+                """
                 plot QC figures (one per run) to assess drift correction
-                '''
+                """
                 make_THINGS_QC_figure(
                     sub,
                     ses,
@@ -647,7 +813,7 @@ def driftCorr_ETthings(
 
 
 def main():
-    '''
+    """
     This script performs drift-correction on the THINGS eyetracking data.
 
     If the argument "is_final" is false, it exports:
@@ -670,7 +836,7 @@ def main():
     ses-020 (sep 15th is sub-06, sep 22nd is sub-01).
     Those output files (events, gaze and figures) needs to be RELABELLED
     MANUALLY to match the rest of the dataset (corrected events files, bold files).
-    '''
+    """
     args = get_arguments()
     # e.g., (elm): /unf/eyetracker/neuromod/triplets/sourcedata
     in_path = args.in_path
