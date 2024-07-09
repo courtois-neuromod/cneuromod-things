@@ -135,6 +135,7 @@ anatomical/pycortex/db/*
 
 # output figures
 datapaper/figures/*.png
+datapaper/figures/*.jpg
 datapaper/figures/b_rankings/*.png
 datapaper/figures/b_rankings/*.jpg
 datapaper/figures/*.svg

@@ -1,5 +1,5 @@
-THINGS behavioural data analyses
-================================
+THINGS behavioural & eye-tracking data analyses
+===============================================
 
 ## Image Recognition Performance Metrics
 
@@ -34,7 +34,7 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 ---------------------------
 ## Trial-Wise Image Ratings and Annotations
 
-Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputed as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
+Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputted as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
 
 For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
 * ``THINGS/things_concepts.tsv``
@@ -69,7 +69,7 @@ python code/behav_data_annotate.py --events_dir="${EVDIR}" --annot_dir="${ANDIR}
 -----------------------------
 ## Fixation Compliance Metrics
 
-The script ``code/analyze_fixations.py`` processes eye-tracking data and its derivatives. It concatenates trial-wise fixation compliance metrics across all runs. It also converts drift-corrected gaze from normalized scores into degrees of visual angles (relative distance in x and y from central fixation mark, and absolute distance from central fixation) for trials with recorded button presses (gaze points are filtered above a set threshold of pupil detection confidence and then down-sampled to 1 every 5 points).
+The script ``code/analyze_fixations.py`` processes eye-tracking data and its derivatives. It concatenates trial-wise fixation compliance metrics across all runs. It also converts drift-corrected gaze from normalized scores (as proportions of the projector screen) into degrees of visual angles (relative distance in x and y from central fixation mark, and absolute distance from central fixation) for trials with recorded button presses (gaze points are filtered above a set threshold of pupil detection confidence and then downsampled to 1 every 5 points, corresponding to a maximum of 50 Hz).
 
 ```bash
 DATADIR="path/to/cneuromod-things"
@@ -82,5 +82,5 @@ python code/analyze_fixations.py --sub_num="01" --data_dir="${DATADIR}"
 - ``sub-0*_ses-*_task-things_run-*_eyetrack.tsv.gz``, files of drift-corrected gaze per run
 
 **Output**:
-- ``sub-0*_task-things_desc-driftCor_gaze.tsv``
-- ``sub-0*_task-things_desc-fixCompliance_statseries.tsv``, trial-wise metrics of fixation compliance concatenated across all events.tsv files. Columns are described in ``task-things_desc-fixCompliance_statseries.json``
+- ``sub-0*_task-things_desc-driftCor_gaze.tsv``, drift-corrected gaze (in degrees of visual angle from the central fixation mark) sampled during the image-viewing portion of each trials, concatenated across all runs. Includes 1 out of 5 gaze points derived from pupils detected above a set confidence threshold, from trials for which an answer (button press) was recorded.
+- ``sub-0*_task-things_desc-fixCompliance_statseries.tsv``, trial-wise metrics of fixation compliance concatenated across all events.tsv files (all runs). Columns are described in ``task-things_desc-fixCompliance_statseries.json``
