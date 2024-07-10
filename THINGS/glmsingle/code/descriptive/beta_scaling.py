@@ -233,7 +233,7 @@ def get_retino_mask(args, things_mask):
     retino_roi_masks = [
         apply_mask(nib.load(
             f"{args.data_dir}/retinotopy/prf/sub-{sub_num}/rois/"
-            f"sub-{sub_num}_task-retinotopy_space-T1w_model-npythy_"
+            f"sub-{sub_num}_task-retinotopy_space-T1w_res-func_model-npythy_"
             f"label-{roi}_desc-nn_mask.nii.gz",
         ), things_mask).astype(bool) for roi in ["V1", "V2", "V3"]
     ]
