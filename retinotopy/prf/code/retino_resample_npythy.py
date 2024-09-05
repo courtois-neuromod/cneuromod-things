@@ -54,17 +54,21 @@ def export_maps(
         roi_arr = np.zeros(va.shape)
         roi_arr[np.where(va == i)] = 1.
         roi_img = new_img_like(va_img, roi_arr)
+        roi_img.to_filename(
+            f"{data_dir}/prf/sub-{sub}/rois/sub-{sub}_task-retinotopy_space-T1w"
+            f"_res-anat_model-npythy_label-{roi}_mask.nii.gz",
+        )
         # nearest extrapolation (preferred for binary mask)
         res_img = resample_to_img(roi_img, ref_img, interpolation='nearest')
         res_img.to_filename(
             f"{data_dir}/prf/sub-{sub}/rois/sub-{sub}_task-retinotopy_space-T1w"
-            f"_model-npythy_label-{roi}_desc-nn_mask.nii.gz",
+            f"_res-func_model-npythy_label-{roi}_desc-nn_mask.nii.gz",
         )
         # also save linear interpolation for convenience
         lres_img = resample_to_img(roi_img, ref_img, interpolation='linear')
         lres_img.to_filename(
             f"{data_dir}/prf/sub-{sub}/rois/sub-{sub}_task-retinotopy_space-T1w"
-            f"_model-npythy_label-{roi}_desc-linear_mask.nii.gz",
+            f"_res-func_model-npythy_label-{roi}_desc-linear_mask.nii.gz",
         )
 
 
@@ -103,7 +107,10 @@ def resample_npythy(
         "_atlas-varea_dseg.nii.gz",
     )
 
-    va_img = load_img(f"{out_path}/inferred_varea.nii.gz")
+    va_img = load_img(
+        f"{out_path}/sub-{sub}_task-retinotopy_space-T1w_res-anat_model-npythy"
+        "_atlas-varea_dseg.nii.gz",
+    )
     export_maps(sub, data_dir, va_img, ref_img)
 
 

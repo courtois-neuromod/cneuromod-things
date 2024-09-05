@@ -73,7 +73,7 @@ python beta_scaling.py --data_dir="${DATADIR}" --perImg --sub="01"
 - ``fLoc/rois/sub-{sub_num}/rois/task-derived/sub-{sub_num}_task-floc_space-T1w_stats-tscores_contrast-{faces, bodies, places}_cutoff-3.72_desc-unsmooth_mask.nii.g``, masks of above-threshold voxels (t > 3.72) on fLoc contrasts (faces, bodies and places) contained within their respective set of Kanwisher parcels (face, body or scene).
 - ``fLoc/rois/sub-{sub_num}/glm/sub-{sub_num}_task-floc_space-T1w_model-GLM_stats-tscores_contrast-{faces, bodies, places}_desc-unsmooth_statseries.nii.gz``, t-scores for the faces, bodies and places contrasts derived from the fLoc task (NSD-style contrasts).
 - ``fLoc/rois/sub-{sub_num}/rois/from_atlas/sub-{sub_num}_parcel-kanwisher_space-T1w_contrast-{c[0]}_mask.nii``, group-derived parcels from the Kanwisher group warped to single-subject space.
-- ``retinotopy/prf/sub-{sub_num}/rois/sub-{sub_num}_task-retinotopy_space-T1w_model-npythy_label-{V1, V2, V3}_desc-nn_mask.nii.gz``, masks of visual areas V1, V2 and V3 derived from retinotopy data and group priors with NeuroPythy.
+- ``retinotopy/prf/sub-{sub_num}/rois/sub-{sub_num}_task-retinotopy_space-T1w_res-func_model-npythy_label-{V1, V2, V3}_desc-nn_mask.nii.gz``, masks of visual areas V1, V2 and V3 derived from retinotopy data and group priors with NeuroPythy.
 - ``THINGS/glmsingle/sub-{sub_num}/glmsingle/output/sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, maps of voxelwise noise ceilings derived from the THINGS task.
 
 
@@ -84,4 +84,4 @@ python beta_scaling.py --data_dir="${DATADIR}" --perImg --sub="01"
 - low-level visual areas V1, V2 and V3
 - the union of face, body and scene-sensitive voxels (selected at two different thresholds: t > 2.5 and t > 3.72) contained within their corresponding set of Kanwisher parcels.
 - a collection of brain voxels with the highest noise ceilings derived from the THINGS task (no spatial contiguity requirement)
-The output file also contains the number of voxels in each ROI mask, as a reference. 
+The output file also contains the number of voxels in each ROI mask, as a reference.

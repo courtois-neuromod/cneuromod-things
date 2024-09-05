@@ -247,7 +247,7 @@ echo "Job finished"
 ------------
 ## Step 8. Downsample visual ROIs to T1w functional resolution**
 
-Resample visual ROIs to T1w functional (EPI) resolution, and export binary masks of each ROI.
+Resample visual ROIs to T1w functional (EPI) resolution, and export binary masks of each ROI (EPI and anat resolution).
 
 Run this script for each subject
 ```bash
@@ -260,4 +260,5 @@ python retino_resample_npythy.py --data_dir="${DATADIR}" --sub="01"
 - ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz`` and ``sub-{sub_num}_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz``, T1w volumes (anatomical resolution) of retinotopy metrics adjusted from the subject's own data using a group atlas prior, and regions of interest labels inferred using Neuropythy.
 **Output**:
 - ``sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz``and ``sub-{sub_num}_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz``, volumes of Neuropythy output resampled to T1w functional (EPI) resolution.
-- ``sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz``, binary region-of-interest masks resampled to T1w functional (EPI) resolution for the following ROIs: V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a.
+- ``sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_label-{roi}_mask.nii.gz``, binary region-of-interest masks in T1w space (anatomical resolution) for the following ROIs: V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a.
+- ``sub-*_task-retinotopy_space-T1w_res-func_model-npythy_label-{roi}_desc-nn_mask.nii.gz``, binary region-of-interest masks resampled to T1w functional (EPI) resolution for the following ROIs: V1, V2, V3, hV4, V01, V02, L01, L02, T01, T02, V3b and V3a.

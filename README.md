@@ -176,8 +176,9 @@ Project Organization
     │               │          ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz    
     │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
     │               └── rois       <- visual ROI masks    
-    │                    ├── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-nn_mask.nii.gz
-    │                    └── sub-*_task-retinotopy_space-T1w_model-npythy_label-{roi}_desc-linear_mask.nii.gz
+    │                    ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_label-{roi}_mask.nii.gz
+    │                    ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_label-{roi}_desc-nn_mask.nii.gz
+    │                    └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_label-{roi}_desc-linear_mask.nii.gz
     │
     ├── THINGS                    <- THINGS datasets, scripts and derivatives
     │    ├── README.md            <- Overview of THINGS datasets and scripts
