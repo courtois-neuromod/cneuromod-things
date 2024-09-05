@@ -10,9 +10,9 @@ Files related to the main task are found under ``THINGS``:
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
 ``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
-that include flat maps to visualize voxelwise statistics on the cortex are also included.
+that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data and results files saved in the current repository.
+``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and results files saved in the current repository.
 
 Project Organization
 ------------
@@ -37,7 +37,7 @@ Project Organization
     │    └── pycortex
     │          ├── README.md
     │          ├── doc
-    │          │    └── flatmap.md      <- Instructions to generate flat maps in pycortex
+    │          │    └── using_flatmaps.md      <- Instructions to generate flat maps in pycortex
     │          └── db     <- database of pycortex files with annotated surfaces that delineate visual ROIs
     │               └── sub-0*
     │                     ├── anatomicals
