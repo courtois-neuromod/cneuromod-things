@@ -84,3 +84,58 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# THINGS+ annotations
+THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+/*sv
+
+# THINGS behav data
+THINGS/behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
+THINGS/behaviour/sub-0*/fix/sub-0*_task-things_*.tsv
+
+# THINGS head motion data
+THINGS/glmsingle/sub-0*/qc/sub-0*_task-things_headmotion.tsv
+
+# THINGS GLMsingle data
+THINGS/glmsingle/*.h5
+THINGS/glmsingle/task-things_imgAnnotations.json
+THINGS/glmsingle/sub-0*/glmsingle/*/sub-0*
+THINGS/glmsingle/sub-0*/glmsingle/output/T1w/*
+
+# THINGS descriptive analyses
+THINGS/glmsingle/sub-0*/descriptive/sub-0*
+
+# THINGS events files data
+THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
+THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_eyetrack.tsv.gz
+THINGS/fmriprep/sourcedata/things/task-things_events_desc-OLD.json
+
+# THINGS stimuli
+THINGS/fmriprep/sourcedata/things/stimuli/images_fmri/*
+
+# raw QC notes w identifiers
+THINGS/fmriprep/sourcedata/things/code/cleanup/raw_qc_notes.md
+
+# fLoc files
+fLoc/rois/sub-0*/glm/sub-*
+fLoc/fmriprep/sourcedata/floc/sub-0*/ses-0*/func/sub-0*_ses-0*_task-fLoc_run-0*events.tsv
+fLoc/rois/standard_masks/standard_rois/*nii
+fLoc/rois/standard_masks/kanwisher_parcels/*
+fLoc/rois/sub-*/rois/from_atlas/sub-0*
+fLoc/rois/sub-*/rois/task-derived/sub-0*
+
+# retino files
+retinotopy/prf/apertures/*
+retinotopy/prf/sub-0*/prf/*put/*
+retinotopy/prf/sub-0*/npythy/*put/*
+retinotopy/prf/sub-0*/rois/*nii.gz
+retinotopy/prf/code/*.sh
+
+# pycortex files
+anatomical/pycortex/db/*
+
+# output figures
+datapaper/figures/*.png
+datapaper/figures/*.jpg
+datapaper/figures/b_rankings/*.png
+datapaper/figures/b_rankings/*.jpg
+datapaper/figures/*.svg
