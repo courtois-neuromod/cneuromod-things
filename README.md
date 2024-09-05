@@ -14,8 +14,6 @@ that include flat maps to visualize voxelwise statistics on the cortex are also 
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data and results files saved in the current repository.
 
-TODO: add refs to manuscript
-
 Project Organization
 ------------
 
