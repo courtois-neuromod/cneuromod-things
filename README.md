@@ -10,9 +10,9 @@ Files related to the main task are found under ``THINGS``:
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
 ``fLoc`` and ``retino`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
-that include flat maps to visualize voxelwise statistics on the cortex are also included.
+that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the data paper using data and results files saved in the current repository.
+``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and results files saved in the current repository. TODO: add link to datapaper manuscript.
 
 Project Organization
 ------------
@@ -37,7 +37,7 @@ Project Organization
     │    └── pycortex
     │          ├── README.md
     │          ├── doc
-    │          │    └── flatmap.md      <- Instructions to generate flat maps in pycortex
+    │          │    └── using_flatmaps.md      <- Instructions to generate flat maps in pycortex
     │          └── db     <- database of pycortex files with annotated surfaces that delineate visual ROIs
     │               └── sub-0*
     │                     ├── anatomicals
@@ -60,8 +60,8 @@ Project Organization
     │    │               │     └── ses-*
     │    │               │          └── func
     │    │               │               └── sub-0*_ses-00*_task-fLoc_run-0*_events.tsv  <- events.tsv files
-    │    │               └── stimuli
-    │    │                     └── images   <- stimulus images per category
+    │    │               │
+    │    │               └── stimuli     <- stimulus images per category
     │    │
     │    └── rois               <- fLoc derivative datasets and scripts
     │            ├── code       <- scripts to run glm and generate ROIs
@@ -70,11 +70,12 @@ Project Organization
     │            │     ├── fLoc_makedesign.py
     │            │     ├── fLoc_firstLevel_nilearn.py  
     │            │     ├── fLoc_split_CVSparcels_perROI.py  
-    │            │     └── fLoc_reconcile_parcelMasks.py
+    │            │     ├── fLoc_reconcile_parcelMasks.py  
+    │            │     └── fLoc_reconcile_ROImasks.py
     │            │
     │            ├── standard_masks
     │            │     ├── kanwisher_parcels
-    │            │     │    ├── cvs            
+    │            │     │    ├── cvs    <- download and unzip cvs_*_parcels.zip files from https://web.mit.edu/bcs/nklab/GSS.shtml#download
     │            │     │    │    ├── cvs_body_parcels
     │            │     │    │    ├── cvs_face_parcels
     │            │     │    │    ├── cvs_object_parcels
@@ -136,7 +137,8 @@ Project Organization
     │         │     ├── retino_make_apertureMasks.py
     │         │     ├── retino_prepare_BOLD.py
     │         │     ├── retino_run_analyzePRF.m
-    │         │     └── retino_reassamble_voxels.py
+    │         │     ├── retino_reassamble_voxels.py
+    │         │     └── retino_resample_npythy.py
     │         │
     │         ├── apertures       <- aperture masks that delineate task field of view
     │         │     ├── task-retinotopy_condition-bars_desc-perTR_apertures.mat
@@ -292,9 +294,7 @@ Project Organization
     │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
     │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_statseries.h5        
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5      
     │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
     │                  │
     │                  ├── qc     <- quality checks
