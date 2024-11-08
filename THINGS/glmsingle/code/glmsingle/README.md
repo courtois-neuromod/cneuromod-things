@@ -278,10 +278,11 @@ python GLMsingle_betasPerImg.py --things_dir="${DATADIR}" --zbetas --sub_num="01
 
 **Output**: \
 ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5``, a file that contains beta scores organized in groups whose key is the image name (e.g., 'camel_02s'). Under each image, each group includes:
-- 'betas': the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the no-NaN functional mask.
+- ``betas``: the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the no-NaN functional mask.
 - ``num_reps``: the number of image repetitions included in the averaging.
-- ``blank``: the number of trials with no recorded answers (no button press) \
-Note that, because blank trials were excluded, an image shown three times for which no answer was captured on one of those trials will have ``rep_num = 2``, and ``blank = 1`` (the sum of ``blank`` and ``rep_num`` should equal the total number of times an image was shown.
+- ``blank``: the number of trials with no recorded answers (no button press)
+
+Note that, because blank trials were excluded, an image shown three times with only two answers captured on those three trials will have ``rep_num = 2``, and ``blank = 1`` (the sum of ``blank`` and ``rep_num`` should equal the total number of times an image was shown to the participant).
 
 The .h5 file also includes:
 - the raw 3D array and 4x4 affine matrix of the no-NaN functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space). \
