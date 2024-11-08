@@ -181,12 +181,12 @@ python GLMsingle_noiseceilings.py --things_dir="${DATADIR}" --sub_num="01"
 ```
 
 **Input**:
-- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputted by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1.
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
-- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
+- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotations.tsv``, a single .tsv file per subject with trial-wise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` script in the above preliminary step.
 
 **Output**:
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz``, a brain volume
@@ -228,7 +228,7 @@ python GLMsingle_betasPerTrial.py --data_dir="${DATADIR}" --zbetas --sub_num="01
 Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas (not z-scored)
 
 **Input**:
-- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputted by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
@@ -236,7 +236,7 @@ Note: omit the ``--zbetas`` flag to extract raw GLMsingle betas (not z-scored)
 **Output**:
 - ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5``, a single ``.h5`` file
 that contains beta scores organized in nested groups whose key is the session number and sub-key is the run number.
-Betas are saved into arrays of dim=(trials, voxels) where each row is a 1D array of flattened voxel scores masked with the no-NaN functional mask.
+Betas are saved into arrays of dim=(trials, voxels) where each row is a 1D array of flattened voxel scores masked with the no-NaN functional mask. All trials are included, and rows correspond with those of the ``cneuromod-things/THINGS/fmriprep/sourcedata/things/sub-{sub_num}/ses-*/func/sub-{sub_num}_ses-*_task-things_run-*_events.tsv`` files.
 - Beside the betas, the ``.h5`` file also contains the raw 3D array and 4x4 affine matrix of the no-NaN functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space).
 
 E.g., to convert the 5th trial of the 2nd run from session 10 into a brain volume:
@@ -254,12 +254,12 @@ s10_r2_t5_unmasked_betas = unmask(np.array(h5file['10']['2']['betas'])[4, :], ma
 ------------
 ## Step 8. Export betas averaged per image in HDF5 file
 
-Average trialwise beta scores estimated with GLMsingle modelD (FITHRF_GLMDENOISE_RR)
+Average trial-wise beta scores estimated with GLMsingle modelD (FITHRF_GLMDENOISE_RR)
 per stimulus image, and save scores as one 1D arrays of flattened voxels per image in one .h5 file per subject.
 
-The number of repetitions, and the number of blank trials (no reccorded button press), are also saved with each image's mean voxelwise betas.
+The number of repetitions, and the number of blank trials (no recorded button press), are also saved with each image's mean voxel-wise betas. Note that blank trials are excluded from the image-wise signal averaging.
 
-The script also performs validations on trialwise metrics from ``*events.tsv`` files, subject-specific image-to-number mappings, and the design matrices given to GLMsingle.
+The script also performs validations on trial-wise metrics from ``*events.tsv`` files, subject-specific image-to-number mappings, and the design matrices given to GLMsingle.
 
 Launch the following script for each subject
 ```bash
@@ -268,19 +268,21 @@ python GLMsingle_betasPerImg.py --things_dir="${DATADIR}" --zbetas --sub_num="01
 ```
 
 **Input**:
-- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputed by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
+- A subject's ``TYPED_FITHRF_GLMDENOISE_RR.mat``, a single .mat file outputted by GLMsingle (model D) in Step 4, which contains trial-unique betas per voxel
 - ``task-things_runlist.h5``, a single file with nested lists of valid runs per session for each subject created in Step 3.
 - ``sub-{sub_num}_task-things_imgDesignNumbers.json``, a file created in Step 1 that assigns a unique number to each stimulus image seen by the participant (>4000)
 - A subject's ``sub-{sub_num}_task-things_model-glmsingle_desc-sparse_design.h5`` file created in Step 1
-- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trialwise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` (see Step 6).
+- A subject's ``cneuromod-things/THINGS/behaviour/sub-{sub_num}/beh/sub-{sub_num}_task-things_desc-perTrial_annotation.tsv``, a single .tsv file per subject with trial-wise performance metrics and image annotations created with the ``cneuromod-things/THINGS/behaviour/code/behav_data_annotate.py`` (see Step 6).
 - A subject's ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-union_mask.nii`` and
 ``sub-{sub_num}_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii`` masks created in Steps 2 and 5, respectively.
 
 **Output**: \
 ``sub-{sub_num}_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5``, a file that contains beta scores organized in groups whose key is the image name (e.g., 'camel_02s'). Under each image, each group includes:
-- 'betas': the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the no-NaN functional mask.
-- 'num_reps': the number of times the image was repeated
-- 'blank': the number of trials with no recorded answers (no button press)
+- ``betas``: the betas averaged per image (up to 3 repetitions, excluding trials with no answer), saved as a 1D array of flattened voxels masked with the no-NaN functional mask.
+- ``num_reps``: the number of image repetitions included in the averaging.
+- ``blank``: the number of trials with no recorded answers (no button press)
+
+Note that, because blank trials were excluded, an image shown three times with only two answers captured on those three trials will have ``rep_num = 2``, and ``blank = 1`` (the sum of ``blank`` and ``rep_num`` should equal the total number of times an image was shown to the participant).
 
 The .h5 file also includes:
 - the raw 3D array and 4x4 affine matrix of the no-NaN functional mask, whose dims match the input bold volumes. These two arrays (``mask_array`` and ``mask_affine``) can be used to unmask 1D beta arrays to convert them back into brain volumes (in native space). \
