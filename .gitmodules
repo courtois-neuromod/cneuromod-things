@@ -16,3 +16,8 @@
 	url = git@github.com:courtois-neuromod/floc.fmriprep.git
 	datalad-id = 237e4de8-a4d4-42aa-8814-ab0f2f6c331c
 	datalad-url = git@github.com:courtois-neuromod/floc.fmriprep.git
+[submodule "anatomical/pycortex"]
+	path = anatomical/pycortex
+	url = git@github.com:courtois-neuromod/anat.pycortex.git
+	datalad-id = 77f50c61-82aa-4f3a-ae7c-9b3b6e3f7cdf
+	datalad-url = git@github.com:courtois-neuromod/anat.pycortex.git
