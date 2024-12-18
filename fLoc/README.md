@@ -10,19 +10,29 @@ Each session included two functional runs of 3.85 minutes with randomly ordered 
 
 ## fLoc/fmriprep
 
-``fmriprep`` includes bids-formatted bold data processed with fmriprep in MNI and subject (T1w) space, saved along functional brain masks and noise confounds. The ``sourcedata/floc`` submodule includes raw fMRI files, and ``*events.tsv`` files with bloc and imagewise metrics.
+The ``fLoc/fmriprep`` submodule includes bids-formatted bold data preprocessed with fmriprep in MNI and native subject (T1w) space, saved with functional brain masks and noise confounds.
 
-``sourcedata/floc`` also contains the ``stimuli`` submodule, which includes the image stimuli.
+It contains the ``sourcedata/floc`` submodule, which includes:
+- raw fMRI files
+- ``*events.tsv`` files with bloc and imagewise metrics.
+- the ``stimuli`` submodule, which includes the task stimulus images.
+- the ``code`` directory with scripts to check and update the ``*events.tsv`` files
 
 ## fLoc/rois
 
-``rois`` includes fMRI analyses and derivatives, including scripts, intermediate results (e.g., parcels in standard space, glm results), and task-derived binary masks of ROIs known for their categorical preferences for faces, scenes and body parts, in subject (T1w) space.
+The ``fLoc/rois`` submodule includes:
+- ``code``, which includes the scripts to derive functional ROIs from subject-specific fMRI data constrained by group priors. The **pipeline to derive ROIs** is described in ``fLoc/rois/code/README.md`` along with instructions to run the different scripts.
+- ``standard_masks``, ROI masks (in CVS and MNI space) extracted from group-derived parcels from the Kanwisher group. Parcels can be downloaded [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download).
+- ``sub-0*``, subject-specific derivatives, including intermediate results (e.g., group-derived ROIs warped to native subject space, glm contrasts from the fLoc task), and **task-derived binary masks of ROIs known for their categorical preferences for faces, scenes and body parts**, in subject (T1w) space.
 
-ROIs include:
+ROIs include the:
 > * ``FFA``: fusiform face area
 > * ``OFA``: occipital face area
-> * ``pSTS``: posterior superior temporal sulcus
+> * ``pSTS``: posterior superior temporal sulcus (face preference)
 > * ``PPA``: parahippocampal place area
 > * ``OPA``: occipital place area
 > * ``MPA``: medial place area
 > * ``EBA``: extrastriate body area
+
+**NOTE:**\
+``sub-06`` completed the main cneuromod-things task but not the fLoc task. To obtain functional ROI masks for that subject, we substituted GLM contrasts derived from the fLoc tasks with voxelwise noise ceilings estimated with data from the main THINGS task.
