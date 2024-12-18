@@ -9,7 +9,7 @@ The original flat patches are saved under ``cneuromod-things/anatomical/smriprep
 
 The pycortex sub-repository contains:
 - ``db``, a Pycortex filestore (database) in which individual subjects' maps and transformations are stored. For ``sub-01``, ``sub-02`` and ``sub-03``, who completed fMRI visual localizer tasks, full-brain flat maps are annotated with visual ROIs that were traced manually in Inkscape. ROI labels include low-level visual areas [``V1``, ``V2`` and ``V3``] identified with retinotopy, and face areas [``FFA: fusiform face area``, ``OFA: occipital face area`` and ``pSTS: posterior superior temporal sulcus`` ], body [``extrastriate body area: EBA``] and place areas [``PPA: parahippocampal place area``, ``OPA: occipital place area`` and ``MPA: medial place area``] identified with fLoc.
-- ``docs/using_flatmaps.md``, an instruction manual that details how to import Freesurfer patches into Pycortex, how to annotate them with Inkscape, and how to project volumetric brain data onto cortical flat maps.
+- ``docs/flatmaps.md``, an instruction manual that details how to import Freesurfer patches into Pycortex, how to annotate them with Inkscape, and how to project volumetric brain data onto cortical flat maps.
 
 **Links and documentation**
 - Flat maps for dummies: https://docs.google.com/document/d/19EgtxN0BezHSO1hqkfmzzcpVCPRjrOcBDvrkXp0owxk/edit
