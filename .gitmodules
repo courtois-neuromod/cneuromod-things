@@ -1,13 +1,23 @@
 [submodule "retinotopy/fmriprep"]
 	path = retinotopy/fmriprep
-	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.retinotopy.fmriprep
+	url = git@github.com:courtois-neuromod/retinotopy.fmriprep.git
 	datalad-id = 48398cbc-de88-4e06-ad53-09fec11fe65b
-	datalad-url = "ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.retinotopy.fmriprep"
+	datalad-url = git@github.com:courtois-neuromod/retinotopy.fmriprep.git
 [submodule "anatomical/smriprep"]
 	path = anatomical/smriprep
-	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.anat.smriprep
+	url = git@github.com:courtois-neuromod/anat.smriprep.git
 	datalad-id = f3ef9683-0a58-4d2b-b4eb-d33d8fc3fd2b
-	datalad-url = "ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.anat.smriprep"
+	datalad-url = git@github.com:courtois-neuromod/anat.smriprep.git
 [submodule "retinotopy/prf/code/analyzePRF"]
 	path = retinotopy/prf/code/analyzePRF
 	url = git@github.com:cvnlab/analyzePRF.git
+[submodule "fLoc/fmriprep"]
+	path = fLoc/fmriprep
+	url = git@github.com:courtois-neuromod/floc.fmriprep.git
+	datalad-id = 237e4de8-a4d4-42aa-8814-ab0f2f6c331c
+	datalad-url = git@github.com:courtois-neuromod/floc.fmriprep.git
+[submodule "anatomical/pycortex"]
+	path = anatomical/pycortex
+	url = git@github.com:courtois-neuromod/anat.pycortex.git
+	datalad-id = 77f50c61-82aa-4f3a-ae7c-9b3b6e3f7cdf
+	datalad-url = git@github.com:courtois-neuromod/anat.pycortex.git
