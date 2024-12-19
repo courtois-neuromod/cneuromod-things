@@ -34,9 +34,9 @@ Of note, a handful of sessions had their planned patterns of repetition affected
 ---------------------------
 ## Trial-Wise Image Ratings and Annotations
 
-Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets and manual image annotations produced for CNeuroMod-things are attributed to each trial to perform representation analyses. Annotated trials are outputted as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
+Image ratings from the [THINGS](https://things-initiative.org/) and THINGSplus datasets, and manual image annotations produced specifically for CNeuroMod-things, are assigned to each trial to perform representation analyses. Annotated trials are outputted as ``.tsv`` files per subject in the ``THINGS/behaviour`` dataset.
 
-For this script to run, the following annotation files must be downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
+The following image annotation files were downloaded from the [THINGS object concept and object image database](https://osf.io/jum2f/), and saved directly under ``cneuromod-things/THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+``:
 * ``THINGS/things_concepts.tsv``
 * ``THINGSplus/Metadata/Concept-specific/arousal_meanRatings.tsv``
 * ``THINGSplus/Metadata/Concept-specific/category53_wideFormat.tsv``
@@ -44,6 +44,8 @@ For this script to run, the following annotation files must be downloaded from t
 * ``THINGSplus/Metadata/Concept-specific/size_meanRatings.tsv``
 * ``THINGSplus/Metadata/Image-specific/imageLabeling_imageWise.tsv``
 * ``THINGSplus/Metadata/Image-specific/imageLabeling_objectWise.tsv``
+
+See the [THINGSplus preprint](https://osf.io/preprints/psyarxiv/exu9f) for more information about these annotations.
 
 Launch the following script to process a subject's sessions
 ```bash

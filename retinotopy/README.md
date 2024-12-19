@@ -10,7 +10,7 @@ Each session included three 5-minutes functional runs, each of which used a diff
 The stimulated visual field was a circular area with a diameter corresponding to 10 degrees of visual angle. `ring` runs featured a thick circle aperture that expanded from and contracted toward the screen center. `wedge` runs featured a wedge aperture rotating clockwise and counter-clockwise. `bar` runs featured a wide bar aperture sweeping across the screen in 8 different directions. Participants fixated their gaze on a central dot and pressed a button whenever the dot changed color.
 
 **NOTE:**\
-Another CNeuroMod participant, `sub-05`, also completed the retinotopy task, although they did not complete the main cneuromod-things task. Retinotopy data and results from `sub-05` are included in the current repository.
+Another CNeuroMod participant, `sub-05`, also completed the retinotopy task (6 sessions), although they did not complete the main cneuromod-things task. Retinotopy data and results from `sub-05` are included in the current repository.
 
 
 ## retinotopy/fmriprep
