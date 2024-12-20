@@ -236,7 +236,7 @@ Project Organization
     │    │       │     ├── requirements.txt
     │    │       │     ├── analyze_fixations.py        <- processes trial-wise fixations
     │    │       │     ├── behav_data_annotate.py      <- builds trial-wise image annotations   
-    │    │       │     └── behav_data_extract.py       <- computes memory scores from events.tsv files
+    │    │       │     └── behav_data_memoperformance.py       <- computes memory scores from events.tsv files
     │    │       ├── sub-0*
     │    │       │     ├── fix
     │    │       │     │    ├── sub-0*_task-things_desc-fixCompliance_statseries.tsv
