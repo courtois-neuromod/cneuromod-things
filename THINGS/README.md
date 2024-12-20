@@ -22,12 +22,6 @@ It contains the ``sourcedata/things`` submodule, which includes:
 
 TODO: Explain here how to download and save images from THINGS initiative
 
-TODO: create special branch things.stimuli:
-- update annotations readme to describe things+ annotations;
-- add things+ annotation files for version control
-- remove images
-- link to submodule from cneuromod.things
-
 ## THINGS/behaviour
 
 The ``THINGS/behaviour`` submodule includes the ``code`` directory with scripts to extract metrics of performance on the continuous recognition task, to assign image ratings and annotations to each task trial, and to derive trial-wise metrics of fixation compliance from eye-tracking data. See ``THINGS/behaviour/README.md`` for pipeline descriptions and instructions to run the various scripts.
