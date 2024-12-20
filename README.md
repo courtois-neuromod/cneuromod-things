@@ -77,7 +77,7 @@ Project Organization
     │            │
     │            ├── standard_masks
     │            │     ├── kanwisher_parcels
-    │            │     │    ├── cvs    <- download and unzip cvs_*_parcels.zip files from https://web.mit.edu/bcs/nklab/GSS.shtml#download
+    │            │     │    ├── cvs    <- downloaded and unzipped cvs_*_parcels.zip files from https://web.mit.edu/bcs/nklab/GSS.shtml#download
     │            │     │    │    ├── cvs_body_parcels
     │            │     │    │    ├── cvs_face_parcels
     │            │     │    │    ├── cvs_object_parcels
