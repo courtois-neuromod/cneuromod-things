@@ -69,11 +69,9 @@ Note that the script can process scans in MNI or subject (T1w) space (default is
 
 To obtain ROI masks in subject space, we started from normalized (CVS space) parcels of voxels with face, body, scene and object preferences in derived from n=40 individuals by the Kanwisher group.
 
+CVS parcels (CVS space, ``cvs_avg35`` template, n=40 subjects) in ``.nii`` format were downloaded from the Kanwisher group's website [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download). ``cvs_*parcels.zip`` files were saved and unzipped directly under ``fLoc/rois/standard_masks/kanwisher_parcels/cvs``
+
 The following command lines derive ROI masks from those group parcels, and warp the parcels and ROI masks from CVS to MNI to subject (T1w) space.
-
-### 3.0 Download the Kanwisher parcels
-
-Download CVS parcels (CVS space, ``cvs_avg35`` template, n=40 subjects) in ``.nii`` format from the Kanwisher group [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download). Save and unzip ``cvs_*parcels.zip`` files under ``fLoc/rois/standard_masks/kanwisher_parcels/cvs``
 
 ### 3.1 Extract normalized (CVS) ROI masks from group parcels (e.g., FFA, PPA)
 
