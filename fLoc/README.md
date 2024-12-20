@@ -22,7 +22,7 @@ It contains the ``sourcedata/floc`` submodule, which includes:
 
 The ``fLoc/rois`` submodule includes:
 - ``code``, which includes the scripts to derive functional ROIs from subject-specific fMRI data constrained by group priors. The **pipeline to derive ROIs** is described in ``fLoc/rois/code/README.md`` along with instructions to run the different scripts.
-- ``standard_masks``, ROI masks (in CVS and MNI space) extracted from group-derived parcels from the Kanwisher group. Parcels can be downloaded [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download).
+- ``standard_masks``, ROI masks (saved under ``fLoc/rois/standard_masks/standard_rois`` in CVS and MNI space) extracted from group-derived parcels from the Kanwisher group. These parcels were downloaded from [here](https://web.mit.edu/bcs/nklab/GSS.shtml#download) and saved under ``fLoc/rois/standard_masks/kanwisher_parcels``.
 - ``sub-0*``, subject-specific derivatives, including intermediate results (e.g., group-derived ROIs warped to native subject space, glm contrasts from the fLoc task), and **task-derived binary masks of ROIs known for their categorical preferences for faces, scenes and body parts**, in subject (T1w) space.
 
 ROIs include the:
