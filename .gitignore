@@ -88,10 +88,6 @@ target/
 # THINGS+ annotations
 THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+/*sv
 
-# THINGS behav data
-THINGS/behaviour/sub-0*/beh/sub-0*_task-things_*.tsv
-THINGS/behaviour/sub-0*/fix/sub-0*_task-things_*.tsv
-
 # THINGS head motion data
 THINGS/glmsingle/sub-0*/qc/sub-0*_task-things_headmotion.tsv
 
