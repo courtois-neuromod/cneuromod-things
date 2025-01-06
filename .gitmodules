@@ -21,3 +21,8 @@
 	url = git@github.com:courtois-neuromod/anat.pycortex.git
 	datalad-id = 77f50c61-82aa-4f3a-ae7c-9b3b6e3f7cdf
 	datalad-url = git@github.com:courtois-neuromod/anat.pycortex.git
+[submodule "THINGS/behaviour"]
+	path = THINGS/behaviour
+	url = git@github.com:courtois-neuromod/things.behaviour.git
+	datalad-id = 3814d9a1-62c1-456f-9204-623c238934fc
+	datalad-url = git@github.com:courtois-neuromod/things.behaviour.git
