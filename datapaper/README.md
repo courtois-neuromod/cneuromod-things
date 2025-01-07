@@ -1,9 +1,9 @@
-datapaper file
+datapaper files
 ===============
 
 ## notebooks
 
-This director includes jupyter notebooks (and required libraries) with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
+This directory includes jupyter notebooks (and required libraries) with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
 - `behav_analysis`: plots of performance (accuracy, reaction time, response rate) on the continuous image recognition (memory) task, and frequency distributions for the delay periods between matching image repetitions.
 - `beta_dimReduction`: showcases dimensionality reductions (t-SNE plots) on the trialwise and imagewise betas (derived from BOLD data with the GLMsingle toolbox), color-coded to reflect image annotations. E.g., object size, animals vs. plants, animals vs. vehicles, etc.
 - `beta_ranking`: ranking of imagewise beta scores within ROIs defined with functional localizers (fusiform face area (FFA), extrastriate body area (EBA), and parahipp. place area (PPA). Betas are color-coded to reflect the content of their corresponding image (whether it contains faces, body parts, or elements of scenery). The top 12 images with the highest beta scores in the ranking are also displayed.
