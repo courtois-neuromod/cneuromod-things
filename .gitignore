@@ -119,13 +119,6 @@ fLoc/rois/standard_masks/kanwisher_parcels/*
 fLoc/rois/sub-*/rois/from_atlas/sub-0*
 fLoc/rois/sub-*/rois/task-derived/sub-0*
 
-# retino files
-retinotopy/prf/apertures/*
-retinotopy/prf/sub-0*/prf/*put/*
-retinotopy/prf/sub-0*/npythy/*put/*
-retinotopy/prf/sub-0*/rois/*nii.gz
-retinotopy/prf/code/*.sh
-
 # pycortex files
 anatomical/pycortex/db/*
 

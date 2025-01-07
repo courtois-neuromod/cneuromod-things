@@ -8,9 +8,6 @@
 	url = git@github.com:courtois-neuromod/anat.smriprep.git
 	datalad-id = f3ef9683-0a58-4d2b-b4eb-d33d8fc3fd2b
 	datalad-url = git@github.com:courtois-neuromod/anat.smriprep.git
-[submodule "retinotopy/prf/code/analyzePRF"]
-	path = retinotopy/prf/code/analyzePRF
-	url = git@github.com:cvnlab/analyzePRF.git
 [submodule "fLoc/fmriprep"]
 	path = fLoc/fmriprep
 	url = git@github.com:courtois-neuromod/floc.fmriprep.git
@@ -26,3 +23,8 @@
 	url = git@github.com:courtois-neuromod/things.behaviour.git
 	datalad-id = 3814d9a1-62c1-456f-9204-623c238934fc
 	datalad-url = git@github.com:courtois-neuromod/things.behaviour.git
+[submodule "retinotopy/prf"]
+	path = retinotopy/prf
+	url = git@github.com:courtois-neuromod/retinotopy.prf.git
+	datalad-id = 5cccb887-2bf5-4465-8a5b-684cdaa8e7b0
+	datalad-url = git@github.com:courtois-neuromod/retinotopy.prf.git
