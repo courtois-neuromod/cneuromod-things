@@ -28,3 +28,8 @@
 	url = git@github.com:courtois-neuromod/retinotopy.prf.git
 	datalad-id = 5cccb887-2bf5-4465-8a5b-684cdaa8e7b0
 	datalad-url = git@github.com:courtois-neuromod/retinotopy.prf.git
+[submodule "THINGS/glmsingle"]
+	path = THINGS/glmsingle
+	url = git@github.com:courtois-neuromod/things.glmsingle.git
+	datalad-id = 48db661d-fcef-44ba-a2bc-4bb04f8fd3d5
+	datalad-url = git@github.com:courtois-neuromod/things.glmsingle.git
