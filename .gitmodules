@@ -23,3 +23,8 @@
 	url = git@github.com:courtois-neuromod/things.behaviour.git
 	datalad-id = 3814d9a1-62c1-456f-9204-623c238934fc
 	datalad-url = git@github.com:courtois-neuromod/things.behaviour.git
+[submodule "retinotopy/prf"]
+	path = retinotopy/prf
+	url = git@github.com:courtois-neuromod/retinotopy.prf.git
+	datalad-id = 5cccb887-2bf5-4465-8a5b-684cdaa8e7b0
+	datalad-url = git@github.com:courtois-neuromod/retinotopy.prf.git
