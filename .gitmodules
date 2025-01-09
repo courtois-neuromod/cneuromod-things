@@ -33,3 +33,8 @@
 	url = git@github.com:courtois-neuromod/things.glmsingle.git
 	datalad-id = 48db661d-fcef-44ba-a2bc-4bb04f8fd3d5
 	datalad-url = git@github.com:courtois-neuromod/things.glmsingle.git
+[submodule "fLoc/rois"]
+	path = fLoc/rois
+	url = git@github.com:courtois-neuromod/floc.rois.git
+	datalad-id = 64b59aaf-4a0b-47c8-867e-fb47ecf01988
+	datalad-url = git@github.com:courtois-neuromod/floc.rois.git
