@@ -84,28 +84,32 @@ Project Organization
     │            │     │    │    ├── cvs_scene_parcels
     │            │     │    │    └── readme.txt            
     │            │     │    └── mni            
-    │            │     │         └── parcel-kanwisher_space-MNI152T1_res-2mm_contrast-{body, face, object, scene}_mask.nii
+    │            │     │         └── parcel-kanwisher_space-MNI152T1_res-2mm_contrast-{body, face, object, scene}_pseg.nii.gz
     │            │     └── standard_rois  <- unilateral and bilateral ROI masks in CVS and MNI space
-    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii
-    │            │          ├── parcel-kanwisher_space-MNI152T1_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii
-    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
-    │            │          ├── parcel-kanwisher_space-MNI152T1_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
-    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
-    │            │          └── parcel-kanwisher_space-MNI152T1_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
+    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii.gz
+    │            │          ├── parcel-kanwisher_space-MNI152T1_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_pseg.nii.gz
+    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii.gz
+    │            │          ├── parcel-kanwisher_space-MNI152T1_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_pseg.nii.gz    
+    │            │          ├── parcel-kanwisher_space-CVSavg35_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii.gz
+    │            │          └── parcel-kanwisher_space-MNI152T1_contrast-body_roi-EBA_desc-{L, R, bilat}_pseg.nii.gz
     │            │
     │            └── sub-0*
     │                  ├── glm               <- first-level GLM contrast on fLoc BOLD data
     │                  │    ├── sub-*_task-floc_model-GLM_design.h5
-    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii
-    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii
+    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii.gz
+    │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii.gz
     │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-smooth_statseries.nii.gz    
     │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-unsmooth_statseries.nii.gz
     │                  └── rois
     │                       ├── from_atlas       <- Kanwisher parcels and ROI masks warped to subject space
-    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-{body, face, object, scene}_mask.nii    
-    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii   
-    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii    
-    │                       │     └── sub-*_parcel-kanwisher_space-T1w_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-{body, face, object, scene}_pseg.nii.gz    
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_pseg.nii.gz   
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_pseg.nii.gz
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-body_roi-EBA_desc-{L, R, bilat}_pseg.nii.gz
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-{body, face, object, scene}_mask.nii.gz    
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-face_roi-{FFA, OFA, pSTS}_desc-{L, R, bilat}_mask.nii.gz   
+    │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii.gz
+    │                       │     └── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii.gz
     │                       └── task-derived     <- parcels and ROI masks derived from the fLoc task
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
     │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
