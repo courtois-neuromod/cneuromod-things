@@ -99,17 +99,6 @@ THINGS/fmriprep/sourcedata/things/stimuli/images_fmri/*
 # raw QC notes w identifiers
 THINGS/fmriprep/sourcedata/things/code/cleanup/raw_qc_notes.md
 
-# fLoc files
-fLoc/rois/sub-0*/glm/sub-*
-fLoc/fmriprep/sourcedata/floc/sub-0*/ses-0*/func/sub-0*_ses-0*_task-fLoc_run-0*events.tsv
-fLoc/rois/standard_masks/standard_rois/*nii
-fLoc/rois/standard_masks/kanwisher_parcels/*
-fLoc/rois/sub-*/rois/from_atlas/sub-0*
-fLoc/rois/sub-*/rois/task-derived/sub-0*
-
-# pycortex files
-anatomical/pycortex/db/*
-
 # output figures
 datapaper/figures/*.png
 datapaper/figures/*.jpg
