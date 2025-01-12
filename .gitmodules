@@ -38,3 +38,8 @@
 	url = git@github.com:courtois-neuromod/floc.rois.git
 	datalad-id = 64b59aaf-4a0b-47c8-867e-fb47ecf01988
 	datalad-url = git@github.com:courtois-neuromod/floc.rois.git
+[submodule "THINGS/fmriprep"]
+	path = THINGS/fmriprep
+	url = git@github.com:courtois-neuromod/things.fmriprep.git
+	datalad-id = 81d8c126-b10f-4e8b-9eab-6825964c8552
+	datalad-url = git@github.com:courtois-neuromod/things.fmriprep.git
