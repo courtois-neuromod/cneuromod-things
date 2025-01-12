@@ -85,20 +85,6 @@ target/
 # Mypy cache
 .mypy_cache/
 
-# THINGS+ annotations
-THINGS/fmriprep/sourcedata/things/stimuli/annotations/THINGS+/*sv
-
-# THINGS events files data
-THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_events.tsv
-THINGS/fmriprep/sourcedata/things/sub-0*/ses-0*/func/sub-0*_ses-0*_task-things_run-*_eyetrack.tsv.gz
-THINGS/fmriprep/sourcedata/things/task-things_events_desc-OLD.json
-
-# THINGS stimuli
-THINGS/fmriprep/sourcedata/things/stimuli/images_fmri/*
-
-# raw QC notes w identifiers
-THINGS/fmriprep/sourcedata/things/code/cleanup/raw_qc_notes.md
-
 # output figures
 datapaper/figures/*.png
 datapaper/figures/*.jpg
