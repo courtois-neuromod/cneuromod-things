@@ -14,7 +14,75 @@ that include flat maps to visualize voxelwise statistics on a flattened cortical
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository. TODO: add link to datapaper manuscript.
 
-TODO: add sets of instructions to access and download datasets.
+
+Installation
+============
+
+All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and it is easy to download only the subset of data needed for a project.
+
+
+1. Requesting access
+--------------------
+
+You can apply for access to the CNeuroMod datasets [here](https://www.cneuromod.ca/access/access/).
+
+You will receive login credentials to access the NeuroMod git and the
+NeuroMod Amazon S3 fileserver so you can download the data.
+[See here](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing the data.
+
+
+2. Installing DataLad
+---------------------
+
+Install a recent version of the [DataLad software](https://www.datalad.org/),
+a tool for versioning large data structures in a git repository available
+for Linux, OSX and Windows.
+
+If not already present, we also recommend creating an SSH key on the machine
+where the dataset will be installed and adding it to Github. See the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account/) on how to create and add a key to your account.
+
+
+3. Installing the cneuromod-things repository
+---------------------------------
+
+Install the current repository from GitHub with DataLad.
+
+```bash
+datalad install -r git@github.com:courtois-neuromod/cneuromod-things.git
+```
+With the ``-r`` flag, this command will install the main repository and all its submodules.
+
+**NOTE:** when probed for a password to access ``elm.criugm.qc.ca``, press enter. The error message will not interfere with the installation.
+
+4. Download the dataset(s)
+----------------------------
+Specify your CNeuroMod login credentials as environment variables in your
+``bash`` console to download data from the S3 file server.
+
+Use the **access_key** and **secret_key** you received when granted access
+to the dataset.
+
+```bash
+  export AWS_ACCESS_KEY_ID=<s3_access_key>  AWS_SECRET_ACCESS_KEY=<s3_secret_key>
+```
+
+You can download specific data subsets and files by specifying their path to the ``datalad get`` command. For example, you can download ``sub-01``'s behavioural response files with:
+```bash
+cd cneuromod-things
+datalad get -r THINGS/behaviour/sub-01/beh/*
+```
+
+Alternatively, you can download the full dataset by pulling all files from the S3 file server with this command line.
+```bash
+cd cneuromod-things
+datalad get -r -J8 .
+```
+where:
+
+-r : recursive flag, to download the content of all submodules recursively.
+-J8 : how many parallel jobs to use to download the dataset (here set to 8).
+. : tells ``datalad get`` to act on the current directory and its content.
+
 
 Project Organization
 ------------
@@ -206,7 +274,7 @@ Project Organization
     │    │               │               ├── sub-0*_ses-*_task-things_run-*_eyetrack.tsv.gz  <- eye-tracking files
     │    │               │               └── sub-0*_ses-*_task-things_run-*_events.tsv  <- events.tsv files
     │    │               ├── stimuli
-    │    │               │     ├── README.md   <- instructions to access stimulus images 
+    │    │               │     ├── README.md   <- instructions to access stimulus images
     │    │               │     ├── images_fmri <- stimulus images per category (unzip images_fmri.zip here)
     │    │               │     └── annotations <- image annotations
     │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings

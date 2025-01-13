@@ -7,7 +7,7 @@ Four CNeuroMod participants completed between 33 (`sub-06`) and 36 (`sub-01`, `s
 
 Each image was shown three times throughout the duration of the experiment (it was repeated once within and once across weekly sessions). For each trial, participants reported whether the image was shown for the first time (“unseen”) or whether it had been shown previously (“seen”), either during the current or a previous session or both. Participants also reported whether or not they felt confident in their answer. Responses (seen/unseen ✕ low/high confidence) were made with the right thumb by pressing one of four buttons (top, bottom, left, right) on a video game controller designed by the team and described in [Harel et al. (2022)](https://psyarxiv.com/m2x6y/). No feedback was given to participants throughout the entire duration of the experiment.
 
-Note: A few sessions were accidentally administered out of the planed order, introducing atypical patterns of repetition for images shown during/after those sessions. Users may want to exclude these sessions from analyses that depend on repetition patterns or memory performance. These include `ses-024`, `ses-025` and `ses-026` for `sub-03`, and `ses-019` to `ses-026` (inclusively) for `sub-06`. fMRI data from `run 6` of `sub-06`'s `ses-008` are excluded from the dataset due to poor brain alignment.
+Note: A few sessions were accidentally administered out of the planed order, introducing atypical patterns of repetition for images shown during/after those sessions. Users may want to exclude these sessions from analyses that depend on repetition patterns or memory performance. These include `ses-24`, `ses-25` and `ses-26` for `sub-03`, and `ses-19` to `ses-26` (inclusively) for `sub-06`. fMRI data from `run 6` of `sub-06`'s `ses-08` are excluded from the dataset due to poor brain alignment.
 
 ## THINGS/fmriprep
 
@@ -18,9 +18,7 @@ It contains the ``sourcedata/things`` submodule, which includes:
 - ``*eyetrack.tsv.gz`` files, timestamped gaze positions per run derived from eye-tracking
 - ``*events.tsv`` files with trialwise metrics (e.g., image shown, repeat condition, memory performance, reaction time, trialwise metrics of fixation compliance), whose columns are described in ``THINGS/fmriprep/sourcedata/things/task-things_events.json``
 - the ``code`` directory with scripts to process ``*events.tsv`` files and eyetracking files (see ``THINGS/fmriprep/sourcedata/things/code/README.md`` for pipeline description and instructions to run the scripts).
-- the ``stimuli`` submodule, which includes image ratings (e.g., size, how natural) and content annotations (e.g., the presence of faces, body parts and elements of scenery; see ``THINGS/fmriprep/sourcedata/things/stimuli/annotations/README.md``), and a placeholder directory to save the THINGS image stimuli (``THINGS/fmriprep/sourcedata/things/stimuli/images_fmri``) needed to run certain scripts. Due to permission requirements, image files must be downloaded directly from the [THINGS initiative database](https://osf.io/jum2f/).
-
-Note: THINGS stimulus images are saved as a single zipped file, (``images_fmri.zip``), in the ``THINGS/fmriprep/sourcedata/things/stimuli`` submodule. To access and use these images, follow the instructions from this submodule's README.md.
+- the ``stimuli`` submodule, which includes the THINGS image stimuli, as well as image ratings (e.g., size, how natural) and content annotations (e.g., the presence of faces, body parts and elements of scenery. THINGS stimulus images are saved as a single zipped file, (``images_fmri.zip``), in the ``THINGS/fmriprep/sourcedata/things/stimuli`` submodule. To access and use these images, follow the instructions from this submodule's README.md. See ``THINGS/fmriprep/sourcedata/things/stimuli/annotations/README.md``). Stimulus image files can also be downloaded directly from the [THINGS initiative database](https://osf.io/jum2f/).
 
 ## THINGS/behaviour
 
