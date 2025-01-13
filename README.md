@@ -49,7 +49,7 @@ datalad install -r git@github.com:courtois-neuromod/cneuromod-things.git
 ```
 With the ``-r`` flag, this command will install the main repository and all its submodules.
 
-**4. Download the dataset(s)**
+**4. Downloading the dataset(s)**
 
 Specify your CNeuroMod login credentials as environment variables in your
 ``bash`` console to download data from the S3 file server.
