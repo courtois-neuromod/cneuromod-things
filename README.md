@@ -12,7 +12,9 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
 that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository. TODO: add link to datapaper manuscript.
+``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository. 
+
+***TODO: add link to datapaper manuscript.***
 
 
 Installation
@@ -74,9 +76,9 @@ datalad get -r -J8 .
 ```
 where:
 
--r : recursive flag, to download the content of all submodules recursively.
--J8 : how many parallel jobs to use to download the dataset (here set to 8).
-. : tells ``datalad get`` to act on the current directory and its content.
+- ``-r`` : recursive flag, to download the content of all submodules recursively.
+- ``-J8`` : how many parallel jobs to use to download the dataset (here set to 8).
+- ``.`` : tells ``datalad get`` to act on the current directory and its content.
 
 
 Project Organization
