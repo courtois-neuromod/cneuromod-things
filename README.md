@@ -21,8 +21,7 @@ Installation
 All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and it is easy to download only the subset of data needed for a project.
 
 
-1. Requesting access
---------------------
+##1. Requesting access
 
 You can apply for access to the CNeuroMod datasets [here](https://www.cneuromod.ca/access/access/).
 
@@ -31,8 +30,7 @@ NeuroMod Amazon S3 fileserver so you can download the data.
 [See here](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing the data.
 
 
-2. Installing DataLad
----------------------
+##2. Installing DataLad
 
 Install a recent version of the [DataLad software](https://www.datalad.org/),
 a tool for versioning large data structures in a git repository available
@@ -42,8 +40,7 @@ If not already present, we also recommend creating an SSH key on the machine
 where the dataset will be installed and adding it to Github. See the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account/) on how to create and add a key to your account.
 
 
-3. Installing the cneuromod-things repository
----------------------------------
+##3. Installing the cneuromod-things repository
 
 Install the current repository from GitHub with DataLad.
 
@@ -54,8 +51,9 @@ With the ``-r`` flag, this command will install the main repository and all its 
 
 **NOTE:** when probed for a password to access ``elm.criugm.qc.ca``, press enter. The error message will not interfere with the installation.
 
-4. Download the dataset(s)
-----------------------------
+
+##4. Download the dataset(s)
+
 Specify your CNeuroMod login credentials as environment variables in your
 ``bash`` console to download data from the S3 file server.
 
