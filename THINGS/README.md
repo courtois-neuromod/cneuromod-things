@@ -20,7 +20,7 @@ It contains the ``sourcedata/things`` submodule, which includes:
 - the ``code`` directory with scripts to process ``*events.tsv`` files and eyetracking files (see ``THINGS/fmriprep/sourcedata/things/code/README.md`` for pipeline description and instructions to run the scripts).
 - the ``stimuli`` submodule, which includes image ratings (e.g., size, how natural) and content annotations (e.g., the presence of faces, body parts and elements of scenery; see ``THINGS/fmriprep/sourcedata/things/stimuli/annotations/README.md``), and a placeholder directory to save the THINGS image stimuli (``THINGS/fmriprep/sourcedata/things/stimuli/images_fmri``) needed to run certain scripts. Due to permission requirements, image files must be downloaded directly from the [THINGS initiative database](https://osf.io/jum2f/).
 
-TODO: Explain here how to download and save images from THINGS initiative
+Note: THINGS stimulus images are saved as a single zipped file, (``images_fmri.zip``), in the ``THINGS/fmriprep/sourcedata/things/stimuli`` submodule. To access and use these images, follow the instructions from this submodule's README.md.
 
 ## THINGS/behaviour
 

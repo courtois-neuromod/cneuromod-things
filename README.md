@@ -206,7 +206,8 @@ Project Organization
     │    │               │               ├── sub-0*_ses-*_task-things_run-*_eyetrack.tsv.gz  <- eye-tracking files
     │    │               │               └── sub-0*_ses-*_task-things_run-*_events.tsv  <- events.tsv files
     │    │               ├── stimuli
-    │    │               │     ├── images_fmri <- stimulus images per category
+    │    │               │     ├── README.md   <- instructions to access stimulus images 
+    │    │               │     ├── images_fmri <- stimulus images per category (unzip images_fmri.zip here)
     │    │               │     └── annotations <- image annotations
     │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
     │    │               │            ├── THINGS+      <- download annotations directly from THINGS+ database
