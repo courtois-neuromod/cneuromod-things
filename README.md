@@ -1,7 +1,7 @@
 cneuromod-things
 ==============================
 
-![720 CC0 THINGS images](./misc/things720_mosaic_CC0.jpg)
+![720 CC0 THINGS images](./misc/things_720mosaic_CC0.jpg)
 
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
