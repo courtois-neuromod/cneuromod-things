@@ -20,7 +20,7 @@ that include flat maps to visualize voxelwise statistics on a flattened cortical
 Installation
 ============
 
-All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and it is easy to download only the subset of data needed for a project.
+All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
 
 
 **1. Requesting access**
@@ -47,9 +47,8 @@ where the dataset will be installed and adding it to Github. See the [official g
 Install the current repository from GitHub with DataLad.
 
 ```bash
-datalad install -r git@github.com:courtois-neuromod/cneuromod-things.git
+datalad clone git@github.com:courtois-neuromod/cneuromod-things.git
 ```
-With the ``-r`` flag, this command will install the main repository and all its submodules.
 
 **4. Downloading the dataset(s)**
 
@@ -63,23 +62,20 @@ to the dataset.
   export AWS_ACCESS_KEY_ID=<s3_access_key>  AWS_SECRET_ACCESS_KEY=<s3_secret_key>
 ```
 
-You can download specific data subsets and files by specifying their path using the ``datalad get`` command. For example, you can download ``sub-01``'s behavioural response files with:
+You can download specific data subsets and files by specifying their path using the ``datalad get`` command. Note that, if you just cloned the ``cneuromod-things`` repository, submodules will appear empty. You will need to use the ``datalad get`` command twice: once to download a submodule’s symbolic links and files stored directly on github, and then a second time to download files from the remote S3 store. 
+
+For example, you can download ``sub-01``'s files from the THINGS/behaviour submodule with:
 ```bash
-cd cneuromod-things
-datalad get -r THINGS/behaviour/sub-01/beh/*
+cd cneuromod-things/THINGS/behaviour
+datalad get *
+datalad get sub-01/beh/*
 ```
 
 Alternatively, you can download the full dataset by pulling all files from the S3 file server with this command line.
 ```bash
 cd cneuromod-things
-datalad get -r -J8 .
+datalad get -r *
 ```
-where:
-
-- ``-r`` : recursive flag, to download the content of all submodules recursively.
-- ``-J8`` : how many parallel jobs to use to download the dataset (here set to 8).
-- ``.`` : tells ``datalad get`` to act on the current directory and its content.
-
 
 Project Organization
 ------------
