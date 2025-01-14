@@ -1,6 +1,8 @@
 cneuromod-things
 ==============================
 
+![720 CC0 THINGS images](./misc/things720_mosaic_CC0.jpg)
+
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
@@ -12,7 +14,7 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
 that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository. 
+``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
 
 ***TODO: add link to datapaper manuscript.***
 
@@ -62,7 +64,7 @@ to the dataset.
   export AWS_ACCESS_KEY_ID=<s3_access_key>  AWS_SECRET_ACCESS_KEY=<s3_secret_key>
 ```
 
-You can download specific data subsets and files by specifying their path using the ``datalad get`` command. Note that, if you just cloned the ``cneuromod-things`` repository, submodules will appear empty. You will need to use the ``datalad get`` command twice: once to download a submodule’s symbolic links and files stored directly on github, and then a second time to download files from the remote S3 store. 
+You can download specific data subsets and files by specifying their path using the ``datalad get`` command. Note that, if you just cloned the ``cneuromod-things`` repository, submodules will appear empty. You will need to use the ``datalad get`` command twice: once to download a submodule’s symbolic links and files stored directly on github, and then a second time to download files from the remote S3 store.
 
 For example, you can download ``sub-01``'s files from the THINGS/behaviour submodule with:
 ```bash
