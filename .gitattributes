@@ -4,6 +4,7 @@
 *.txt annex.largefiles=nothing
 *.ipynb annex.largefiles=nothing
 *.tsv annex.largefiles=nothing
+*.jpg annex.largefiles=nothing
 *.py annex.largefiles=nothing
 * annex.backend=MD5E
 **/.git* annex.largefiles=nothing
