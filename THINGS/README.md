@@ -53,4 +53,4 @@ The `code` directory includes three scripts:
 - `check-memory-counts.py` to assess the distribution of memory conditions
     (e.g., "correct rejection") within individual scanning runs.
 
-`THINGS/glmsingle` also includes ``sub-0*`` directories, which contain the subject-specific GLM statistical maps for a subset of memory contrasts (i.e., "within-session hit vs. correct rejection"). 
+`THINGS/glm-memory` also includes ``sub-0*`` directories, which contain the subject-specific GLM statistical maps for a subset of memory contrasts (i.e., "within-session hit vs. correct rejection"). 
