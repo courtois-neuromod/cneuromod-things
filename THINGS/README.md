@@ -43,3 +43,14 @@ under ``THINGS/glmsingle/code/glmsingle`` (commit ``c4e298e``).
 - input and output files for GLMsingle. Outputs of interest include **trialwise and imagewise beta scores** and **voxelwise noise ceilings** (saved under ``THINGS/glmsingle/sub-0*/glmsingle/output``). See ``THINGS/glmsingle/code/glmsingle/README.md`` for details.
 - head motion (framewise displacement) metrics saved under ``THINGS/glmsingle/sub-0*/qc``. See ``THINGS/glmsingle/code/qc/README.md`` for details.
 - files used to produce annotated visualisations (t-SNE plots, annotated beta rankings within visual ROIs) under ``THINGS/glmsingle/sub-0*/descriptive``. See ``THINGS/glmsingle/code/descriptive/README.md`` for details. Figures can be generated from these files with notebooks found under ``cneuromod-things/datapaper/notebooks``.
+
+## THINGS/glm-memory
+
+The `THINGS/glm-memory` submodule include code for General Linear Model (GLM) analyses of memory contrasts in the THINGS dataset.
+The `code` directory includes three scripts:
+- `gen-memory-ffx.py`, which will generate fixed-effects analysis (FFX) stat maps
+- `visualize-memory-ffx.py`, which will visualize these stat maps on the volume and on flat maps
+- `check-memory-counts.py` to assess the distribution of memory conditions
+    (e.g., "correct rejection") within individual scanning runs.
+
+`THINGS/glmsingle` also includes ``sub-0*`` directories, which contain the subject-specific GLM statistical maps for a subset of memory contrasts (i.e., "within-session hit vs. correct rejection"). 
