@@ -43,3 +43,8 @@
 	url = git@github.com:courtois-neuromod/things.fmriprep.git
 	datalad-id = 81d8c126-b10f-4e8b-9eab-6825964c8552
 	datalad-url = git@github.com:courtois-neuromod/things.fmriprep.git
+[submodule "THINGS/glm-memory"]
+	path = THINGS/glm-memory
+	url = git@github.com:courtois-neuromod/things-glm.git
+	datalad-id = 522a1885-1f42-48c3-af0d-30f08d72aa36
+	datalad-url = git@github.com:courtois-neuromod/things-glm.git
