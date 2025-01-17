@@ -161,8 +161,8 @@ Project Organization
     │                  │    ├── sub-*_task-floc_model-GLM_design.h5
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii.gz
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii.gz
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-smooth_statseries.nii.gz    
-    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-unsmooth_statseries.nii.gz
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stat-{betas, tscores}_contrast-*_desc-smooth_statmap.nii.gz    
+    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stat-{betas, tscores}_contrast-*_desc-unsmooth_statmap.nii.gz
     │                  └── rois
     │                       ├── from_atlas       <- Kanwisher parcels and ROI masks warped to subject space
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-{body, face, object, scene}_pseg.nii.gz    
@@ -174,10 +174,10 @@ Project Organization
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii.gz
     │                       │     └── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii.gz
     │                       └── task-derived     <- parcels and ROI masks derived from the fLoc task
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
-    │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
+    │                             └── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
     │
     ├── retinotopy              <- retinotopy (pRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
@@ -224,13 +224,13 @@ Project Organization
     │               │    │            ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
     │               │    │            └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
     │               │    └── output
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stat-{stat}_statmap.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stat-{stat}_desc-npythy_statmap.nii.gz
     │               │          └── chunks    
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ang_desc-chunk{chunk_num}_statseries.mat
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ecc_desc-chunk{chunk_num}_statseries.mat   
-    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-rfsize_desc-chunk{chunk_num}_statseries.mat
-    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-R2_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stat-ang_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stat-ecc_desc-chunk{chunk_num}_statseries.mat   
+    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stat-rfsize_desc-chunk{chunk_num}_statseries.mat
+    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stat-R2_desc-chunk{chunk_num}_statseries.mat
     │               ├── npythy       <- NeuroPythy toolbox input and output files
     │               │    ├── input
     │               │    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
@@ -241,9 +241,9 @@ Project Organization
     │               │          ├── {lh, rh}.retinotopy.sphere.reg
     │               │          ├── inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz
     │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz   
-    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz           
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stat-{angle, eccen, sigma}_statmap.nii.gz           
     │               │          ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz    
-    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
+    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stat-{angle, eccen, sigma}_statmap.nii.gz
     │               └── rois       <- visual ROI masks    
     │                    ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_label-{roi}_mask.nii.gz
     │                    ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_label-{roi}_desc-nn_mask.nii.gz
@@ -363,17 +363,17 @@ Project Organization
     │                  │          │     ├── TYPEB_FITHRF.mat   
     │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5      
-    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
+    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
+    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
     │                  │
     │                  ├── qc     <- quality checks
     │                  │    └── sub-0*_task-things_headmotion.tsv
     │                  └── descriptive   <- annotated beta rankings and t-SNE plots per visual ROIs
     │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
-    │                       ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
-    │                       ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
-    │                       └── sub-*_task-things_space-T1w_stats-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz    
+    │                       ├── sub-*_task-things_space-T1w_stat-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
+    │                       ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stat-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
+    │                       └── sub-*_task-things_space-T1w_stat-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz    
     │            
     │
     └── datapaper          <- Report, figures, visualization notebooks
