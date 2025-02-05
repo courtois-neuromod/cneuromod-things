@@ -3,16 +3,16 @@ cneuromod-things
 
 ![720 CC0 THINGS images](./misc/things_720mosaic_CC0.jpg)
 
-Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
 - ``THINGS/fmriprep`` includes source and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
-- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous recognition task and of fixation compliance (assessed with eye-tracking).
-- ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
+- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous image recognition task and of fixation compliance (assessed with eye-tracking).
+- ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-concept analyses to showcase the quality of the data.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
-``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
-that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
+``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
+submodule includes flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
 
@@ -273,7 +273,7 @@ Project Organization
     │    │               │     ├── images_fmri <- stimulus images per category (unzip images_fmri.zip here)
     │    │               │     └── annotations <- image annotations
     │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
-    │    │               │            ├── THINGS+      <- download annotations directly from THINGS+ database
+    │    │               │            ├── THINGSplus      <- download annotations directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
     │    │               │            │     ├── category53_wideFormat.tsv
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
@@ -288,7 +288,8 @@ Project Organization
     │    │               │     ├── cleanup             <- scripts to validate events.tsv files    
     │    │               │     │      ├── requirements.txt       
     │    │               │     │      ├── qc_notes.md          <- notes on QCing runs & sessions        
-    │    │               │     │      └── clean_events.py      <- script to relabel/clean *events.tsv files
+    │    │               │     │      ├── clean_events.py      <- script to relabel/clean *events.tsv files
+    │    │               │     │      └── add_lastKP.py        <- script to derive performance metrics from last keypress    
     │    │               │     └── eyetracking         <- scripts to process eye-tracking data
     │    │               │            ├── requirements.txt    
     │    │               │            ├── step1_eyetrack_prep.py      <- exports raw gaze to numpy, plots qc charts        
