@@ -3,17 +3,17 @@ cneuromod-things
 
 ![720 CC0 THINGS images](./misc/things_720mosaic_CC0.jpg)
 
-Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
-- ``THINGS/fmriprep`` includes source and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
-- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous recognition task and of fixation compliance (assessed with eye-tracking).
-- ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-principle analyses to showcase the quality of the data.  
-- ``THINGS/glm-memory`` includes GLM-based analyses of memory effects in the preprocessed BOLD data, as well as the associated statistical maps and visualization scripts.  
+- ``THINGS/fmriprep`` includes source and preprocessed BOLD data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
+- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous image recognition task and of fixation compliance (assessed with eye-tracking).
+- ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-concept analyses to showcase the quality of the data.  
+- ``THINGS/glm-memory`` includes GLM-based analyses of memory effects in the preprocessed BOLD data and associated statistical maps.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
-``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. ``anatomical`` data
-that include flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
+``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
+submodule includes flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
 
@@ -74,7 +74,7 @@ datalad get *
 datalad get sub-01/beh/*
 ```
 
-Alternatively, you can download the full dataset by pulling all files from the S3 file server with this command line.
+Alternatively (not recommended!), you can pull the entire content of this dataset and of its nested submodules from the S3 file server with this command line.
 ```bash
 cd cneuromod-things
 datalad get -r *
@@ -162,8 +162,8 @@ Project Organization
     │                  │    ├── sub-*_task-floc_model-GLM_design.h5
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNonNaN_mask.nii.gz
     │                  │    ├── sub-*_task-floc_space-T1w_label-brain_desc-unionNaN_mask.nii.gz
-    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-smooth_statseries.nii.gz    
-    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stats-{betas, tscores}_contrast-*_desc-unsmooth_statseries.nii.gz
+    │                  │    ├── sub-*_task-floc_space-T1w_model-GLM_stat-{betas, tscores}_contrast-*_desc-smooth_statmap.nii.gz    
+    │                  │    └── sub-*_task-floc_space-T1w_model-GLM_stat-{betas, tscores}_contrast-*_desc-unsmooth_statmap.nii.gz
     │                  └── rois
     │                       ├── from_atlas       <- Kanwisher parcels and ROI masks warped to subject space
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-anat_contrast-{body, face, object, scene}_pseg.nii.gz    
@@ -175,10 +175,10 @@ Project Organization
     │                       │     ├── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-scene_roi-{PPA, OPA, MPA}_desc-{L, R, bilat}_mask.nii.gz
     │                       │     └── sub-*_parcel-kanwisher_space-T1w_res-func_contrast-body_roi-EBA_desc-{L, R, bilat}_mask.nii.gz
     │                       └── task-derived     <- parcels and ROI masks derived from the fLoc task
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
-    │                             ├── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
-    │                             └── sub-*_task-floc_space-T1w_stats-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_cutoff-*_desc-smooth_mask.nii.gz    
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_cutoff-*_desc-unsmooth_mask.nii.gz
+    │                             ├── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-smooth_mask.nii.gz
+    │                             └── sub-*_task-floc_space-T1w_stat-tscores_contrast-*_roi-*_cutoff-*_nvox-*_fwhm-*_ratio-*_desc-unsmooth_mask.nii.gz
     │
     ├── retinotopy              <- retinotopy (pRF) visual localizer datasets and scripts
     │    ├── README.md          <- Overview of retinotopy dataset and scripts
@@ -225,13 +225,13 @@ Project Organization
     │               │    │            ├── sub-0*_task-retinotopy_condition-rings_space-T1w_desc-chunk{chunk_num}_bold.mat    
     │               │    │            └── sub-0*_task-retinotopy_condition-wedges_space-T1w_desc-chunk{chunk_num}_bold.mat
     │               │    └── output
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stats-{stat}_statseries.nii.gz
-    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stats-{stat}_desc-npythy_statseries.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzepRF_label-brain_stat-{stat}_statmap.nii.gz
+    │               │          ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_label-brain_stat-{stat}_desc-npythy_statmap.nii.gz
     │               │          └── chunks    
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ang_desc-chunk{chunk_num}_statseries.mat
-    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stats-ecc_desc-chunk{chunk_num}_statseries.mat   
-    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-rfsize_desc-chunk{chunk_num}_statseries.mat
-    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stats-R2_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stat-ang_desc-chunk{chunk_num}_statseries.mat
+    │               │                 ├── sub-*_task-retinotopy_space-T1w_model-analyzePRF_stat-ecc_desc-chunk{chunk_num}_statseries.mat   
+    │               │                 ├── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stat-rfsize_desc-chunk{chunk_num}_statseries.mat
+    │               │                 └── sub-0*_task-retinotopy_space-T1w_model-analyzePRF_stat-R2_desc-chunk{chunk_num}_statseries.mat
     │               ├── npythy       <- NeuroPythy toolbox input and output files
     │               │    ├── input
     │               │    │     ├── lh.s*_prf_{ang, ecc, x, y, R2, rfsize}.mgz      
@@ -242,9 +242,9 @@ Project Organization
     │               │          ├── {lh, rh}.retinotopy.sphere.reg
     │               │          ├── inferred_{angle, eccen, sigma, varea}_fsorient.nii.gz
     │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_atlas-varea_dseg.nii.gz   
-    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz           
+    │               │          ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_stat-{angle, eccen, sigma}_statmap.nii.gz           
     │               │          ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_atlas-varea_dseg.nii.gz    
-    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stats-{angle, eccen, sigma}_statseries.nii.gz
+    │               │          └── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_stat-{angle, eccen, sigma}_statmap.nii.gz
     │               └── rois       <- visual ROI masks    
     │                    ├── sub-*_task-retinotopy_space-T1w_res-anat_model-npythy_label-{roi}_mask.nii.gz
     │                    ├── sub-*_task-retinotopy_space-T1w_res-func_model-npythy_label-{roi}_desc-nn_mask.nii.gz
@@ -256,11 +256,11 @@ Project Organization
     │    │    ├── sub-0*
     │    │    │     └── ses-*
     │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_desc-preproc_part-mag_bold.nii.gz
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_desc-brain_part-mag_mask.nii.gz
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-preproc_part-mag_bold.nii.gz
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_space-T1w_desc-brain_part-mag_mask.nii.gz    
-    │    │    │               └── sub-0*_ses-*_task-things_run-*_desc-confounds_part-mag_timeseries.tsv    <- noise confounds
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-T1w_desc-preproc_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-T1w_desc-brain_mask.nii.gz    
+    │    │    │               └── sub-0*_ses-*_task-things_run-*_part-mag_desc-confounds_timeseries.tsv    <- noise confounds
     │    │    │  
     │    │    └── sourcedata      <- raw files
     │    │         └── things     <- bidsified raw fMRI data & output   
@@ -274,7 +274,7 @@ Project Organization
     │    │               │     ├── images_fmri <- stimulus images per category (unzip images_fmri.zip here)
     │    │               │     └── annotations <- image annotations
     │    │               │            ├── README.md    <- annotation doc, links to download THINGS+ ratings
-    │    │               │            ├── THINGS+      <- download annotations directly from THINGS+ database
+    │    │               │            ├── THINGSplus      <- download annotations directly from THINGS+ database
     │    │               │            │     ├── arousal_meanRatings.tsv
     │    │               │            │     ├── category53_wideFormat.tsv
     │    │               │            │     ├── imageLabeling_imageWise.tsv  
@@ -289,7 +289,8 @@ Project Organization
     │    │               │     ├── cleanup             <- scripts to validate events.tsv files    
     │    │               │     │      ├── requirements.txt       
     │    │               │     │      ├── qc_notes.md          <- notes on QCing runs & sessions        
-    │    │               │     │      └── clean_events.py      <- script to relabel/clean *events.tsv files
+    │    │               │     │      ├── clean_events.py      <- script to relabel/clean *events.tsv files
+    │    │               │     │      └── add_lastKP.py        <- script to derive performance metrics from last keypress    
     │    │               │     └── eyetracking         <- scripts to process eye-tracking data
     │    │               │            ├── requirements.txt    
     │    │               │            ├── step1_eyetrack_prep.py      <- exports raw gaze to numpy, plots qc charts        
@@ -322,7 +323,7 @@ Project Organization
     │    │       ├── task-things_desc-fixCompliance_statseries.json    
     │    │       └── task-things_beh.json
     │    │
-    │    └── glmsingle        <- GLMsingle derivatives (voxel-wise betas, noise ceilings)
+    │    ├── glmsingle        <- GLMsingle derivatives (voxel-wise betas, noise ceilings)
     │    |       ├── code            <- scripts to run GLMsingle and process output
     │    |       │     ├── requirements.txt      
     │    |       │     ├── qc
@@ -364,32 +365,28 @@ Project Organization
     │    |             │          │     ├── TYPEB_FITHRF.mat   
     │    |             │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │    |             │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-imageBetas_desc-zscore_statseries.h5  
-    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-trialBetas_desc-zscore_statseries.h5      
-    │    |             │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stats-noiseCeilings_statmap.nii.gz
+    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
+    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
+    │    |             │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
     │    |             │
     │    |             ├── qc     <- quality checks
     │    |             │    └── sub-0*_task-things_headmotion.tsv
     │    |             └── descriptive   <- annotated beta rankings and t-SNE plots per visual ROIs
     │    |                  ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
-    │    |                  ├── sub-*_task-things_space-T1w_stats-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
-    │    |                  ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stats-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
-    │    |                  └── sub-*_task-things_space-T1w_stats-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz
-    │    └── glm-memory        <- analyses of the memory effects in the preprocessed BOLD data
+    │    |                  ├── sub-*_task-things_space-T1w_stat-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
+    │    |                  ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stat-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
+    │    |                  └── sub-*_task-things_space-T1w_stat-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz
+    │    │    
+    │    └── glm-memory        <- analyses of memory effects in the preprocessed BOLD data
     │            ├── README.md
     │            ├── LICENSE.md
     │            ├── code
     │            │     ├── requirements.txt
     │            │     ├── check-memory-counts.py        <- check the distribution of each memory condition across BOLD runs
-    │            │     ├── gen-memory-ffx.py             <- generate the statistical maps for the subject-level fixed effects analysis of the desired memory contrast
-    │            │     └── visualize-memory-ffx.py       <- visualize the generated statistical maps both on the volume and on a flattened cortical surface
+    │            │     └── gen-memory-ffx.py             <- generate the statistical maps for the subject-level fixed effects analysis of the desired memory contrast
     │            └── sub-0*
     │                  └── glm
-    │                       ├── sub-0*_task-things_space-T1w_contrast-HitWithinvCorrectRej_stat-effect_statmap.nii.gz   
-    │                       ├── sub-0*_task-things_space-T1w_contrast-HitWithinvCorrectRej_stat-t_statmap.nii.gz
-    │                       ├── sub-0*_task-things_space-T1w_contrast-HitWithinvCorrectRej_stat-variance_statmap.nii.gz  
-    │                       └── sub-0*_task-things_space-T1w_contrast-HitWithinvCorrectRej_stat-z_statmap.nii.gz 
-    │            
+    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Between}vCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
