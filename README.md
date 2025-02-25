@@ -74,11 +74,8 @@ datalad get *
 datalad get sub-01/beh/*
 ```
 
-Alternatively (not recommended!), you can pull the entire content of this dataset and of its nested submodules from the S3 file server with this command line.
-```bash
-cd cneuromod-things
-datalad get -r *
-```
+**Warning**: while it is technically feasible to pull the entire content of all nested submodules recursively from the S3 file server (using ``datalad get -r *``), we strongly recommend against it due to the complexity and depth of the nested repository structure and sheer dataset size.
+
 
 Project Organization
 ------------
@@ -386,7 +383,8 @@ Project Organization
     │            │     └── gen-memory-ffx.py             <- generate the statistical maps for the subject-level fixed effects analysis of the desired memory contrast
     │            └── sub-0*
     │                  └── glm
-    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Between}vCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
+    │                       │── sub-0*_task-things_space-T1w_contrast-HitvCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
+    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Btwn}vCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
