@@ -6,9 +6,10 @@ cneuromod-things
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
-- ``THINGS/fmriprep`` includes source and preprocessed bold data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
+- ``THINGS/fmriprep`` includes source and preprocessed BOLD data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
 - ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous image recognition task and of fixation compliance (assessed with eye-tracking).
 - ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-concept analyses to showcase the quality of the data.  
+- ``THINGS/glm-memory`` includes GLM-based analyses of memory effects in the preprocessed BOLD data and associated statistical maps.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
 ``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
@@ -322,60 +323,70 @@ Project Organization
     │    │       ├── task-things_desc-fixCompliance_statseries.json    
     │    │       └── task-things_beh.json
     │    │
-    │    └── glmsingle        <- GLMsingle derivatives (voxel-wise betas, noise ceilings)
-    │            ├── code            <- scripts to run GLMsingle and process output
-    │            │     ├── requirements.txt      
-    │            │     ├── qc
-    │            │     │    ├── README.md               
-    │            │     │    └── compile_headmotion.py   
-    │            │     ├── glmsingle       
-    │            │     │    ├── GLMsingle  <- GLMsingle repo submodule (c4e298e)    
-    │            │     │    ├── README.md       
-    │            │     │    ├── GLMsingle_makedesign.py                   
-    │            │     │    ├── GLMsingle_preprocBOLD.py
-    │            │     │    ├── GLMsingle_makerunlist.py  
-    │            │     │    ├── GLMsingle_cleanmask.py  
-    │            │     │    ├── GLMsingle_run.m    
-    │            │     │    ├── GLMsingle_noiseceilings.py          
-    │            │     │    ├── GLMsingle_betasPerTrial.py  
-    │            │     │    └── GLMsingle_betasPerImg.py
-    │            │     └── descriptive    
-    │            │          ├── README.md         
-    │            │          ├── extract_annotations.py  
-    │            │          ├── rank_img_perVox.py  
-    │            │          └── beta_scaling.py        
-    │            │
-    │            ├── task-things_runlist.h5             <- list of valid runs per subject
-    │            ├── task-things_imgAnnotations.json    <- dictionary of compiled image annotations
-    │            │
+    │    ├── glmsingle        <- GLMsingle derivatives (voxel-wise betas, noise ceilings)
+    │    |       ├── code            <- scripts to run GLMsingle and process output
+    │    |       │     ├── requirements.txt      
+    │    |       │     ├── qc
+    │    |       │     │    ├── README.md               
+    │    |       │     │    └── compile_headmotion.py   
+    │    |       │     ├── glmsingle       
+    │    |       │     │    ├── GLMsingle  <- GLMsingle repo submodule (c4e298e)    
+    │    |       │     │    ├── README.md       
+    │    |       │     │    ├── GLMsingle_makedesign.py                   
+    │    |       │     │    ├── GLMsingle_preprocBOLD.py
+    │    |       │     │    ├── GLMsingle_makerunlist.py  
+    │    |       │     │    ├── GLMsingle_cleanmask.py  
+    │    |       │     │    ├── GLMsingle_run.m    
+    │    |       │     │    ├── GLMsingle_noiseceilings.py          
+    │    |       │     │    ├── GLMsingle_betasPerTrial.py  
+    │    |       │     │    └── GLMsingle_betasPerImg.py
+    │    |       │     └── descriptive    
+    │    |       │          ├── README.md         
+    │    |       │          ├── extract_annotations.py  
+    │    |       │          ├── rank_img_perVox.py  
+    │    |       │          └── beta_scaling.py        
+    │    |       │
+    │    |       ├── task-things_runlist.h5             <- list of valid runs per subject
+    │    |       ├── task-things_imgAnnotations.json    <- dictionary of compiled image annotations
+    │    |       │
+    │    |       └── sub-0*
+    │    |             ├── glmsingle  <- GLMsingle input and output (voxelwise betas, noise ceilings)
+    │    |             │    ├── input    
+    │    |             │    │     ├── sub-*_task-things_model-glmsingle_desc-sparse_design.h5
+    │    |             │    │     ├── sub-*_task-things_imgDesignNumbers.json
+    │    |             │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5     
+    │    |             │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-union_mask.nii
+    │    |             │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
+    │    |             │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
+    │    |             │    │     └── ...    
+    │    |             │    └── output    
+    │    |             │          ├── T1w
+    │    |             │          │     ├── TYPEA_ONOFF.mat    
+    │    |             │          │     ├── TYPEB_FITHRF.mat   
+    │    |             │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
+    │    |             │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
+    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
+    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
+    │    |             │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
+    │    |             │
+    │    |             ├── qc     <- quality checks
+    │    |             │    └── sub-0*_task-things_headmotion.tsv
+    │    |             └── descriptive   <- annotated beta rankings and t-SNE plots per visual ROIs
+    │    |                  ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
+    │    |                  ├── sub-*_task-things_space-T1w_stat-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
+    │    |                  ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stat-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
+    │    |                  └── sub-*_task-things_space-T1w_stat-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz
+    │    │    
+    │    └── glm-memory        <- analyses of memory effects in the preprocessed BOLD data
+    │            ├── README.md
+    │            ├── LICENSE.md
+    │            ├── code
+    │            │     ├── requirements.txt
+    │            │     ├── check-memory-counts.py        <- check the distribution of each memory condition across BOLD runs
+    │            │     └── gen-memory-ffx.py             <- generate the statistical maps for the subject-level fixed effects analysis of the desired memory contrast
     │            └── sub-0*
-    │                  ├── glmsingle  <- GLMsingle input and output (voxelwise betas, noise ceilings)
-    │                  │    ├── input    
-    │                  │    │     ├── sub-*_task-things_model-glmsingle_desc-sparse_design.h5
-    │                  │    │     ├── sub-*_task-things_imgDesignNumbers.json
-    │                  │    │     ├── sub-*_task-things_space-T1w_maskedBOLD.h5     
-    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-union_mask.nii
-    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNonNaN_mask.nii
-    │                  │    │     ├── sub-*_task-things_space-T1w_label-brain_desc-unionNaN_mask.nii
-    │                  │    │     └── ...    
-    │                  │    └── output    
-    │                  │          ├── T1w
-    │                  │          │     ├── TYPEA_ONOFF.mat    
-    │                  │          │     ├── TYPEB_FITHRF.mat   
-    │                  │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
-    │                  │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
-    │                  │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
-    │                  │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
-    │                  │
-    │                  ├── qc     <- quality checks
-    │                  │    └── sub-0*_task-things_headmotion.tsv
-    │                  └── descriptive   <- annotated beta rankings and t-SNE plots per visual ROIs
-    │                       ├── sub-*_task-things_desc-{perImage, perTrial}_labels.npy
-    │                       ├── sub-*_task-things_space-T1w_stat-{betas, ranks}_desc-{perImage, perTrial}_statseries.npy
-    │                       ├── sub-*_task-things_space-T1w_contrast-*_roi-*_cutoff-*_nvox-*_stat-{ranks, betas, noiceCeilings}_desc-{perImage, perTrial}_statseries.npy  
-    │                       └── sub-*_task-things_space-T1w_stat-tSNE_label-visualROIs_desc-{perImage, perTrial}_statseries.npz    
-    │            
+    │                  └── glm
+    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Between}vCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
