@@ -11,7 +11,7 @@ Note: A few sessions were accidentally administered out of the planed order, int
 
 ## THINGS/fmriprep
 
-The ``THINGS/fmriprep`` submodule includes bids-formatted bold data preprocessed with fmriprep in MNI and native subject (T1w) space, saved with functional brain masks and noise confounds.
+The ``THINGS/fmriprep`` submodule includes bids-formatted BOLD data preprocessed with fmriprep in MNI and native subject (T1w) space, saved with functional brain masks and noise confounds.
 
 It contains the ``sourcedata/things`` submodule, which includes:
 - raw fMRI files
@@ -46,11 +46,6 @@ under ``THINGS/glmsingle/code/glmsingle`` (commit ``c4e298e``).
 
 ## THINGS/glm-memory
 
-The `THINGS/glm-memory` submodule include code for General Linear Model (GLM) analyses of memory contrasts in the THINGS dataset.
-The `code` directory includes three scripts:
-- `gen-memory-ffx.py`, which will generate fixed-effects analysis (FFX) stat maps
-- `visualize-memory-ffx.py`, which will visualize these stat maps on the volume and on flat maps
-- `check-memory-counts.py` to assess the distribution of memory conditions
-    (e.g., "correct rejection") within individual scanning runs.
+The `THINGS/glm-memory` submodule includes the `code` directory, which includes scripts to perform General Linear Model (GLM) analyses that contrast memory conditions on the cneuromod-things fMRI data.
 
-`THINGS/glm-memory` also includes ``sub-0*`` directories, which contain the subject-specific GLM statistical maps for a subset of memory contrasts (i.e., "within-session hit vs. correct rejection"). 
+`THINGS/glm-memory` also includes ``sub-0*`` directories, which contain **subject-specific GLM statistical maps for a subset of memory contrasts** (i.e., "within-session hit vs. correct rejection").
