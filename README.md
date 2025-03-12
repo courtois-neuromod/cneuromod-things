@@ -380,11 +380,14 @@ Project Organization
     │            ├── code
     │            │     ├── requirements.txt
     │            │     ├── check-memory-counts.py        <- check the distribution of each memory condition across BOLD runs
-    │            │     └── gen-memory-ffx.py             <- generate the statistical maps for the subject-level fixed effects analysis of the desired memory contrast
+    │            │     ├── glm_mem_betas.py              <- t-tests contrasting GLMsingle betas across memory conditions
+    │            │     └── gen-memory-ffx.py             <- subject-level fixed effects analysis of memory contrasts
     │            └── sub-0*
     │                  └── glm
-    │                       │── sub-0*_task-things_space-T1w_contrast-HitvCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
-    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Btwn}vCorrectRej_stat-{effect, t, variance, z}_statmap.nii.gz   
+    │                       │── sub-0*_task-things_space-T1w_contrast-HitvCorrectRej_stat-{t, p}_desc-fromBetas_statmap.nii.gz   
+    │                       │── sub-0*_task-things_space-T1w_contrast-Hit{Within, Btwn}vCorrectRej_stat-{t, p}_desc-fromBetas_statmap.nii.gz   
+    │                       │── sub-0*_task-things_space-T1w_contrast-HitvCorrectRej_stat-{effect, t, variance, z}_desc-fromBOLD_statmap.nii.gz   
+    │                       └── sub-0*_task-things_space-T1w_contrast-Hit{Within, Btwn}vCorrectRej_stat-{effect, t, variance, z}_desc-fromBOLD_statmap.nii.gz   
     │
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
