@@ -90,4 +90,5 @@ datapaper/figures/*.png
 datapaper/figures/*.jpg
 datapaper/figures/b_rankings/*.png
 datapaper/figures/b_rankings/*.jpg
+datapaper/notebooks/glmMemo_flatmaps_tests.ipynb
 datapaper/figures/*.svg

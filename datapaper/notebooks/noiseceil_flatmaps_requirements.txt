@@ -1,6 +1,7 @@
 cython
 setuptools
 wheel
+matplotlib==3.7.5
 nibabel==3.0
 numpy==1.23.4
 pycortex==1.2.5

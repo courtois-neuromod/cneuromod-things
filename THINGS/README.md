@@ -11,7 +11,7 @@ Note: A few sessions were accidentally administered out of the planed order, int
 
 ## THINGS/fmriprep
 
-The ``THINGS/fmriprep`` submodule includes bids-formatted bold data preprocessed with fmriprep in MNI and native subject (T1w) space, saved with functional brain masks and noise confounds.
+The ``THINGS/fmriprep`` submodule includes bids-formatted BOLD data preprocessed with fmriprep in MNI and native subject (T1w) space, saved with functional brain masks and noise confounds.
 
 It contains the ``sourcedata/things`` submodule, which includes:
 - raw fMRI files
@@ -43,3 +43,9 @@ under ``THINGS/glmsingle/code/glmsingle`` (commit ``c4e298e``).
 - input and output files for GLMsingle. Outputs of interest include **trialwise and imagewise beta scores** and **voxelwise noise ceilings** (saved under ``THINGS/glmsingle/sub-0*/glmsingle/output``). See ``THINGS/glmsingle/code/glmsingle/README.md`` for details.
 - head motion (framewise displacement) metrics saved under ``THINGS/glmsingle/sub-0*/qc``. See ``THINGS/glmsingle/code/qc/README.md`` for details.
 - files used to produce annotated visualisations (t-SNE plots, annotated beta rankings within visual ROIs) under ``THINGS/glmsingle/sub-0*/descriptive``. See ``THINGS/glmsingle/code/descriptive/README.md`` for details. Figures can be generated from these files with notebooks found under ``cneuromod-things/datapaper/notebooks``.
+
+## THINGS/glm-memory
+
+The `THINGS/glm-memory` submodule includes the `code` directory, which includes scripts to perform General Linear Model (GLM) analyses that contrast memory conditions on the cneuromod-things fMRI data.
+
+`THINGS/glm-memory` also includes ``sub-0*`` directories, which contain **subject-specific GLM statistical maps for a subset of memory contrasts** (i.e., "within-session hit vs. correct rejection").
