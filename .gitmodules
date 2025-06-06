@@ -2,49 +2,49 @@
 	path = retinotopy/fmriprep
 	url = git@github.com:courtois-neuromod/retinotopy.fmriprep.git
 	datalad-id = 48398cbc-de88-4e06-ad53-09fec11fe65b
-	datalad-url = git@github.com:courtois-neuromod/retinotopy.fmriprep.git
+	datalad-url = https://github.com/courtois-neuromod/retinotopy.fmriprep.git
 [submodule "anatomical/smriprep"]
 	path = anatomical/smriprep
 	url = git@github.com:courtois-neuromod/anat.smriprep.git
 	datalad-id = f3ef9683-0a58-4d2b-b4eb-d33d8fc3fd2b
-	datalad-url = git@github.com:courtois-neuromod/anat.smriprep.git
+	datalad-url = https://github.com/courtois-neuromod/anat.smriprep.git
 [submodule "fLoc/fmriprep"]
 	path = fLoc/fmriprep
 	url = git@github.com:courtois-neuromod/floc.fmriprep.git
 	datalad-id = 237e4de8-a4d4-42aa-8814-ab0f2f6c331c
-	datalad-url = git@github.com:courtois-neuromod/floc.fmriprep.git
+	datalad-url = https://github.com/courtois-neuromod/floc.fmriprep.git
 [submodule "anatomical/pycortex"]
 	path = anatomical/pycortex
 	url = git@github.com:courtois-neuromod/anat.pycortex.git
 	datalad-id = 77f50c61-82aa-4f3a-ae7c-9b3b6e3f7cdf
-	datalad-url = git@github.com:courtois-neuromod/anat.pycortex.git
+	datalad-url = https://github.com/courtois-neuromod/anat.pycortex.git
 [submodule "THINGS/behaviour"]
 	path = THINGS/behaviour
 	url = git@github.com:courtois-neuromod/things.behaviour.git
 	datalad-id = 3814d9a1-62c1-456f-9204-623c238934fc
-	datalad-url = git@github.com:courtois-neuromod/things.behaviour.git
+	datalad-url = https://github.com/courtois-neuromod/things.behaviour.git
 [submodule "retinotopy/prf"]
 	path = retinotopy/prf
 	url = git@github.com:courtois-neuromod/retinotopy.prf.git
 	datalad-id = 5cccb887-2bf5-4465-8a5b-684cdaa8e7b0
-	datalad-url = git@github.com:courtois-neuromod/retinotopy.prf.git
+	datalad-url = https://github.com/courtois-neuromod/retinotopy.prf.git
 [submodule "THINGS/glmsingle"]
 	path = THINGS/glmsingle
 	url = git@github.com:courtois-neuromod/things.glmsingle.git
 	datalad-id = 48db661d-fcef-44ba-a2bc-4bb04f8fd3d5
-	datalad-url = git@github.com:courtois-neuromod/things.glmsingle.git
+	datalad-url = https://github.com/courtois-neuromod/things.glmsingle.git
 [submodule "fLoc/rois"]
 	path = fLoc/rois
 	url = git@github.com:courtois-neuromod/floc.rois.git
 	datalad-id = 64b59aaf-4a0b-47c8-867e-fb47ecf01988
-	datalad-url = git@github.com:courtois-neuromod/floc.rois.git
+	datalad-url = https://github.com/courtois-neuromod/floc.rois.git
 [submodule "THINGS/fmriprep"]
 	path = THINGS/fmriprep
 	url = git@github.com:courtois-neuromod/things.fmriprep.git
 	datalad-id = 81d8c126-b10f-4e8b-9eab-6825964c8552
-	datalad-url = git@github.com:courtois-neuromod/things.fmriprep.git
+	datalad-url = https://github.com/courtois-neuromod/things.fmriprep.git
 [submodule "THINGS/glm-memory"]
 	path = THINGS/glm-memory
 	url = git@github.com:courtois-neuromod/things-glm.git
 	datalad-id = 522a1885-1f42-48c3-af0d-30f08d72aa36
-	datalad-url = git@github.com:courtois-neuromod/things-glm.git
+	datalad-url = https://github.com/courtois-neuromod/things-glm.git
