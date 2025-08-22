@@ -6,6 +6,8 @@ cneuromod-things
 
 ![720 CC0 THINGS images](./misc/things_720mosaic_CC0.jpg)
 
+## Dataset overview 
+
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
@@ -20,9 +22,7 @@ submodule includes flat maps to visualize voxelwise statistics on a flattened co
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures from an upcoming data paper using data and result files saved in the current repository.
 
-
-Data Access
-============
+## Data access
 
 All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
 
