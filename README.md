@@ -18,57 +18,38 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
 submodule includes flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from the upcoming data paper using data and result files saved in the current repository.
-
-***TODO: add link to datapaper manuscript.***
+``datapaper`` includes jupyter notebooks with code to re-create figures from an upcoming data paper using data and result files saved in the current repository.
 
 
-Installation
+Data Access
 ============
 
 All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
 
+The four subjects who contributed to the CNeuroMod-THINGS dataset have requested access to their data, and chosen to share them openly via the [Canadian Open Neuroscience Platform (CONP) data portal](https://portal.conp.ca/dataset?id=projects/cneuromod) as citizen scientists. The data are distributed under a liberal Creative Commons (CC0) data license that authorizes the re-sharing of derivatives, and can be downloaded from the CONP portal without registered access. See our [official documentation](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing CNeuroMod datasets.
 
-**1. Requesting access**
-
-You can apply for access to the CNeuroMod datasets [here](https://www.cneuromod.ca/access/access/).
-
-You will receive login credentials to access the NeuroMod git and the
-NeuroMod Amazon S3 fileserver so you can download the data.
-[See here](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing the data.
-
-
-**2. Installing DataLad**
+**1. Installing DataLad**
 
 Install a recent version of the [DataLad software](https://www.datalad.org/),
-a tool for versioning large data structures in a git repository available
+a tool for versioning large data structures organized in git repositories available
 for Linux, OSX and Windows.
 
 If not already present, we also recommend creating an SSH key on the machine
 where the dataset will be installed and adding it to Github. See the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account/) on how to create and add a key to your account.
 
 
-**3. Installing the cneuromod-things repository**
+**2. Cloning the cneuromod-things repository**
 
-Install the current repository from GitHub with DataLad.
+Install the current repository from GitHub with DataLad. This step only downloads symbolic links to retrieve the data files.
 
 ```bash
 datalad clone git@github.com:courtois-neuromod/cneuromod-things.git
 ```
+A warning message will be thrown because the remote origin does not have git-annex installed. This issue will not prevent the installation.
 
-**4. Downloading the dataset(s)**
+**3. Downloading data files**
 
-Specify your CNeuroMod login credentials as environment variables in your
-``bash`` console to download data from the S3 file server.
-
-Use the **access_key** and **secret_key** you received when granted access
-to the dataset.
-
-```bash
-  export AWS_ACCESS_KEY_ID=<s3_access_key>  AWS_SECRET_ACCESS_KEY=<s3_secret_key>
-```
-
-You can download specific data subsets and files by specifying their path using the ``datalad get`` command. Note that, if you just cloned the ``cneuromod-things`` repository, submodules will appear empty. You will need to use the ``datalad get`` command twice: once to download a submodule’s symbolic links and files stored directly on github, and then a second time to download files from the remote S3 store.
+You can download specific data subsets and files by specifying their path using the ``datalad get`` command. Note that, if you just cloned the ``cneuromod-things`` repository, its submodules will appear empty. To download a specific data subset, you can navigate to the submodule whose content you need and pull the files directly from there. Use the ``datalad get`` command once to download the submodule’s symbolic links and files stored directly on GitHub, and then a second time to pull files from the remote CONP server. 
 
 For example, you can download ``sub-01``'s files from the THINGS/behaviour submodule with:
 ```bash
@@ -77,7 +58,7 @@ datalad get *
 datalad get sub-01/beh/*
 ```
 
-**Warning**: while it is technically feasible to pull the entire content of all nested submodules recursively from the S3 file server (using ``datalad get -r *``), we strongly recommend against it due to the complexity and depth of the nested repository structure and sheer dataset size.
+**Warning**: while it is technically feasible to pull the entire content of all nested submodules recursively from the CONP server (using ``datalad get -r *``), we strongly recommend against it due to the complexity and depth of the nested repository structure and sheer dataset size.
 
 
 Project Organization
