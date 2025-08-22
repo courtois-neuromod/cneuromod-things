@@ -6,7 +6,7 @@ cneuromod-things
 
 ![720 CC0 THINGS images](./misc/things_720mosaic_CC0.jpg)
 
-## Dataset overview 
+## Repository overview 
 
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
@@ -20,7 +20,9 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
 submodule includes flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
 
-``datapaper`` includes jupyter notebooks with code to re-create figures from an upcoming data paper using data and result files saved in the current repository.
+``datapaper`` includes jupyter notebooks with code to re-create figures with data and result files from the current repository, as featured in the following data descriptor pre-print:
+
+**St-Laurent, Marie, Basile Pinsard, Oliver Contier, Elizabeth DuPre, Katja Seeliger, Valentina Borghesani, Julie A. Boyle, Lune Bellec, and Martin N. Hebart.** 2025. “CNeuroMod-THINGS, a Densely-Sampled fMRI Dataset for Visual Neuroscience.” arXiv [q-bio.NC]. [https://doi.org/10.48550/ARXIV.2507.09024](https://arxiv.org/abs/2507.09024).
 
 ## Data access
 
