@@ -8,7 +8,7 @@ cneuromod-things
 
 ## Repository overview 
 
-Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/){:target="_blank"}.
+Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
 - ``THINGS/fmriprep`` includes source and preprocessed BOLD data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
@@ -22,22 +22,22 @@ submodule includes flat maps to visualize voxelwise statistics on a flattened co
 
 ``datapaper`` includes jupyter notebooks with code to re-create figures with data and result files from the current repository, as featured in the following data descriptor pre-print:
 
-**St-Laurent, Marie, Basile Pinsard, Oliver Contier, Elizabeth DuPre, Katja Seeliger, Valentina Borghesani, Julie A. Boyle, Lune Bellec, and Martin N. Hebart.** 2025. “CNeuroMod-THINGS, a Densely-Sampled fMRI Dataset for Visual Neuroscience.” arXiv [q-bio.NC]. [https://doi.org/10.48550/ARXIV.2507.09024](https://arxiv.org/abs/2507.09024){:target="_blank"}.
+**St-Laurent, Marie, Basile Pinsard, Oliver Contier, Elizabeth DuPre, Katja Seeliger, Valentina Borghesani, Julie A. Boyle, Lune Bellec, and Martin N. Hebart.** 2025. “CNeuroMod-THINGS, a Densely-Sampled fMRI Dataset for Visual Neuroscience.” arXiv [q-bio.NC]. [https://doi.org/10.48550/ARXIV.2507.09024](https://arxiv.org/abs/2507.09024).
 
 ## Data access
 
-All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/){:target="_blank"}. The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html){:target="_blank"}. Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
+All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
 
-The four subjects who contributed to the CNeuroMod-THINGS dataset have requested access to their data, and chosen to share them openly via the [Canadian Open Neuroscience Platform (CONP) data portal](https://portal.conp.ca/dataset?id=projects/cneuromod){:target="_blank"} as citizen scientists. The data are distributed under a liberal Creative Commons (CC0) data license that authorizes the re-sharing of derivatives, and can be downloaded from the CONP portal without registered access. See our [official documentation](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/){:target="_blank"} for additional information on accessing CNeuroMod datasets.
+The four subjects who contributed to the CNeuroMod-THINGS dataset have requested access to their data, and chosen to share them openly via the [Canadian Open Neuroscience Platform (CONP) data portal](https://portal.conp.ca/dataset?id=projects/cneuromod) as citizen scientists. The data are distributed under a liberal Creative Commons (CC0) data license that authorizes the re-sharing of derivatives, and can be downloaded from the CONP portal without registered access. See our [official documentation](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing CNeuroMod datasets.
 
 **1. Installing DataLad**
 
-Install a recent version of the [DataLad software](https://www.datalad.org/){:target="_blank"},
+Install a recent version of the [DataLad software](https://www.datalad.org/),
 a tool for versioning large data structures organized in git repositories available
 for Linux, OSX and Windows.
 
 If not already present, we also recommend creating an SSH key on the machine
-where the dataset will be installed and adding it to Github. See the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account/){:target="_blank"} on how to create and add a key to your account.
+where the dataset will be installed and adding it to Github. See the [official github instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account/) on how to create and add a key to your account.
 
 
 **2. Cloning the cneuromod-things repository**
