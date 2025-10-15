@@ -99,8 +99,10 @@ Project Organization
     │    ├── fmriprep         <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
-    │    │    │          └── func    <- preprocessed fMRI files in T1w space
+    │    │    │          └── func    <- preprocessed fMRI files in T1w, MNI152NLin2009cAsym and fsLR space
     │    │    │               ├── sub-0*_ses-0*_task-fLoc_run-*_space-T1w_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-0*_task-fLoc_run-*_space-MNI152NLin2009cAsym_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-0*_task-fLoc_run-*_space-fsLR_den-91k_part-mag_bold.dtseries.nii   
     │    │    │               └── sub-0*_ses-0*_task-fLoc_run-*_desc-confounds_part-mag_timeseries.tsv  <- noise confounds
     │    │    │  
     │    │    └── sourcedata     <- raw files
@@ -168,8 +170,10 @@ Project Organization
     │    ├── fmriprep           <- retinotopy fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
-    │    │    │          └── func    <- preprocessed fMRI files in T1w space
+    │    │    │          └── func    <- preprocessed fMRI files in T1w, MNI152NLin2009cAsym and fsLR space
     │    │    │               ├── sub-0*_ses-0*_task-{bars, rings, wedges}_space-T1w_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-0*_task-{bars, rings, wedges}_space-MNI152NLin2009cAsym_desc-preproc_part-mag_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-0*_task-{bars, rings, wedges}_space-fsLR_den-91k_part-mag_bold.dtseries.nii    
     │    │    │               └── sub-0*_ses-0*_task-{bars, rings, wedges}_desc-confounds_timeseries.tsv  <- noise confounds
     │    │    │  
     │    │    └── sourcedata         <- raw files
@@ -238,11 +242,12 @@ Project Organization
     │    ├── fmriprep      <- fmriprep output
     │    │    ├── sub-0*
     │    │    │     └── ses-*
-    │    │    │          └── func    <- preprocessed fMRI files in MNI and T1w space
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
-    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+    │    │    │          └── func    <- preprocessed fMRI files in T1w, MNI152NLin2009cAsym and fsLR space
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-T1w_desc-preproc_bold.nii.gz
     │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-T1w_desc-brain_mask.nii.gz    
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+    │    │    │               ├── sub-0*_ses-*_task-things_run-*_part-mag_space-fsLR_den-91k_bold.dtseries.nii
     │    │    │               └── sub-0*_ses-*_task-things_run-*_part-mag_desc-confounds_timeseries.tsv    <- noise confounds
     │    │    │  
     │    │    └── sourcedata      <- raw files
