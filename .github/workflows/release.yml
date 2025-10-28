@@ -1,0 +1,24 @@
+name: Release workflow
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload-to-zenodo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: publish on Zenodo
+        uses: BIDS-flux/datalad-zenodo-upload@main
+        id: integration
+        with:
+          recursion_limit: 1
+          sandbox: true
+          zenodo_token: ${{ secrets.ZENODO_SANDBOX_API_TOKEN }}
+
+      - name: Outputs Zenodo records.
+        run: |
+          echo "zenodo_doi = ${{ steps.integration.outputs.zenodo_doi }}"
+          echo "zenodo_url = ${{ steps.integration.outputs.zenodo_url }}"
+          echo "archive_url = ${{ steps.integration.outputs.archive_url }}"
