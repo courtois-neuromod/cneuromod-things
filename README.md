@@ -383,12 +383,12 @@ Project Organization
     └── datapaper          <- Report, figures, visualization notebooks
         ├── figures        <- Graphics and figures from the report
         ├── notebooks      <- Code to generate datapaper figures
-        │       ├── behav_analysis.ipynb        <- behav figures     
-        │       ├── beta_ranking.ipynb          <- beta ranking figures          
-        │       ├── beta_dimReduction.ipynb     <- beta t-SNE plots    
-        │       ├── fixation_compliance.ipynb   <- gaze position distribution  
-        │       ├── noiseCeil_flatmaps.ipynb    <- noise ceilings projected on cortical flat maps    
-        │       └── head_motion.ipynb           <- framewise displacement figs  
+        │       ├── behav_analysis.ipynb            <- behav figures     
+        │       ├── annotated_betas_per_ROI.ipynb   <- top betas per ROI figures          
+        │       ├── beta_dimReduction.ipynb         <- beta t-SNE plots    
+        │       ├── fixation_compliance.ipynb       <- gaze position distribution  
+        │       ├── brain_flatmaps.ipynb            <- noise ceilings, TSNR and t-scores projected on cortical flat maps    
+        │       └── qc_motion_response.ipynb        <- response rates and framewise displacement figs  
         └── report         <- Data paper manuscript     <- TODO
 
 --------
