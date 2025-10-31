@@ -18,6 +18,14 @@ It contains the ``sourcedata/floc`` submodule, which includes:
 - the ``stimuli`` submodule, which includes the task stimulus images.
 - the ``code`` directory with scripts to check and update the ``*events.tsv`` files
 
+
+## fLoc/tsnr
+
+The `fLoc/tsnr` submodule includes the `code` directory, which contains scripts to generate temporal signal-to-noise (TSNR) maps from the `dsprep` library.
+
+`fLoc/tsnr` also includes ``sub-0*`` directories, which contain **subject-specific TSNR maps per run and for all runs (averaged TSNR)**.
+
+
 ## fLoc/rois
 
 The ``fLoc/rois`` submodule includes:

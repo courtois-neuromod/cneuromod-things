@@ -11,22 +11,23 @@ cneuromod-things
 Data, scripts and derivatives for the CNeuroMod-THINGS dataset, for which N=4 CNeuroMod participants (``sub-01``, ``sub-02``, ``sub-03`` and ``sub-06``) underwent 33-36 fMRI sessions of a continuous recognition task based on images from the [THINGS dataset](https://things-initiative.org/).
 
 Files related to the main task are found under ``THINGS``:
-- ``THINGS/fmriprep`` includes source and preprocessed BOLD data, eye-tracking data, ``*events.tsv`` files with trialwise metrics, stimuli and annotations.
-- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous image recognition task and of fixation compliance (assessed with eye-tracking).
+- ``THINGS/fmriprep`` includes source and preprocessed BOLD data, eye-tracking data, ``*events.tsv`` files with trialwise metrics (task condition, accuracy, response time), image stimuli and corresponding annotations.
+- ``THINGS/tsnr`` includes temporal signal-to-noise maps derived from the BOLD data preprocessed with fmriprep.
+- ``THINGS/behaviour`` includes analyses of the subjects' performance on the continuous image recognition task and of fixation compliance during image viewing (assessed with eye-tracking).
 - ``THINGS/glmsingle`` includes fMRI analyses and derivatives, including trialwise and imagewise beta scores estimated with GLMsingle, voxelwise noise ceilings, and proof-of-concept analyses to showcase the quality of the data.  
 - ``THINGS/glm-memory`` includes GLM-based analyses of memory effects in the preprocessed BOLD data and associated statistical maps.  
 
 In addition, this repository includes data, scripts and derivatives from two complementary vision localizer tasks,
-``fLoc`` and ``retinotopy`` (population receptive field), used to derive subject-specific ROIs. The ``anatomical`` data
-submodule includes flat maps to visualize voxelwise statistics on a flattened cortical surface are also included.
+``fLoc`` and ``retinotopy`` (population receptive field), which we used to estimate subject-specific ROIs. The ``anatomical`` data
+submodule includes files to visualize voxelwise statistics on flattened cortical surface (a.k.a flat maps).
 
-``datapaper`` includes jupyter notebooks with code to re-create figures with data and result files from the current repository, as featured in the following data descriptor pre-print:
+``datapaper`` includes jupyter notebooks with step-by-step instructions and code to generate figures from data files included in the current repository. These figures include the result figures featured in the following data descriptor pre-print:
 
 **St-Laurent, Marie, Basile Pinsard, Oliver Contier, Elizabeth DuPre, Katja Seeliger, Valentina Borghesani, Julie A. Boyle, Lune Bellec, and Martin N. Hebart.** 2025. “CNeuroMod-THINGS, a Densely-Sampled fMRI Dataset for Visual Neuroscience.” arXiv [q-bio.NC]. [https://doi.org/10.48550/ARXIV.2507.09024](https://arxiv.org/abs/2507.09024).
 
 ## Data access
 
-All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). Datasets can be explored without downloading the data, and make it easy to download only the subset of data needed for a project.
+All CNeuroMod data are made available as a [DataLad collection on github](https://github.com/courtois-neuromod/). The released datasets are described [here](https://docs.cneuromod.ca/en/latest/DATASETS.html). DataLad collections can be explored without downloading the data locally, and make it easy to download only the subset of data needed for a project.
 
 The four subjects who contributed to the CNeuroMod-THINGS dataset have requested access to their data, and chosen to share them openly via the [Canadian Open Neuroscience Platform (CONP) data portal](https://portal.conp.ca/dataset?id=projects/cneuromod) as citizen scientists. The data are distributed under a liberal Creative Commons (CC0) data license that authorizes the re-sharing of derivatives, and can be downloaded from the CONP portal without registered access. See our [official documentation](https://docs.cneuromod.ca/en/latest/ACCESS.html#downloading-the-dataset/) for additional information on accessing CNeuroMod datasets.
 
@@ -42,7 +43,7 @@ where the dataset will be installed and adding it to Github. See the [official g
 
 **2. Cloning the cneuromod-things repository**
 
-Install the current repository from GitHub with DataLad. This step only downloads symbolic links to retrieve the data files.
+Install the current repository from GitHub with DataLad. This step only downloads symbolic links used to retrieve the data files (no large files are downloaded).
 
 ```bash
 datalad clone git@github.com:courtois-neuromod/cneuromod-things.git
@@ -113,6 +114,15 @@ Project Organization
     │    │               │               └── sub-0*_ses-00*_task-fLoc_run-0*_events.tsv  <- events.tsv files
     │    │               │
     │    │               └── stimuli     <- stimulus images per category
+    │    │  
+    │    ├── tsnr         <- temporal signal-to-noise maps 
+    │    │    └── sub-0*
+    │    │          ├── sub-0*_task-floc_space-MNI152NLin2009cAsym_stat-avgtsnr_statmap.nii.gz   <- tsnr averaged across runs
+    │    │          ├── sub-0*_task-floc_space-T1w_stat-avgtsnr_statmap.nii.gz                   <- tsnr averaged across runs
+    │    │          └── ses-*
+    │    │               └── func  
+    │    │                    ├── sub-0*_ses-0*_task-fLoc_run-*_space-MNI152NLin2009cAsym_stat-{mean, stdev, tsnr}_statmap.nii.gz 
+    │    │                    └── sub-0*_ses-0*_task-fLoc_run-*_space-T1w_stat-{mean, stdev, tsnr}_statmap.nii.gz
     │    │
     │    └── rois               <- fLoc derivative datasets and scripts
     │            ├── code       <- scripts to run glm and generate ROIs
@@ -185,6 +195,15 @@ Project Organization
     │    │               └── stimuli
     │    │                     ├── {grid, images, scenes}.npz
     │    │                     └── apertures_{bars, ring, wedge_newtr}.npz
+    │    │
+    │    ├── tsnr         <- temporal signal-to-noise maps 
+    │    │    └── sub-0*
+    │    │          ├── sub-0*_task-retinotopy_space-MNI152NLin2009cAsym_stat-avgtsnr_statmap.nii.gz   <- tsnr averaged across runs
+    │    │          ├── sub-0*_task-retinotopy_space-T1w_stat-avgtsnr_statmap.nii.gz                   <- tsnr averaged across runs
+    │    │          └── ses-*
+    │    │               └── func  
+    │    │                    ├── sub-0*_ses-0*_task-{bars, rings, wedges}_space-MNI152NLin2009cAsym_stat-{mean, stdev, tsnr}_statmap.nii.gz 
+    │    │                    └── sub-0*_ses-0*_task-{bars, rings, wedges}_space-T1w_stat-{mean, stdev, tsnr}_statmap.nii.gz
     │    │
     │    └── prf                  <- population receptive fiels scripts and derivatives (e.g., visual ROIs)
     │         ├── code            <- scripts to run glm single and process output
@@ -287,6 +306,15 @@ Project Organization
     │    │               │            └── utils.py                    <- support functions
     │    │               │    
     │    │               └── task-things_events.json       <- defines columns in events.tsv files
+    │    │
+    │    ├── tsnr         <- temporal signal-to-noise maps 
+    │    │    └── sub-0*
+    │    │          ├── sub-0*_task-things_space-MNI152NLin2009cAsym_stat-avgtsnr_statmap.nii.gz   <- tsnr averaged across runs
+    │    │          ├── sub-0*_task-things_space-T1w_stat-avgtsnr_statmap.nii.gz                   <- tsnr averaged across runs
+    │    │          └── ses-*
+    │    │               └── func  
+    │    │                    ├── sub-0*_ses-*_task-things_run-*_space-MNI152NLin2009cAsym_stat-{mean, stdev, tsnr}_statmap.nii.gz 
+    │    │                    └── sub-0*_ses-*_task-things_run-*_space-T1w_stat-{mean, stdev, tsnr}_statmap.nii.gz
     │    │
     │    ├── behaviour        <- performance on the image recognition task & fixation compliance
     │    │       ├── README.md
