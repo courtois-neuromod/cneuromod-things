@@ -58,3 +58,8 @@
 	url = git@github.com:courtois-neuromod/floc.tsnr.git
 	datalad-id = 248242aa-b1cb-47fb-b62b-9f2cd7dfb522
 	datalad-url = git@github.com:courtois-neuromod/floc.tsnr.git
+[submodule "retinotopy/tsnr"]
+	path = retinotopy/tsnr
+	url = git@github.com:courtois-neuromod/retinotopy.tsnr.git
+	datalad-id = 16cd678d-cd42-4f70-97ce-1001f4b63c18
+	datalad-url = git@github.com:courtois-neuromod/retinotopy.tsnr.git
