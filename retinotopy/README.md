@@ -22,6 +22,14 @@ It contains the ``sourcedata/retinotopy`` submodule, which includes:
 - ``*events.tsv`` files with bloc and imagewise metrics.
 - the ``stimuli`` submodule, which includes the apertures and image stimuli.
 
+
+## retinotopy/tsnr
+
+The `retinotopy/tsnr` submodule includes the `code` directory, which contains scripts to generate temporal signal-to-noise (TSNR) maps from the `dsprep` library.
+
+`retinotopy/tsnr` also includes ``sub-0*`` directories, which contain **subject-specific TSNR maps per run and for all runs (averaged TSNR)**.
+
+
 ## retinotopy/prf
 
 The ``retinotopy/prf`` submodule includes:

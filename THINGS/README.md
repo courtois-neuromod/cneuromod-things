@@ -20,6 +20,14 @@ It contains the ``sourcedata/things`` submodule, which includes:
 - the ``code`` directory with scripts to process ``*events.tsv`` files and eyetracking files (see ``THINGS/fmriprep/sourcedata/things/code/README.md`` for pipeline description and instructions to run the scripts).
 - the ``stimuli`` submodule, which includes the THINGS stimulus images saved as a single zipped file (``images_fmri.zip``). To access and use these images, follow the instructions from this submodule's README.md (``THINGS/fmriprep/sourcedata/things/stimuli/README.md``). Stimulus images can also be downloaded directly from the [THINGS initiative database](https://osf.io/jum2f/). The ``sourcedata/things/stimuli`` submodule also includes image ratings (e.g., size, how natural) and content annotations (e.g., the presence of faces, body parts and elements of scenery; see ``THINGS/fmriprep/sourcedata/things/stimuli/annotations/README.md``).
 
+
+## THINGS/tsnr
+
+The `THINGS/tsnr` submodule includes the `code` directory, which contains scripts to generate temporal signal-to-noise (TSNR) maps from the `dsprep` library.
+
+`THINGS/tsnr` also includes ``sub-0*`` directories, which contain **subject-specific TSNR maps per run and for all runs (averaged TSNR)**.
+
+
 ## THINGS/behaviour
 
 The ``THINGS/behaviour`` submodule includes the ``code`` directory with scripts to extract metrics of performance on the continuous recognition task, to assign image ratings and annotations to each task trial, and to derive trial-wise metrics of fixation compliance from eye-tracking data. See ``THINGS/behaviour/README.md`` for pipeline descriptions and instructions to run the various scripts.
