@@ -53,3 +53,8 @@
 	url = git@github.com:courtois-neuromod/things.tsnr.git
 	datalad-id = ebe8b092-b3d4-48f7-a585-89a3bd0935d6
 	datalad-url = git@github.com:courtois-neuromod/things.tsnr.git
+[submodule "fLoc/tsnr"]
+	path = fLoc/tsnr
+	url = git@github.com:courtois-neuromod/floc.tsnr.git
+	datalad-id = 248242aa-b1cb-47fb-b62b-9f2cd7dfb522
+	datalad-url = git@github.com:courtois-neuromod/floc.tsnr.git
