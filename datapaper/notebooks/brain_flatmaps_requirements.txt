@@ -7,4 +7,5 @@ numpy==1.24.4
 pycortex==1.2.11
 
 # Python 3.8.10
+# Inkscape 1.1.2
 # Freesurfer 7.3.2
