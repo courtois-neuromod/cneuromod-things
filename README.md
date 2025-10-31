@@ -21,7 +21,7 @@ In addition, this repository includes data, scripts and derivatives from two com
 ``fLoc`` and ``retinotopy`` (population receptive field), which we used to estimate subject-specific ROIs. The ``anatomical`` data
 submodule includes files to visualize voxelwise statistics on flattened cortical surface (a.k.a flat maps).
 
-``datapaper`` includes jupyter notebooks with step-by-step instructions and code to generate figures from data files included in the current repository. These figures include the result figures featured in the following data descriptor pre-print:
+``datapaper`` includes jupyter notebooks with step-by-step instructions and code to generate figures using data files from the current repository. These figures include the results figures from the following data descriptor pre-print:
 
 **St-Laurent, Marie, Basile Pinsard, Oliver Contier, Elizabeth DuPre, Katja Seeliger, Valentina Borghesani, Julie A. Boyle, Lune Bellec, and Martin N. Hebart.** 2025. “CNeuroMod-THINGS, a Densely-Sampled fMRI Dataset for Visual Neuroscience.” arXiv [q-bio.NC]. [https://doi.org/10.48550/ARXIV.2507.09024](https://arxiv.org/abs/2507.09024).
 
