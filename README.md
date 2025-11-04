@@ -417,6 +417,6 @@ Project Organization
         │       ├── fixation_compliance.ipynb       <- gaze position distribution  
         │       ├── brain_flatmaps.ipynb            <- noise ceilings, TSNR and t-scores projected on cortical flat maps    
         │       └── qc_motion_response.ipynb        <- response rates and framewise displacement figs  
-        └── report         <- Data paper manuscript     <- TODO
+        └── report  
 
 --------
