@@ -4,7 +4,7 @@
   "creators": [
     {
       "name": "St-Laurent, Marie",
-      "affiliation": ["Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany","Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada"]
+      "affiliation": "Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany; Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada"
     },
     {
       "name": "Pinsard, Basile",
@@ -16,15 +16,15 @@
     },
     {
       "name": "Dupre, Elizabeth",
-      "affiliation": ["Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada "," Département de psychologie, Université de Montréal, Montréal, Canada"]
+      "affiliation": "Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada; Département de psychologie, Université de Montréal, Montréal, Canada"
     },
     {
       "name": "Seeliger, Katja",
-      "affiliation": ["Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany "," Martin Luther University Halle-Wittenberg, Medical Faculty, Halle, Germany"]
+      "affiliation": "Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany; Martin Luther University Halle-Wittenberg, Medical Faculty, Halle, Germany"
     },
     {
       "name": "Borghesani, Valentina",
-      "affiliation": ["Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada "," Faculté de psychologie et des sciences de l’éducation, Université de Genève, Genève, Swizerland"]
+      "affiliation": "Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada; Faculté de psychologie et des sciences de l’éducation, Université de Genève, Genève, Swizerland"
     },
     {
       "name": "Boyle, Julie A.",
@@ -32,11 +32,11 @@
     },
     {
       "name": "Bellec, Lune",
-      "affiliation": ["Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada "," Département de psychologie, Université de Montréal, Montréal, Canada"]
+      "affiliation": "Centre de recherche de l’Institut universitaire de gériatrie de Montréal, Montréal, Canada; Département de psychologie, Université de Montréal, Montréal, Canada"
     },
     {
       "name": "Hebart, Martin N.",
-      "affiliation": ["Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany "," Department of Medicine, Justus Liebig University Giessen, Giessen, Germany "," Center for Mind, Brain and Behavior (CMBB), Universities of Marburg, Giessen, and Darmstadt, Germany"]
+      "affiliation": "Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany; Department of Medicine, Justus Liebig University Giessen, Giessen, Germany; Center for Mind, Brain and Behavior (CMBB), Universities of Marburg, Giessen, and Darmstadt, Germany"
     }
   ],
   "description": "CNeuroMod-THINGS, a densely-sampled fMRI dataset for visual neuroscience",

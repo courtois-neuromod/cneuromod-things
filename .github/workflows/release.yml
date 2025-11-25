@@ -14,8 +14,7 @@ jobs:
         id: integration
         with:
           recursion_limit: 1
-          sandbox: true
-          zenodo_token: ${{ secrets.ZENODO_SANDBOX_API_TOKEN }}
+          zenodo_token: ${{ secrets.ZENODO_API_TOKEN }}
 
       - name: Outputs Zenodo records.
         run: |
