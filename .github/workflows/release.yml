@@ -14,6 +14,11 @@ jobs:
         id: integration
         with:
           recursion_limit: 1
+	  additional-subdatasets: |
+	    THINGS/fmriprep/sourcedata/things/stimuli
+	    fLoc/fmriprep/sourcedata/floc/stimuli
+	    retinotopy/fmriprep/sourcedata/retinotopy/stimuli
+	    anatomical/smriprep/sourcedata/freesurfer
           zenodo_token: ${{ secrets.ZENODO_API_TOKEN }}
 
       - name: Outputs Zenodo records.
