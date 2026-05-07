@@ -381,9 +381,14 @@ Project Organization
     │    |             │          │     ├── TYPEB_FITHRF.mat   
     │    |             │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
     │    |             │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat  
-    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
-    │    |             │          ├── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
-    │    |             │          └── sub-0*_task-things_space-T1w_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
+    │    |             │          ├── MNI152NLin2009cAsym
+    │    |             │          │     ├── TYPEA_ONOFF.mat    
+    │    |             │          │     ├── TYPEB_FITHRF.mat   
+    │    |             │          │     ├── TYPEC_FITHRF_GLMDENOISE.mat
+    │    |             │          │     └── TYPED_FITHRF_GLMDENOISE_RR.mat      
+    │    |             │          ├── sub-0*_task-things_space-{T1w, MNI152NLin2009cAsym}_model-fitHrfGLMdenoiseRR_stat-imageBetas_desc-zscore_statseries.h5  
+    │    |             │          ├── sub-0*_task-things_space-{T1w, MNI152NLin2009cAsym}_model-fitHrfGLMdenoiseRR_stat-trialBetas_desc-zscore_statseries.h5      
+    │    |             │          └── sub-0*_task-things_space-{T1w, MNI152NLin2009cAsym}_model-fitHrfGLMdenoiseRR_stat-noiseCeilings_statmap.nii.gz
     │    |             │
     │    |             ├── qc     <- quality checks
     │    |             │    └── sub-0*_task-things_headmotion.tsv
